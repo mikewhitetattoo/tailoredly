@@ -1,0 +1,1302 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Nails Studio Demo</title>
+    <meta name="description" content="Fictional demonstration website for Pink Petal Nails, a cute and modern nail studio in Sliema, Malta. Showcase of nail art, BIAB, and manicures.">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Inter:wght@400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        blush: '#FFF0F3',
+                        roseSoft: '#FAD2E1',
+                        roseAccent: '#E5989B',
+                        pinkDark: '#B5838D',
+                        coralWarm: '#FFB4A2',
+                        creamBg: '#FFFDF9',
+                        charcoalText: '#2B2D42',
+                    },
+                    fontFamily: {
+                        serif: ['"Playfair Display"', 'serif'],
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                        script: ['"Caveat"', 'cursive'],
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- FontAwesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-8px) rotate(3deg); }
+        }
+        .animate-float {
+            animation: float 4s ease-in-out infinite;
+        }
+        .animate-float-delayed {
+            animation: float 5s ease-in-out 2s infinite;
+        }
+        @media (prefers-reduced-motion: reduce) {
+            .animate-float, .animate-float-delayed {
+                animation: none;
+            }
+        }
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #FFF0F3;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #FAD2E1;
+            border-radius: 9999px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #E5989B;
+        }
+        @keyframes marquee {
+            0% { transform: translateX(0%); }
+            100% { transform: translateX(-50%); }
+        }
+        body {
+            overflow-x: hidden;
+        }
+
+        /* ========================================================= */
+        /* EXACT TAILOREDLY DEMO BANNER STYLES                       */
+        /* ========================================================= */
+        .tailoredly-banner-wrap {
+            position: fixed !important;
+            top: 132px !important;
+            right: 24px !important;
+            bottom: auto !important;
+            left: auto !important;
+            transform: none !important;
+            z-index: 2147483647 !important;
+            width: auto;
+            max-width: calc(100vw - 48px);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif !important;
+            box-sizing: border-box;
+            pointer-events: auto;
+        }
+
+        .tailoredly-banner-box {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            padding: 10px 16px;
+            background: radial-gradient(circle at 85% 50%, rgba(190, 18, 74, 0.08) 0%, rgba(6, 6, 8, 0.98) 55%), #060608;
+            border: 1px solid rgba(244, 37, 100, 0.45);
+            border-radius: 16px;
+            box-shadow: 
+                0 0 25px rgba(235, 20, 85, 0.22),
+                0 12px 32px rgba(0, 0, 0, 0.92),
+                inset 0 0 8px rgba(244, 37, 100, 0.04);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif !important;
+        }
+
+        .tailoredly-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            min-width: 0;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif !important;
+        }
+
+        .tailoredly-icon-box {
+            width: 38px;
+            height: 38px;
+            min-width: 38px;
+            border-radius: 10px;
+            border: 1px solid rgba(244, 37, 100, 0.4);
+            background: rgba(14, 8, 12, 0.95);
+            box-shadow: 0 0 12px rgba(244, 37, 100, 0.15);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #f42564;
+        }
+
+        .tailoredly-brand-text {
+            display: flex;
+            flex-direction: column;
+            line-height: 1.2;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif !important;
+        }
+
+        .tailoredly-demo-label {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif !important;
+            font-size: 9.5px !important;
+            font-weight: 700 !important;
+            letter-spacing: 0.18em !important;
+            text-transform: uppercase !important;
+            color: #f42564 !important;
+            margin-bottom: 2px !important;
+        }
+
+        .tailoredly-madeby {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif !important;
+            font-size: 16px !important;
+            font-weight: 700 !important;
+            color: #d1d5db !important;
+            letter-spacing: -0.01em !important;
+            white-space: nowrap !important;
+            display: flex !important;
+            align-items: baseline !important;
+            gap: 5px !important;
+        }
+
+        .tailoredly-logo-mark {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif !important;
+            font-weight: 900 !important;
+            letter-spacing: 0.02em !important;
+            text-transform: uppercase !important;
+            color: #ffffff !important;
+        }
+
+        .tailoredly-logo-mark span {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif !important;
+            color: #f42564 !important;
+        }
+
+        .tailoredly-divider {
+            width: 1px;
+            height: 32px;
+            background: rgba(255, 255, 255, 0.1);
+            flex-shrink: 0;
+        }
+
+        .tailoredly-middle {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            line-height: 1.3;
+            min-width: 0;
+            padding-right: 4px;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif !important;
+        }
+
+        .tailoredly-question {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif !important;
+            font-size: 13px !important;
+            font-weight: 500 !important;
+            color: #f3f4f6 !important;
+            margin: 0 !important;
+            white-space: nowrap !important;
+        }
+
+        .tailoredly-subtext {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif !important;
+            font-size: 12px !important;
+            font-weight: 400 !important;
+            color: #8e8e99 !important;
+            margin: 0 !important;
+            white-space: nowrap !important;
+        }
+
+        .tailoredly-btn {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif !important;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 9px 16px;
+            border-radius: 11px;
+            background: linear-gradient(90deg, #f72564 0%, #c11248 100%);
+            color: #ffffff !important;
+            font-size: 13px !important;
+            font-weight: 700 !important;
+            text-decoration: none !important;
+            white-space: nowrap;
+            box-shadow: 0 0 22px rgba(247, 37, 100, 0.5), inset 0 1px 1px rgba(255, 255, 255, 0.25);
+            transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
+            flex-shrink: 0;
+        }
+
+        .tailoredly-btn:hover {
+            transform: translateY(-1px);
+            filter: brightness(1.08);
+            box-shadow: 0 0 30px rgba(247, 37, 100, 0.75), inset 0 1px 1px rgba(255, 255, 255, 0.35);
+        }
+
+        .tailoredly-btn svg {
+            transition: transform 0.2s ease;
+        }
+
+        .tailoredly-btn:hover svg {
+            transform: translateX(-3px);
+        }
+
+        @media (max-width: 1250px) and (min-width: 769px) {
+            .tailoredly-divider,
+            .tailoredly-middle {
+                display: none;
+            }
+        }
+
+        @media (max-width: 768px) {
+            html body {
+                padding-bottom: 96px !important;
+            }
+            .tailoredly-banner-wrap {
+                top: auto !important;
+                right: auto !important;
+                bottom: calc(56px + env(safe-area-inset-bottom, 0px)) !important;
+                left: 50% !important;
+                transform: translateX(-50%) !important;
+                width: calc(100% - 16px);
+                max-width: 540px;
+            }
+            .tailoredly-banner-box {
+                padding: 10px 12px;
+                gap: 10px;
+                border-radius: 15px;
+            }
+            .tailoredly-divider,
+            .tailoredly-middle {
+                display: none;
+            }
+            .tailoredly-icon-box {
+                width: 36px;
+                height: 36px;
+                min-width: 36px;
+                border-radius: 9px;
+            }
+            .tailoredly-icon-box svg {
+                width: 17px;
+                height: 17px;
+            }
+            .tailoredly-demo-label {
+                font-size: 8.5px !important;
+                letter-spacing: 0.14em !important;
+                margin-bottom: 1px !important;
+            }
+            .tailoredly-madeby {
+                font-size: 15px !important;
+            }
+            .tailoredly-btn {
+                padding: 10px 14px;
+                font-size: 12.5px !important;
+                gap: 6px;
+                border-radius: 10px;
+            }
+        }
+
+        @media (max-width: 360px) {
+            .tailoredly-icon-box {
+                display: none;
+            }
+            .tailoredly-madeby {
+                font-size: 14px !important;
+            }
+            .tailoredly-btn {
+                padding: 9px 12px;
+                font-size: 12px !important;
+            }
+        }
+    </style>
+
+    <!-- LocalBusiness JSON-LD Structured Data for Demo -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "LocalBusiness",
+      "name": "Nails Studio Example (DEMO)",
+      "image": "https://placehold.co/600x400/FFF0F3/B5838D?text=Nails+Studio",
+      "@id": "https://example.com/nails-studio",
+      "url": "https://example.com/nails-studio",
+      "telephone": "+356 0000 0000",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Tower Road (Demo)",
+        "addressLocality": "Sliema",
+        "postalCode": "SLM 0000",
+        "addressCountry": "MT"
+      },
+      "openingHoursSpecification": [
+        {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": ["Monday", "Wednesday"],
+          "opens": "09:00",
+          "closes": "18:00"
+        },
+        {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": ["Tuesday", "Thursday", "Friday"],
+          "opens": "09:00",
+          "closes": "19:00"
+        },
+        {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": "Saturday",
+          "opens": "09:00",
+          "closes": "17:00"
+        }
+      ],
+      "priceRange": "€€",
+      "description": "Fictional demonstration website for a nail studio in Sliema, Malta."
+    }
+    </script>
+</head>
+<body class="bg-creamBg text-charcoalText font-sans antialiased selection:bg-roseSoft selection:text-charcoalText">
+
+    <!-- Top Demo Ticker Bar -->
+    <div class="bg-amber-400 text-neutral-950 font-bold text-xs uppercase tracking-wider py-2 overflow-hidden whitespace-nowrap sticky top-0 z-[100] shadow-md">
+        <div class="inline-block animate-[marquee_25s_linear_infinite]" style="display: inline-block; white-space: nowrap; animation: marquee 25s linear infinite;">
+            Demo Website &bull; Przykładowa strona &nbsp;&nbsp;&bull;&nbsp;&nbsp; Demo Website &bull; Przykładowa strona &nbsp;&nbsp;&bull;&nbsp;&nbsp; Demo Website &bull; Przykładowa strona &nbsp;&nbsp;&bull;&nbsp;&nbsp; Demo Website &bull; Przykładowa strona &nbsp;&nbsp;&bull;&nbsp;&nbsp; Demo Website &bull; Przykładowa strona &nbsp;&nbsp;&bull;&nbsp;&nbsp; Demo Website &bull; Przykładowa strona
+        </div>
+    </div>
+
+    <!-- Header Navigation -->
+    <header class="sticky top-[31px] z-40 bg-creamBg/95 backdrop-blur-md border-b border-rose-100 transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <!-- Brand Logo -->
+            <a href="#home" class="flex items-center gap-2.5 group">
+                <div class="w-10 h-10 rounded-full bg-roseSoft flex items-center justify-center text-rose-800 text-lg shadow-sm group-hover:scale-105 transition-transform font-serif">
+                    🌸
+                </div>
+                <div>
+                    <span class="font-serif text-xl sm:text-2xl font-bold tracking-tight text-charcoalText block">Nails Studio Example</span>
+                    <span class="text-[11px] sm:text-xs uppercase tracking-widest text-rose-400 font-semibold block -mt-1">Manicure &bull; Pedicure</span>
+                </div>
+            </a>
+
+            <!-- Desktop Nav Links -->
+            <nav class="hidden lg:flex items-center gap-8 text-sm font-medium">
+                <a href="#home" data-nav-link="home" class="desktop-nav-link text-rose-600 font-bold transition-colors">Home</a>
+                <a href="#services" data-nav-link="services" class="desktop-nav-link text-charcoalText/70 hover:text-rose-500 transition-colors">Prices</a>
+                <a href="#gallery" data-nav-link="gallery" class="desktop-nav-link text-charcoalText/70 hover:text-rose-500 transition-colors">Gallery</a>
+                <a href="#about" data-nav-link="about" class="desktop-nav-link text-charcoalText/70 hover:text-rose-500 transition-colors">About</a>
+                <a href="#contact" data-nav-link="contact" class="desktop-nav-link text-charcoalText/70 hover:text-rose-500 transition-colors">Contact</a>
+            </nav>
+
+            <!-- CTA Button (Desktop Only - hidden on mobile and tablet) -->
+            <div class="hidden lg:flex items-center gap-4">
+                <a href="#booking" class="bg-rose-400 hover:bg-rose-500 text-white px-5 py-2.5 rounded-full font-medium text-sm shadow-md shadow-rose-200 transition-all hover:shadow-lg hover:-translate-y-0.5 flex items-center gap-2">
+                    <span>Book Now</span>
+                    <span class="text-xs">♡</span>
+                </a>
+            </div>
+
+            <!-- Mobile Menu Button -->
+            <button id="mobile-menu-btn" onclick="toggleMobileMenu()" class="lg:hidden w-11 h-11 rounded-2xl border border-rose-200 bg-rose-50/90 flex items-center justify-center text-charcoalText hover:text-rose-500 transition-all shadow-sm focus:outline-none" aria-label="Toggle menu">
+                <i class="fa-solid fa-bars text-lg" id="mobile-menu-icon"></i>
+            </button>
+        </div>
+
+        <!-- Mobile Menu Drawer (Solid Opaque White, Professional Styled with Icons) -->
+        <div id="mobile-menu" class="hidden lg:hidden absolute top-full left-0 right-0 bg-white border-t border-b-2 border-rose-100 px-5 pt-3 pb-6 shadow-[0_25px_50px_-12px_rgba(43,45,66,0.22)] z-50">
+            <div class="max-w-md mx-auto">
+                <div class="divide-y divide-rose-50">
+                    <a href="#home" data-mobile-nav="home" onclick="toggleMobileMenu()" class="mobile-nav-btn w-full flex items-center justify-between py-3 px-3 rounded-xl font-bold text-sm text-rose-600 bg-rose-50/90 transition-all my-0.5">
+                        <div class="flex items-center space-x-3.5">
+                            <div class="mobile-nav-icon w-9 h-9 rounded-xl bg-rose-500 text-white flex items-center justify-center text-sm shadow-sm transition-all">
+                                <i class="fa-solid fa-house"></i>
+                            </div>
+                            <span>Home</span>
+                        </div>
+                        <i class="fa-solid fa-chevron-right text-[11px] opacity-80"></i>
+                    </a>
+
+                    <a href="#services" data-mobile-nav="services" onclick="toggleMobileMenu()" class="mobile-nav-btn w-full flex items-center justify-between py-3 px-3 rounded-xl font-semibold text-sm text-charcoalText hover:bg-rose-50/80 hover:text-rose-600 transition-all my-0.5">
+                        <div class="flex items-center space-x-3.5">
+                            <div class="mobile-nav-icon w-9 h-9 rounded-xl bg-rose-50 text-rose-600 border border-rose-100 flex items-center justify-center text-sm transition-all">
+                                <i class="fa-solid fa-tags"></i>
+                            </div>
+                            <span>Prices</span>
+                        </div>
+                        <i class="fa-solid fa-chevron-right text-[11px] text-charcoalText/40"></i>
+                    </a>
+
+                    <a href="#gallery" data-mobile-nav="gallery" onclick="toggleMobileMenu()" class="mobile-nav-btn w-full flex items-center justify-between py-3 px-3 rounded-xl font-semibold text-sm text-charcoalText hover:bg-rose-50/80 hover:text-rose-600 transition-all my-0.5">
+                        <div class="flex items-center space-x-3.5">
+                            <div class="mobile-nav-icon w-9 h-9 rounded-xl bg-rose-50 text-rose-600 border border-rose-100 flex items-center justify-center text-sm transition-all">
+                                <i class="fa-regular fa-images"></i>
+                            </div>
+                            <span>Gallery</span>
+                        </div>
+                        <i class="fa-solid fa-chevron-right text-[11px] text-charcoalText/40"></i>
+                    </a>
+
+                    <a href="#about" data-mobile-nav="about" onclick="toggleMobileMenu()" class="mobile-nav-btn w-full flex items-center justify-between py-3 px-3 rounded-xl font-semibold text-sm text-charcoalText hover:bg-rose-50/80 hover:text-rose-600 transition-all my-0.5">
+                        <div class="flex items-center space-x-3.5">
+                            <div class="mobile-nav-icon w-9 h-9 rounded-xl bg-rose-50 text-rose-600 border border-rose-100 flex items-center justify-center text-sm transition-all">
+                                <i class="fa-solid fa-user-tie"></i>
+                            </div>
+                            <span>About</span>
+                        </div>
+                        <i class="fa-solid fa-chevron-right text-[11px] text-charcoalText/40"></i>
+                    </a>
+
+                    <a href="#contact" data-mobile-nav="contact" onclick="toggleMobileMenu()" class="mobile-nav-btn w-full flex items-center justify-between py-3 px-3 rounded-xl font-semibold text-sm text-charcoalText hover:bg-rose-50/80 hover:text-rose-600 transition-all my-0.5">
+                        <div class="flex items-center space-x-3.5">
+                            <div class="mobile-nav-icon w-9 h-9 rounded-xl bg-rose-50 text-rose-600 border border-rose-100 flex items-center justify-center text-sm transition-all">
+                                <i class="fa-solid fa-location-dot"></i>
+                            </div>
+                            <span>Contact</span>
+                        </div>
+                        <i class="fa-solid fa-chevron-right text-[11px] text-charcoalText/40"></i>
+                    </a>
+                </div>
+
+                <!-- Bottom Quick Actions in Mobile Menu -->
+                <div class="pt-3.5 mt-2 border-t border-rose-50 grid grid-cols-2 gap-2.5">
+                    <a href="tel:+35600000000" class="w-full bg-rose-50 hover:bg-rose-100 text-charcoalText border border-rose-200 font-bold text-xs py-3.5 rounded-xl text-center flex items-center justify-center space-x-2 transition">
+                        <i class="fa-solid fa-phone text-rose-500 text-xs"></i>
+                        <span>+356 000 0000</span>
+                    </a>
+                    <a href="#booking" onclick="toggleMobileMenu()" class="w-full bg-rose-400 hover:bg-rose-500 text-white font-bold text-xs py-3.5 rounded-xl text-center flex items-center justify-center space-x-2 shadow-md shadow-rose-200 transition">
+                        <i class="fa-solid fa-calendar-check text-xs"></i>
+                        <span>Book Now</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- TAILOREDLY DEMO BANNER -->
+    <div class="tailoredly-banner-wrap" role="region" aria-label="Tailoredly Demo Banner">
+        <div class="tailoredly-banner-box">
+            <div class="tailoredly-left">
+                <div class="tailoredly-icon-box" aria-hidden="true">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="3" y="4" width="18" height="12" rx="2" ry="2"></rect>
+                        <line x1="8" y1="20" x2="16" y2="20"></line>
+                        <line x1="12" y1="16" x2="12" y2="20"></line>
+                    </svg>
+                </div>
+                <div class="tailoredly-brand-text">
+                    <span class="tailoredly-demo-label">WEBSITE DEMO</span>
+                    <div class="tailoredly-madeby">
+                        Made by <strong class="tailoredly-logo-mark">TAILORED<span>LY</span></strong>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tailoredly-divider" aria-hidden="true"></div>
+
+            <div class="tailoredly-middle">
+                <p class="tailoredly-question">Like this design?</p>
+                <p class="tailoredly-subtext">Get a website for your business.</p>
+            </div>
+
+            <a href="file:///C:/Users/Bobik/Desktop/Website creator/index.html" class="tailoredly-btn">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="19" y1="12" x2="5" y2="12"></line>
+                    <polyline points="12 19 5 12 12 5"></polyline>
+                </svg>
+                <span>Back to Portfolio</span>
+            </a>
+        </div>
+    </div>
+    <!-- END TAILOREDLY BANNER -->
+
+    <main class="flex-grow">
+        <section id="home" class="scroll-mt-28 relative overflow-hidden py-16 lg:py-24 bg-gradient-to-b from-blush/60 to-creamBg">
+            <!-- Floating Decorative Elements -->
+            <div class="absolute top-12 left-10 text-rose-300 text-2xl animate-float hidden sm:block">♡</div>
+            <div class="absolute bottom-16 right-16 text-rose-300 text-3xl animate-float-delayed hidden sm:block">✦</div>
+            <div class="absolute top-1/2 right-1/4 text-rose-200 text-xl animate-float hidden lg:block">✿</div>
+
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                    
+                    <!-- Hero Text Content -->
+                    <div class="lg:col-span-6 space-y-6 text-center lg:text-left z-10">
+                        <div class="inline-flex items-center gap-2 bg-rose-100/80 text-rose-800 px-3.5 py-1.5 rounded-full text-xs font-semibold tracking-wider uppercase">
+                            <span>✦ Your address &bull; DEMO STUDIO</span>
+                        </div>
+
+                        <h1 class="font-serif text-5xl sm:text-6xl lg:text-7xl font-bold tracking-tight text-charcoalText leading-[1.1]">
+                            Place your main headline here
+                        </h1>
+
+                        <p class="text-xl text-rose-500 font-serif italic">
+                            Add a short, catchy tagline here.
+                        </p>
+
+                        <p class="text-lg text-charcoalText/80 max-w-xl mx-auto lg:mx-0 font-normal">
+                            This is where you introduce your business in a few sentences. Tell visitors what you offer, who you are and what makes your services special. Keep it short, engaging and focused on what you want your customers to know first.
+                        </p>
+
+                        <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 pt-2">
+                            <a href="#booking" class="w-full sm:w-auto bg-rose-400 hover:bg-rose-500 text-white font-medium px-8 py-4 rounded-full shadow-lg shadow-rose-200 transition-all hover:scale-105 text-center">
+                                Book an Appointment ♡
+                            </a>
+                            <a href="#services" class="w-full sm:w-auto bg-white hover:bg-rose-50 text-charcoalText border border-rose-200 font-medium px-8 py-4 rounded-full transition-all text-center">
+                                Explore Our Services
+                            </a>
+                        </div>
+
+                        <!-- Mini Trust / Demo Badge -->
+                        <div class="pt-4 flex items-center justify-center lg:justify-start gap-6 text-xs text-charcoalText/60">
+                            <div class="flex items-center gap-1.5">
+                                <i class="fa-solid fa-check text-rose-400"></i>
+                                <span>Professional Nail Services</span>
+                            </div>
+                            <div class="flex items-center gap-1.5">
+                                <i class="fa-solid fa-check text-rose-400"></i>
+                                <span>Attention to Every Detail</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Hero Visual / Photography Grid -->
+                    <div class="lg:col-span-6 relative">
+                        <div class="relative mx-auto max-w-md lg:max-w-none">
+                            <div class="absolute -inset-4 bg-gradient-to-tr from-rose-200 to-blush rounded-3xl blur-2xl opacity-60 -z-10"></div>
+                            
+                            <div class="grid grid-cols-2 gap-3 sm:gap-4">
+                                <div class="space-y-3 sm:space-y-4">
+                                    <div class="relative overflow-hidden rounded-2xl shadow-xl aspect-[4/5] bg-rose-100 group">
+                                        <img src="nails/main1.png" onerror="this.src='https://placehold.co/600x800/FFF0F3/B5838D?text=nails/main1.png'" alt="Pink Nail Art Demo" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy">
+                                        <div class="absolute inset-0 flex items-center justify-center pointer-events-none p-2 sm:p-4">
+                                            <div class="bg-black/70 backdrop-blur-[2px] border-2 border-dashed border-amber-400 rounded-xl sm:rounded-2xl px-3 sm:px-6 py-2 sm:py-4 rotate-[-12deg] shadow-xl text-center">
+                                                <span class="text-amber-400 font-bold font-serif tracking-widest text-xs sm:text-2xl uppercase drop-shadow-md block">EXAMPLE PHOTO</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="bg-white/90 backdrop-blur-sm p-3.5 sm:p-4 rounded-2xl shadow-md border border-rose-100">
+                                        <p class="font-serif text-xs sm:text-sm font-bold text-rose-800">"Pretty nails, pretty moments."</p>
+                                        <p class="text-[11px] sm:text-xs text-charcoalText/70 mt-1">Fictional portfolio preview</p>
+                                    </div>
+                                </div>
+                                <div class="space-y-3 sm:space-y-4 pt-6 sm:pt-8">
+                                    <div class="bg-rose-900 text-white p-4 sm:p-6 rounded-2xl shadow-xl flex flex-col justify-between aspect-square">
+                                        <div class="text-rose-200 text-xl sm:text-2xl">🌸</div>
+                                        <div>
+                                            <p class="font-serif text-base sm:text-xl font-bold">Demo Studio</p>
+                                            <p class="text-[11px] sm:text-xs text-rose-200 mt-1">Ready for custom website branding</p>
+                                        </div>
+                                    </div>
+                                    <div class="relative overflow-hidden rounded-2xl shadow-xl aspect-[4/5] bg-rose-100 group">
+                                        <img src="nails/main2.png" onerror="this.src='https://placehold.co/600x800/FFF0F3/B5838D?text=nails/main2.png'" alt="Nail Studio Demo" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy">
+                                        <div class="absolute inset-0 flex items-center justify-center pointer-events-none p-2 sm:p-4">
+                                            <div class="bg-black/70 backdrop-blur-[2px] border-2 border-dashed border-amber-400 rounded-xl sm:rounded-2xl px-3 sm:px-6 py-2 sm:py-4 rotate-[10deg] shadow-xl text-center">
+                                                <span class="text-amber-400 font-bold font-serif tracking-widest text-xs sm:text-2xl uppercase drop-shadow-md block">EXAMPLE PHOTO</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <section class="py-16 bg-creamBg border-b border-rose-100">
+            <div class="max-w-4xl mx-auto px-4 text-center space-y-6">
+                <span class="inline-block text-xs font-bold tracking-widest text-rose-500 uppercase bg-rose-50 px-3 py-1 rounded-full border border-rose-100">
+                    DEMO PRESENTATION
+                </span>
+                <h2 class="font-serif text-3xl sm:text-4xl font-bold text-charcoalText">
+                    Welcome Your Clients ♡
+                </h2>
+                <p class="text-lg text-charcoalText/80 leading-relaxed font-normal">
+                    This is the place for a short introduction to your nail studio. Tell visitors who you are, what services you offer and what they can expect when booking an appointment with you.
+                </p>
+                <p class="text-base text-charcoalText/70 leading-relaxed font-normal">
+                    Use this section to briefly introduce your style, experience and approach to your work.
+                </p>
+                <div class="flex justify-center items-center gap-3 pt-2 text-rose-400">
+                    <span>✦</span>
+                    <span>♡</span>
+                    <span>✿</span>
+                </div>
+            </div>
+        </section>
+
+        <section id="services" class="scroll-mt-24 py-20 bg-gradient-to-b from-creamBg to-blush/30">
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+                
+                <div class="text-center max-w-2xl mx-auto mb-12 space-y-3">
+                    <span class="text-xs font-bold tracking-widest text-rose-500 uppercase">OUR SERVICES & PRICES</span>
+                    <h2 class="font-serif text-4xl sm:text-5xl font-bold text-charcoalText">Price List</h2>
+                    <p class="text-charcoalText/70">Explore our treatments and services below. Add your service names, short descriptions, prices and estimated treatment times.</p>
+                    <div class="inline-block text-xs bg-amber-50 text-amber-800 border border-amber-200 px-3 py-1 rounded-md mt-2">
+                        <i class="fa-solid fa-circle-info mr-1"></i> Sample services & pricing &bull; For demonstration purposes only
+                    </div>
+                </div>
+
+                <!-- Unified Pricing Card -->
+                <div class="bg-white rounded-3xl p-6 sm:p-12 shadow-md border border-rose-100 space-y-10">
+                    
+                    <!-- Category 1: Natural Care -->
+                    <div>
+                        <div class="flex items-center gap-3 mb-6 pb-3 border-b border-rose-100">
+                            <div class="w-10 h-10 rounded-xl bg-rose-50 text-rose-500 flex items-center justify-center text-lg">
+                                <i class="fa-solid fa-hand-sparkles"></i>
+                            </div>
+                            <h3 class="font-serif text-2xl font-bold text-charcoalText">Natural Care</h3>
+                        </div>
+                        <div class="space-y-6">
+                            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-4 border-b border-rose-50/60">
+                                <div>
+                                    <h4 class="font-semibold text-charcoalText text-base">Service Name</h4>
+                                    <p class="text-xs text-charcoalText/60 mt-0.5">Short description of your service.</p>
+                                </div>
+                                <span class="font-serif font-bold text-rose-700 text-lg sm:text-right">€XX <span class="text-xs text-charcoalText/50 font-normal">(XX min)</span></span>
+                            </div>
+                            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-4 border-b border-rose-50/60">
+                                <div>
+                                    <h4 class="font-semibold text-charcoalText text-base">Service Name</h4>
+                                    <p class="text-xs text-charcoalText/60 mt-0.5">Short description of your service.</p>
+                                </div>
+                                <span class="font-serif font-bold text-rose-700 text-lg sm:text-right">€XX <span class="text-xs text-charcoalText/50 font-normal">(XX min)</span></span>
+                            </div>
+                            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                                <div>
+                                    <h4 class="font-semibold text-charcoalText text-base">Service Name</h4>
+                                    <p class="text-xs text-charcoalText/60 mt-0.5">Short description of your service.</p>
+                                </div>
+                                <span class="font-serif font-bold text-rose-700 text-lg sm:text-right">€XX <span class="text-xs text-charcoalText/50 font-normal">(XX min)</span></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Category 2: Length & Shape -->
+                    <div>
+                        <div class="flex items-center gap-3 mb-6 pb-3 border-b border-rose-100">
+                            <div class="w-10 h-10 rounded-xl bg-rose-50 text-rose-500 flex items-center justify-center text-lg">
+                                <i class="fa-solid fa-wand-magic-sparkles"></i>
+                            </div>
+                            <h3 class="font-serif text-2xl font-bold text-charcoalText">Length & Shape</h3>
+                        </div>
+                        <div class="space-y-6">
+                            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-4 border-b border-rose-50/60">
+                                <div>
+                                    <h4 class="font-semibold text-charcoalText text-base">Service Name</h4>
+                                    <p class="text-xs text-charcoalText/60 mt-0.5">Short description of your service.</p>
+                                </div>
+                                <span class="font-serif font-bold text-rose-700 text-lg sm:text-right">€XX <span class="text-xs text-charcoalText/50 font-normal">(XX min)</span></span>
+                            </div>
+                            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-4 border-b border-rose-50/60">
+                                <div>
+                                    <h4 class="font-semibold text-charcoalText text-base">Service Name</h4>
+                                    <p class="text-xs text-charcoalText/60 mt-0.5">Short description of your service.</p>
+                                </div>
+                                <span class="font-serif font-bold text-rose-700 text-lg sm:text-right">€XX <span class="text-xs text-charcoalText/50 font-normal">(XX min)</span></span>
+                            </div>
+                            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                                <div>
+                                    <h4 class="font-semibold text-charcoalText text-base">Service Name</h4>
+                                    <p class="text-xs text-charcoalText/60 mt-0.5">Short description of your service.</p>
+                                </div>
+                                <span class="font-serif font-bold text-rose-700 text-lg sm:text-right">€XX <span class="text-xs text-charcoalText/50 font-normal">(XX min)</span></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Category 3: Custom Art -->
+                    <div>
+                        <div class="flex items-center gap-3 mb-6 pb-3 border-b border-rose-100">
+                            <div class="w-10 h-10 rounded-xl bg-rose-50 text-rose-500 flex items-center justify-center text-lg">
+                                <i class="fa-solid fa-palette"></i>
+                            </div>
+                            <h3 class="font-serif text-2xl font-bold text-charcoalText">Custom Art</h3>
+                        </div>
+                        <div class="space-y-6">
+                            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-4 border-b border-rose-50/60">
+                                <div>
+                                    <h4 class="font-semibold text-charcoalText text-base">Service Name</h4>
+                                    <p class="text-xs text-charcoalText/60 mt-0.5">Short description of your service.</p>
+                                </div>
+                                <span class="font-serif font-bold text-rose-700 text-lg sm:text-right">From €XX</span>
+                            </div>
+                            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-4 border-b border-rose-50/60">
+                                <div>
+                                    <h4 class="font-semibold text-charcoalText text-base">Service Name</h4>
+                                    <p class="text-xs text-charcoalText/60 mt-0.5">Short description of your service.</p>
+                                </div>
+                                <span class="font-serif font-bold text-rose-700 text-lg sm:text-right">From €XX</span>
+                            </div>
+                            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                                <div>
+                                    <h4 class="font-semibold text-charcoalText text-base">Service Name</h4>
+                                    <p class="text-xs text-charcoalText/60 mt-0.5">Short description of your service.</p>
+                                </div>
+                                <span class="font-serif font-bold text-rose-700 text-lg sm:text-right">€XX <span class="text-xs text-charcoalText/50 font-normal">(XX min)</span></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Category 4: Spa & Wellness -->
+                    <div>
+                        <div class="flex items-center gap-3 mb-6 pb-3 border-b border-rose-100">
+                            <div class="w-10 h-10 rounded-xl bg-rose-50 text-rose-500 flex items-center justify-center text-lg">
+                                <i class="fa-solid fa-spa"></i>
+                            </div>
+                            <h3 class="font-serif text-2xl font-bold text-charcoalText">Spa & Wellness</h3>
+                        </div>
+                        <div class="space-y-6">
+                            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-4 border-b border-rose-50/60">
+                                <div>
+                                    <h4 class="font-semibold text-charcoalText text-base">Service Name</h4>
+                                    <p class="text-xs text-charcoalText/60 mt-0.5">Short description of your service.</p>
+                                </div>
+                                <span class="font-serif font-bold text-rose-700 text-lg sm:text-right">€XX <span class="text-xs text-charcoalText/50 font-normal">(XX min)</span></span>
+                            </div>
+                            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-4 border-b border-rose-50/60">
+                                <div>
+                                    <h4 class="font-semibold text-charcoalText text-base">Service Name</h4>
+                                    <p class="text-xs text-charcoalText/60 mt-0.5">Short description of your service.</p>
+                                </div>
+                                <span class="font-serif font-bold text-rose-700 text-lg sm:text-right">€XX <span class="text-xs text-charcoalText/50 font-normal">(XX min)</span></span>
+                            </div>
+                            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                                <div>
+                                    <h4 class="font-semibold text-charcoalText text-base">Service Name</h4>
+                                    <p class="text-xs text-charcoalText/60 mt-0.5">Short description of your service.</p>
+                                </div>
+                                <span class="font-serif font-bold text-rose-700 text-lg sm:text-right">€XX <span class="text-xs text-charcoalText/50 font-normal">(XX min)</span></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- CTA inside pricing card -->
+                    <div class="pt-6 text-center border-t border-rose-100">
+                        <a href="#booking" class="inline-block w-full sm:w-auto px-10 py-4 bg-rose-400 hover:bg-rose-500 text-white font-medium rounded-full shadow-md shadow-rose-200 transition-all hover:scale-105 text-base">
+                            Book Treatment Now ♡
+                        </a>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <section id="gallery" class="scroll-mt-24 py-20 bg-blush/40">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center max-w-2xl mx-auto mb-12 sm:mb-16 space-y-3">
+                    <span class="text-xs font-bold tracking-widest text-rose-500 uppercase">Your portfolio gallery</span>
+                    <h2 class="font-serif text-4xl sm:text-5xl font-bold text-charcoalText">Nail Art Gallery</h2>
+                    <p class="text-charcoalText/70">This is where you can showcase your work through photos of your treatments, designs and finished results. Use this section to give potential clients an idea of your style and the quality of your work.</p>
+                    <p class="text-sm font-medium text-rose-600">Showcase your work, favourite designs and latest creations here.</p>
+                    <div class="inline-block text-xs bg-amber-50 text-amber-800 border border-amber-200 px-3 py-1 rounded-md mt-1">
+                        <i class="fa-solid fa-circle-info mr-1"></i> Sample images &bull; umieść pliki w folderze nails/.
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6 lg:gap-8">
+                    <!-- Gallery Item 1 -->
+                    <div class="group cursor-pointer gallery-item" data-index="0">
+                        <div class="relative rounded-2xl overflow-hidden shadow-md aspect-square bg-white">
+                            <img src="nails/nails1.png" onerror="this.src='https://placehold.co/600x600/FFF0F3/B5838D?text=nails/nails1.png'" alt="Nails 1" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300 pointer-events-none" loading="lazy">
+                            <div class="absolute inset-0 flex items-center justify-center pointer-events-none p-2">
+                                <div class="bg-black/70 backdrop-blur-[2px] border-2 border-dashed border-amber-400 rounded-xl px-3 sm:px-5 py-2 sm:py-3 rotate-[-8deg] shadow-xl text-center">
+                                    <span class="text-amber-400 font-bold font-serif tracking-widest text-xs sm:text-lg uppercase drop-shadow-md block">EXAMPLE PHOTO</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Gallery Item 2 -->
+                    <div class="group cursor-pointer gallery-item" data-index="1">
+                        <div class="relative rounded-2xl overflow-hidden shadow-md aspect-square bg-white">
+                            <img src="nails/nails2.png" onerror="this.src='https://placehold.co/600x600/FFF0F3/B5838D?text=nails/nails2.png'" alt="Nails 2" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300 pointer-events-none" loading="lazy">
+                            <div class="absolute inset-0 flex items-center justify-center pointer-events-none p-2">
+                                <div class="bg-black/70 backdrop-blur-[2px] border-2 border-dashed border-amber-400 rounded-xl px-3 sm:px-5 py-2 sm:py-3 rotate-[6deg] shadow-xl text-center">
+                                    <span class="text-amber-400 font-bold font-serif tracking-widest text-xs sm:text-lg uppercase drop-shadow-md block">EXAMPLE PHOTO</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Gallery Item 3 -->
+                    <div class="group cursor-pointer gallery-item" data-index="2">
+                        <div class="relative rounded-2xl overflow-hidden shadow-md aspect-square bg-white">
+                            <img src="nails/nails3.png" onerror="this.src='https://placehold.co/600x600/FFF0F3/B5838D?text=nails/nails3.png'" alt="Nails 3" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300 pointer-events-none" loading="lazy">
+                            <div class="absolute inset-0 flex items-center justify-center pointer-events-none p-2">
+                                <div class="bg-black/70 backdrop-blur-[2px] border-2 border-dashed border-amber-400 rounded-xl px-3 sm:px-5 py-2 sm:py-3 rotate-[-10deg] shadow-xl text-center">
+                                    <span class="text-amber-400 font-bold font-serif tracking-widest text-xs sm:text-lg uppercase drop-shadow-md block">EXAMPLE PHOTO</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Gallery Item 4 -->
+                    <div class="group cursor-pointer gallery-item" data-index="3">
+                        <div class="relative rounded-2xl overflow-hidden shadow-md aspect-square bg-white">
+                            <img src="nails/nails4.png" onerror="this.src='https://placehold.co/600x600/FFF0F3/B5838D?text=nails/nails4.png'" alt="Nails 4" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300 pointer-events-none" loading="lazy">
+                            <div class="absolute inset-0 flex items-center justify-center pointer-events-none p-2">
+                                <div class="bg-black/70 backdrop-blur-[2px] border-2 border-dashed border-amber-400 rounded-xl px-3 sm:px-5 py-2 sm:py-3 rotate-[12deg] shadow-xl text-center">
+                                    <span class="text-amber-400 font-bold font-serif tracking-widest text-xs sm:text-lg uppercase drop-shadow-md block">EXAMPLE PHOTO</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Gallery Item 5 -->
+                    <div class="group cursor-pointer gallery-item" data-index="4">
+                        <div class="relative rounded-2xl overflow-hidden shadow-md aspect-square bg-white">
+                            <img src="nails/nails5.png" onerror="this.src='https://placehold.co/600x600/FFF0F3/B5838D?text=nails/nails5.png'" alt="Nails 5" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300 pointer-events-none" loading="lazy">
+                            <div class="absolute inset-0 flex items-center justify-center pointer-events-none p-2">
+                                <div class="bg-black/70 backdrop-blur-[2px] border-2 border-dashed border-amber-400 rounded-xl px-3 sm:px-5 py-2 sm:py-3 rotate-[-6deg] shadow-xl text-center">
+                                    <span class="text-amber-400 font-bold font-serif tracking-widest text-xs sm:text-lg uppercase drop-shadow-md block">EXAMPLE PHOTO</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Gallery Item 6 -->
+                    <div class="group cursor-pointer gallery-item" data-index="5">
+                        <div class="relative rounded-2xl overflow-hidden shadow-md aspect-square bg-white">
+                            <img src="nails/nails6.png" onerror="this.src='https://placehold.co/600x600/FFF0F3/B5838D?text=nails/nails6.png'" alt="Nails 6" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300 pointer-events-none" loading="lazy">
+                            <div class="absolute inset-0 flex items-center justify-center pointer-events-none p-2">
+                                <div class="bg-black/70 backdrop-blur-[2px] border-2 border-dashed border-amber-400 rounded-xl px-3 sm:px-5 py-2 sm:py-3 rotate-[8deg] shadow-xl text-center">
+                                    <span class="text-amber-400 font-bold font-serif tracking-widest text-xs sm:text-lg uppercase drop-shadow-md block">EXAMPLE PHOTO</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Instagram Link Button -->
+                <div class="mt-12 text-center">
+                    <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 bg-gradient-to-r from-purple-500 via-pink-500 to-amber-400 hover:opacity-95 text-white px-8 py-4 rounded-full font-medium text-sm shadow-lg shadow-pink-200 transition-all hover:scale-105">
+                        <i class="fa-brands fa-instagram text-lg"></i>
+                        <span>See more on Instagram</span>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <div id="lightbox-modal" class="fixed inset-0 z-[200] bg-black/90 backdrop-blur-md hidden flex items-center justify-center transition-all duration-300 opacity-0 pointer-events-none">
+            <button id="lightbox-close-btn" class="absolute top-6 right-6 text-white/80 hover:text-white bg-white/10 hover:bg-white/20 w-12 h-12 rounded-full flex items-center justify-center text-xl transition-all z-[210] cursor-pointer" aria-label="Close Lightbox">
+                <i class="fa-solid fa-xmark pointer-events-none"></i>
+            </button>
+
+            <button id="lightbox-prev-btn" class="absolute left-4 sm:left-8 text-white/80 hover:text-white bg-white/10 hover:bg-white/20 w-12 h-12 rounded-full flex items-center justify-center text-xl transition-all z-[210] cursor-pointer" aria-label="Previous Image">
+                <i class="fa-solid fa-chevron-left pointer-events-none"></i>
+            </button>
+
+            <button id="lightbox-next-btn" class="absolute right-4 sm:right-8 text-white/80 hover:text-white bg-white/10 hover:bg-white/20 w-12 h-12 rounded-full flex items-center justify-center text-xl transition-all z-[210] cursor-pointer" aria-label="Next Image">
+                <i class="fa-solid fa-chevron-right pointer-events-none"></i>
+            </button>
+
+            <div class="max-w-4xl max-h-[85vh] p-4 flex flex-col items-center justify-center relative select-none" id="lightbox-content-wrapper">
+                <img id="lightbox-img" src="" alt="Expanded View" class="max-h-[70vh] max-w-full object-contain rounded-2xl shadow-2xl transition-all duration-300">
+                <div class="text-center mt-4 text-white space-y-1">
+                    <span id="lightbox-counter" class="text-xs text-white/70 block pt-1">1 / 6</span>
+                </div>
+            </div>
+        </div>
+
+        <section id="about" class="scroll-mt-24 py-20 bg-creamBg">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                    <div class="lg:col-span-6 relative">
+                        <div class="relative rounded-3xl overflow-hidden shadow-xl aspect-[4/3] bg-rose-100 group">
+                            <img src="nails/salon.png" onerror="this.src='https://placehold.co/800x600/FFF0F3/B5838D?text=nails/salon.png'" alt="Nail Artist Mia" class="w-full h-full object-cover">
+                            <div class="absolute inset-0 flex items-center justify-center pointer-events-none p-4">
+                                <div class="bg-black/70 backdrop-blur-[2px] border-2 border-dashed border-amber-400 rounded-2xl px-6 py-4 rotate-[-10deg] shadow-xl">
+                                    <span class="text-amber-400 font-bold font-serif tracking-widest text-xl sm:text-2xl uppercase drop-shadow-md">EXAMPLE PHOTO</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="lg:col-span-6 space-y-6">
+                        <span class="text-xs font-bold tracking-widest text-rose-500 uppercase">Meet Your Nail Tech</span>
+                        <h2 class="font-serif text-4xl font-bold text-charcoalText">Introduce yourself here ♡</h2>
+                        <p class="text-charcoalText/80 leading-relaxed">
+                            This is the place for your personal introduction. Introduce yourself, share your experience and tell your clients a little about who you are and what inspired you to start your business.
+                        </p>
+                        <p class="text-charcoalText/80 leading-relaxed">
+                            Use this section to talk about your qualifications, your approach to your work and what makes your services unique. You can also share your passion, experience and what clients can expect when they visit you.
+                        </p>
+                        <p class="text-charcoalText/80 leading-relaxed">
+                            Replace this text with your own story and personal introduction.
+                        </p>
+                        <div class="pt-2 flex items-center gap-6">
+                            <div>
+                                <span class="font-serif text-3xl font-bold text-rose-600">6+</span>
+                                <p class="text-xs text-charcoalText/60">Years Experience</p>
+                            </div>
+                            <div class="w-px h-10 bg-rose-200"></div>
+                            <div>
+                                <span class="font-serif text-3xl font-bold text-rose-600">100%</span>
+                                <p class="text-xs text-charcoalText/60">Sterilized Tools</p>
+                            </div>
+                            <div class="w-px h-10 bg-rose-200"></div>
+                            <div>
+                                <span class="font-serif text-3xl font-bold text-rose-600">5★</span>
+                                <p class="text-xs text-charcoalText/60">Demo Rating</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="booking" class="scroll-mt-24 py-20 bg-gradient-to-t from-blush/60 to-creamBg border-t border-rose-100">
+            <div class="max-w-3xl mx-auto px-4">
+                <div class="bg-white rounded-3xl p-8 sm:p-12 shadow-xl border border-rose-200">
+                    <div class="text-center mb-8 space-y-2">
+                        <span class="text-xs font-bold tracking-widest text-rose-500 uppercase">DEMO BOOKING FORM</span>
+                        <h2 class="font-serif text-3xl sm:text-4xl font-bold text-charcoalText">Book Your Appointment ♡</h2>
+                        <p class="text-xs text-charcoalText/60">Fill out the form below to simulate scheduling a visit.</p>
+                    </div>
+
+                    <form onsubmit="handleBooking(event)" class="space-y-6">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                            <div>
+                                <label class="block text-xs font-semibold uppercase tracking-wider text-charcoalText/70 mb-2">Your Name *</label>
+                                <input type="text" required placeholder="Jessica Smith" class="w-full bg-creamBg border border-rose-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-rose-400">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-semibold uppercase tracking-wider text-charcoalText/70 mb-2">Phone Number *</label>
+                                <input type="tel" required placeholder="+356 9900 1122" class="w-full bg-creamBg border border-rose-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-rose-400">
+                            </div>
+                            <div class="sm:col-span-2">
+                                <label class="block text-xs font-semibold uppercase tracking-wider text-charcoalText/70 mb-2">Select Service *</label>
+                                <select class="w-full bg-creamBg border border-rose-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-rose-400">
+                                    <option>Service Name — €XX (XX min)</option>
+                                    <option selected>Service Name — €XX (XX min)</option>
+                                    <option>Service Name — €XX (XX min)</option>
+                                    <option>Service Name — €XX (XX min)</option>
+                                    <option>Service Name — €XX (XX min)</option>
+                                    <option>Service Name — €XX (XX min)</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-xs font-semibold uppercase tracking-wider text-charcoalText/70 mb-2">Preferred Date *</label>
+                                <input type="date" required value="2026-04-10" class="w-full bg-creamBg border border-rose-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-rose-400">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-semibold uppercase tracking-wider text-charcoalText/70 mb-2">Preferred Time *</label>
+                                <select required class="w-full bg-creamBg border border-rose-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-rose-400">
+                                    <option value="" disabled selected>Select time slot</option>
+                                    <option>09:00 AM</option>
+                                    <option>10:30 AM</option>
+                                    <option>12:00 PM</option>
+                                    <option>02:00 PM</option>
+                                    <option>03:30 PM</option>
+                                    <option>05:00 PM</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold uppercase tracking-wider text-charcoalText/70 mb-2">Notes or Nail Art Inspiration</label>
+                            <textarea rows="3" placeholder="I'd love pink chrome tips with tiny white bows..." class="w-full bg-creamBg border border-rose-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-rose-400"></textarea>
+                        </div>
+                        <div class="text-center pt-2">
+                            <button type="submit" class="w-full sm:w-auto px-10 py-4 bg-rose-400 hover:bg-rose-500 text-white font-medium rounded-full shadow-lg shadow-rose-200 transition-all text-base cursor-pointer">
+                                Submit Booking Request ♡
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact" class="scroll-mt-24 py-20 bg-creamBg border-t border-rose-100">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center max-w-2xl mx-auto mb-16 space-y-2">
+                    <span class="text-xs font-bold tracking-widest text-rose-500 uppercase">FIND US</span>
+                    <h2 class="font-serif text-4xl font-bold text-charcoalText">Your location & opening hours</h2>
+                    <p class="text-charcoalText/70">Add your business location, opening hours and useful contact details here so your clients know where and when they can find you.</p>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                    <div class="bg-white rounded-3xl p-8 sm:p-12 border border-rose-100 shadow-sm space-y-6">
+                        <h3 class="font-serif text-2xl font-bold text-charcoalText">Your Business Name</h3>
+                        <p class="text-sm text-charcoalText/80 leading-relaxed">
+                            Your Address, City, Country <br>
+                            Add a short description of your location here, for example nearby landmarks, parking availability or public transport options.
+                        </p>
+                        <div class="space-y-2 text-sm text-charcoalText/70 pt-2">
+                            <p><strong>Phone / WhatsApp:</strong> +356 0000 0000</p>
+                            <p><strong>Email:</strong> hello@studio.example</p>
+                        </div>
+                        <div class="pt-4 border-t border-rose-50 space-y-1 text-xs text-charcoalText/70">
+                            <p class="font-semibold text-charcoalText mb-1">Opening Hours:</p>
+                            <p>Monday – Wednesday: 09:00 AM – 06:00 PM</p>
+                            <p>Thursday – Friday: 09:00 AM – 07:00 PM</p>
+                            <p>Saturday: 09:00 AM – 05:00 PM</p>
+                        </div>
+                    </div>
+                    <div class="rounded-3xl overflow-hidden shadow-md h-[400px] border border-rose-100 bg-white">
+                        <iframe 
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3230.7!2d14.5014!3d35.9122!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2sMzXCsDU0JzQ0LjAiTiAxNDDCsDMwJzUwLjAiRQ!5e0!3m2!1sen!2smt!4v1650000000000!5m2!1sen!2smt" 
+                            width="100%" 
+                            height="100%" 
+                            style="border:0;" 
+                            allowfullscreen="" 
+                            loading="lazy"
+                            title="Studio Demo Map">
+                        </iframe>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="bg-charcoalText text-white py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-6 text-center sm:text-left">
+            <div>
+                <span class="font-serif text-xl font-bold tracking-tight text-blush">Nails Studio Example</span>
+                <p class="text-xs text-rose-200 mt-1">Fictional demonstration website &bull; Your address</p>
+            </div>
+            <div class="flex flex-wrap justify-center items-center gap-6 text-sm text-rose-100">
+                <a href="#home" class="hover:text-white transition-colors">Home</a>
+                <a href="#services" class="hover:text-white transition-colors">Prices</a>
+                <a href="#gallery" class="hover:text-white transition-colors">Gallery</a>
+                <a href="#about" class="hover:text-white transition-colors">About</a>
+                <a href="#contact" class="hover:text-white transition-colors">Contact</a>
+            </div>
+            <p class="text-xs text-rose-200/60">&copy; 2026 Nails Studio Example. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Toggle mobile menu drawer
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            const icon = document.getElementById('mobile-menu-icon');
+            const btn = document.getElementById('mobile-menu-btn');
+            menu.classList.toggle('hidden');
+
+            if (menu.classList.contains('hidden')) {
+                icon.className = 'fa-solid fa-bars text-lg';
+                btn.classList.remove('bg-rose-400', 'text-white', 'border-rose-400');
+                btn.classList.add('bg-rose-50/90', 'text-charcoalText', 'border-rose-200');
+            } else {
+                icon.className = 'fa-solid fa-xmark text-lg';
+                btn.classList.remove('bg-rose-50/90', 'text-charcoalText', 'border-rose-200');
+                btn.classList.add('bg-rose-400', 'text-white', 'border-rose-400');
+            }
+        }
+
+        // Active link highlighting on desktop & mobile navigation
+        const sectionIds = ['home', 'services', 'gallery', 'about', 'contact'];
+        let isClickScrolling = false;
+        let scrollTimeout;
+
+        function updateNavStyles(sectionId) {
+            // Desktop nav links
+            document.querySelectorAll('.desktop-nav-link').forEach(link => {
+                if (link.getAttribute('data-nav-link') === sectionId) {
+                    link.classList.add('text-rose-600', 'font-bold');
+                    link.classList.remove('text-charcoalText/70', 'font-medium');
+                } else {
+                    link.classList.remove('text-rose-600', 'font-bold');
+                    link.classList.add('text-charcoalText/70', 'font-medium');
+                }
+            });
+
+            // Mobile nav links
+            document.querySelectorAll('.mobile-nav-btn').forEach(btn => {
+                const iconBox = btn.querySelector('.mobile-nav-icon');
+                if (btn.getAttribute('data-mobile-nav') === sectionId) {
+                    btn.classList.add('text-rose-600', 'bg-rose-50/90', 'font-bold');
+                    btn.classList.remove('text-charcoalText', 'font-semibold');
+                    if (iconBox) {
+                        iconBox.classList.add('bg-rose-500', 'text-white', 'shadow-sm');
+                        iconBox.classList.remove('bg-rose-50', 'text-rose-600', 'border', 'border-rose-100');
+                    }
+                } else {
+                    btn.classList.remove('text-rose-600', 'bg-rose-50/90', 'font-bold');
+                    btn.classList.add('text-charcoalText', 'font-semibold');
+                    if (iconBox) {
+                        iconBox.classList.remove('bg-rose-500', 'text-white', 'shadow-sm');
+                        iconBox.classList.add('bg-rose-50', 'text-rose-600', 'border', 'border-rose-100');
+                    }
+                }
+            });
+        }
+
+        // Click handler for smooth scrolling & manual active state
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                const targetId = this.getAttribute('href').substring(1);
+                if (!targetId || targetId === 'booking') return;
+                
+                isClickScrolling = true;
+                clearTimeout(scrollTimeout);
+                scrollTimeout = setTimeout(() => {
+                    isClickScrolling = false;
+                }, 900);
+
+                updateNavStyles(targetId);
+            });
+        });
+
+        // Scroll spy for active section highlight
+        window.addEventListener('scroll', () => {
+            if (isClickScrolling) return;
+
+            const scrollPos = window.scrollY + 240;
+            if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight - 40) {
+                updateNavStyles('contact');
+                return;
+            }
+
+            let current = 'home';
+            sectionIds.forEach(id => {
+                const el = document.getElementById(id);
+                if (el && el.offsetTop <= scrollPos) {
+                    current = id;
+                }
+            });
+            updateNavStyles(current);
+        }, { passive: true });
+
+        // Gallery Lightbox Data & Logic
+        const galleryData = [
+            { src: "nails/nails1.png" },
+            { src: "nails/nails2.png" },
+            { src: "nails/nails3.png" },
+            { src: "nails/nails4.png" },
+            { src: "nails/nails5.png" },
+            { src: "nails/nails6.png" }
+        ];
+
+        let currentLightboxIndex = 0;
+        let touchStartX = 0;
+        let touchEndX = 0;
+
+        function openLightbox(index) {
+            currentLightboxIndex = index;
+            const modal = document.getElementById('lightbox-modal');
+            modal.classList.remove('hidden');
+            modal.classList.remove('pointer-events-none');
+            setTimeout(() => {
+                modal.classList.remove('opacity-0');
+            }, 10);
+            updateLightboxContent();
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeLightbox() {
+            const modal = document.getElementById('lightbox-modal');
+            modal.classList.add('opacity-0');
+            modal.classList.add('pointer-events-none');
+            setTimeout(() => {
+                modal.classList.add('hidden');
+                document.body.style.overflow = 'auto';
+            }, 300);
+        }
+
+        function prevImage(e) {
+            if (e) e.stopPropagation();
+            currentLightboxIndex = (currentLightboxIndex - 1 + galleryData.length) % galleryData.length;
+            updateLightboxContent();
+        }
+
+        function nextImage(e) {
+            if (e) e.stopPropagation();
+            currentLightboxIndex = (currentLightboxIndex + 1) % galleryData.length;
+            updateLightboxContent();
+        }
+
+        function updateLightboxContent() {
+            const item = galleryData[currentLightboxIndex];
+            const img = document.getElementById('lightbox-img');
+            const counter = document.getElementById('lightbox-counter');
+
+            if (!img) return;
+            img.style.opacity = '0';
+            setTimeout(() => {
+                img.src = item.src;
+                counter.textContent = `${currentLightboxIndex + 1} / ${galleryData.length}`;
+                img.style.opacity = '1';
+            }, 150);
+        }
+
+        // Initialize event listeners safely on DOMContentLoaded
+        document.addEventListener('DOMContentLoaded', () => {
+            const galleryItems = document.querySelectorAll('.gallery-item');
+            galleryItems.forEach(item => {
+                item.addEventListener('click', () => {
+                    const idx = parseInt(item.getAttribute('data-index'), 10);
+                    if (!isNaN(idx)) {
+                        openLightbox(idx);
+                    }
+                });
+            });
+
+            const modal = document.getElementById('lightbox-modal');
+            const closeBtn = document.getElementById('lightbox-close-btn');
+            const prevBtn = document.getElementById('lightbox-prev-btn');
+            const nextBtn = document.getElementById('lightbox-next-btn');
+            const wrapper = document.getElementById('lightbox-content-wrapper');
+
+            if (closeBtn) closeBtn.addEventListener('click', closeLightbox);
+            if (prevBtn) prevBtn.addEventListener('click', prevImage);
+            if (nextBtn) nextBtn.addEventListener('click', nextImage);
+
+            if (modal) {
+                modal.addEventListener('click', (e) => {
+                    if (e.target === modal) {
+                        closeLightbox();
+                    }
+                });
+            }
+
+            if (wrapper) {
+                wrapper.addEventListener('touchstart', (e) => {
+                    touchStartX = e.changedTouches[0].screenX;
+                }, {passive: true});
+
+                wrapper.addEventListener('touchend', (e) => {
+                    touchEndX = e.changedTouches[0].screenX;
+                    const threshold = 50;
+                    if (touchEndX < touchStartX - threshold) {
+                        nextImage();
+                    }
+                    if (touchEndX > touchStartX + threshold) {
+                        prevImage();
+                    }
+                }, {passive: true});
+            }
+        });
+
+        document.addEventListener('keydown', (e) => {
+            const modal = document.getElementById('lightbox-modal');
+            if (modal && !modal.classList.contains('hidden')) {
+                if (e.key === 'Escape') closeLightbox();
+                if (e.key === 'ArrowLeft') prevImage();
+                if (e.key === 'ArrowRight') nextImage();
+            }
+        });
+
+        function handleBooking(e) {
+            e.preventDefault();
+            const modal = document.createElement('div');
+            modal.className = 'fixed inset-0 z-50 bg-charcoalText/60 backdrop-blur-sm flex items-center justify-center p-4';
+            modal.innerHTML = `
+                <div class="bg-white rounded-3xl p-8 max-w-md w-full text-center space-y-4 shadow-2xl border border-rose-100 animate-fadeIn">
+                    <div class="w-16 h-16 rounded-full bg-rose-100 text-rose-600 flex items-center justify-center text-2xl mx-auto"><i class="fa-solid fa-circle-check"></i></div>
+                    <h3 class="font-serif text-2xl font-bold text-charcoalText">Thank you for your enquiry!</h3>
+                    <p class="text-sm text-charcoalText/70 leading-relaxed font-medium">Your demo request has been submitted successfully.</p>
+                    <p class="text-sm text-rose-600 font-extrabold pt-1">Ready to create a website for your business? Get in touch with Tailoredly!</p>
+                    <button onclick="this.closest('.fixed').remove()" class="mt-4 w-full py-3 bg-rose-400 hover:bg-rose-500 text-white rounded-full font-medium transition-colors cursor-pointer">
+                        Close Window ♡
+                    </button>
+                </div>
+            `;
+            document.body.appendChild(modal);
+            e.target.reset();
+        }
+    </script>
+</body>
+</html>

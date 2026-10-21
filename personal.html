@@ -1,0 +1,1302 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Example Personal Trainer | Stronger You</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Montserrat & Inter (including weights 800 & 900 for Tailoredly banner) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,600;0,700;0,800;0,900;1,800;1,900&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <!-- Font Awesome CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            lime: '#c0eb34',
+                            limedark: '#a6cd26',
+                            dark: '#080808',
+                            card: '#101010',
+                            border: '#1f1f1f',
+                            yellow: '#facc15'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        heading: ['Montserrat', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #080808;
+            color: #ffffff;
+            overflow-x: hidden;
+        }
+
+        .font-heading {
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .text-brand-lime {
+            color: #c0eb34;
+        }
+        .bg-brand-lime {
+            background-color: #c0eb34;
+        }
+        .border-brand-lime {
+            border-color: #c0eb34;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #080808;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #222222;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #c0eb34;
+        }
+
+        /* Light textured background for About Us section */
+        .light-texture-bg {
+            background-color: #e2e4e8;
+            background-image: radial-gradient(#cbd1da 1.2px, transparent 1.2px);
+            background-size: 18px 18px;
+        }
+
+        /* Neon Lime Brush Graphic Background behind Trainer */
+        .splash-green-bg {
+            position: relative;
+        }
+        .splash-green-bg::before {
+            content: '';
+            position: absolute;
+            top: -10%;
+            left: -6%;
+            width: 108%;
+            height: 120%;
+            background: #c0eb34;
+            clip-path: polygon(0% 15%, 85% 0%, 100% 70%, 75% 100%, 10% 90%, 0% 50%);
+            transform: rotate(-4deg);
+            z-index: 0;
+            filter: drop-shadow(0px 10px 15px rgba(0,0,0,0.15));
+        }
+
+        /* Gym Wall Stencil Typography Style */
+        .wall-stencil {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 900;
+            line-height: 0.85;
+            letter-spacing: -0.04em;
+        }
+
+        .green-brush-underline {
+            position: relative;
+            display: inline-block;
+        }
+        .green-brush-underline::after {
+            content: '';
+            position: absolute;
+            bottom: -6px;
+            left: 0;
+            width: 100%;
+            height: 8px;
+            background: #c0eb34;
+            clip-path: polygon(0 20%, 100% 0, 95% 100%, 5% 80%);
+        }
+
+        /* Active Navigation Link Underline */
+        .nav-item {
+            position: relative;
+            padding-bottom: 4px;
+            transition: color 0.2s ease;
+        }
+        .nav-item.active {
+            color: #ffffff !important;
+            border-bottom: 2px solid #c0eb34;
+        }
+
+        /* Marquee Scrolling Animation */
+        @keyframes marquee {
+            0% { transform: translateX(0%); }
+            100% { transform: translateX(-50%); }
+        }
+        .animate-marquee {
+            display: flex;
+            width: max-content;
+            animation: marquee 25s linear infinite;
+        }
+        .animate-marquee:hover {
+            animation-play-state: paused;
+        }
+
+        /* ========================================================= */
+        /* EXACT TAILOREDLY DEMO BANNER STYLES                       */
+        /* ========================================================= */
+        .tailoredly-banner-wrap {
+            position: fixed !important;
+            top: 122px !important;
+            right: 24px !important;
+            bottom: auto !important;
+            left: auto !important;
+            transform: none !important;
+            z-index: 2147483647 !important;
+            width: auto;
+            max-width: calc(100vw - 48px);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif !important;
+            box-sizing: border-box;
+            pointer-events: auto;
+        }
+
+        .tailoredly-banner-box {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            padding: 10px 16px;
+            background: radial-gradient(circle at 85% 50%, rgba(190, 18, 74, 0.08) 0%, rgba(6, 6, 8, 0.98) 55%), #060608;
+            border: 1px solid rgba(244, 37, 100, 0.45);
+            border-radius: 16px;
+            box-shadow: 
+                0 0 25px rgba(235, 20, 85, 0.22),
+                0 12px 32px rgba(0, 0, 0, 0.92),
+                inset 0 0 8px rgba(244, 37, 100, 0.04);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif !important;
+        }
+
+        .tailoredly-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            min-width: 0;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif !important;
+        }
+
+        .tailoredly-icon-box {
+            width: 38px;
+            height: 38px;
+            min-width: 38px;
+            border-radius: 10px;
+            border: 1px solid rgba(244, 37, 100, 0.4);
+            background: rgba(14, 8, 12, 0.95);
+            box-shadow: 0 0 12px rgba(244, 37, 100, 0.15);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #f42564;
+        }
+
+        .tailoredly-brand-text {
+            display: flex;
+            flex-direction: column;
+            line-height: 1.2;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif !important;
+        }
+
+        .tailoredly-demo-label {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif !important;
+            font-size: 9.5px !important;
+            font-weight: 700 !important;
+            letter-spacing: 0.18em !important;
+            text-transform: uppercase !important;
+            color: #f42564 !important;
+            margin-bottom: 2px !important;
+        }
+
+        .tailoredly-madeby {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif !important;
+            font-size: 16px !important;
+            font-weight: 700 !important;
+            color: #d1d5db !important;
+            letter-spacing: -0.01em !important;
+            white-space: nowrap !important;
+            display: flex !important;
+            align-items: baseline !important;
+            gap: 5px !important;
+        }
+
+        .tailoredly-logo-mark {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif !important;
+            font-weight: 900 !important;
+            letter-spacing: 0.02em !important;
+            text-transform: uppercase !important;
+            color: #ffffff !important;
+        }
+
+        .tailoredly-logo-mark span {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif !important;
+            color: #f42564 !important;
+        }
+
+        .tailoredly-divider {
+            width: 1px;
+            height: 32px;
+            background: rgba(255, 255, 255, 0.1);
+            flex-shrink: 0;
+        }
+
+        .tailoredly-middle {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            line-height: 1.3;
+            min-width: 0;
+            padding-right: 4px;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif !important;
+        }
+
+        .tailoredly-question {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif !important;
+            font-size: 13px !important;
+            font-weight: 500 !important;
+            color: #f3f4f6 !important;
+            margin: 0 !important;
+            white-space: nowrap !important;
+        }
+
+        .tailoredly-subtext {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif !important;
+            font-size: 12px !important;
+            font-weight: 400 !important;
+            color: #8e8e99 !important;
+            margin: 0 !important;
+            white-space: nowrap !important;
+        }
+
+        .tailoredly-btn {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif !important;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 9px 16px;
+            border-radius: 11px;
+            background: linear-gradient(90deg, #f72564 0%, #c11248 100%);
+            color: #ffffff !important;
+            font-size: 13px !important;
+            font-weight: 700 !important;
+            text-decoration: none !important;
+            white-space: nowrap;
+            box-shadow: 0 0 22px rgba(247, 37, 100, 0.5), inset 0 1px 1px rgba(255, 255, 255, 0.25);
+            transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
+            flex-shrink: 0;
+        }
+
+        .tailoredly-btn:hover {
+            transform: translateY(-1px);
+            filter: brightness(1.08);
+            box-shadow: 0 0 30px rgba(247, 37, 100, 0.75), inset 0 1px 1px rgba(255, 255, 255, 0.35);
+        }
+
+        .tailoredly-btn svg {
+            transition: transform 0.2s ease;
+        }
+
+        .tailoredly-btn:hover svg {
+            transform: translateX(-3px);
+        }
+
+        @media (max-width: 1250px) and (min-width: 769px) {
+            .tailoredly-divider,
+            .tailoredly-middle {
+                display: none;
+            }
+        }
+
+        @media (max-width: 768px) {
+            html body {
+                padding-bottom: calc(144px + env(safe-area-inset-bottom, 0px)) !important;
+            }
+            .tailoredly-banner-wrap {
+                top: auto !important;
+                right: auto !important;
+                bottom: calc(56px + env(safe-area-inset-bottom, 0px)) !important;
+                left: 50% !important;
+                transform: translateX(-50%) !important;
+                width: calc(100% - 16px);
+                max-width: 540px;
+            }
+            .tailoredly-banner-box {
+                padding: 10px 12px;
+                gap: 10px;
+                border-radius: 15px;
+            }
+            .tailoredly-divider,
+            .tailoredly-middle {
+                display: none;
+            }
+            .tailoredly-icon-box {
+                width: 36px;
+                height: 36px;
+                min-width: 36px;
+                border-radius: 9px;
+            }
+            .tailoredly-icon-box svg {
+                width: 17px;
+                height: 17px;
+            }
+            .tailoredly-demo-label {
+                font-size: 8.5px !important;
+                letter-spacing: 0.14em !important;
+                margin-bottom: 1px !important;
+            }
+            .tailoredly-madeby {
+                font-size: 15px !important;
+            }
+            .tailoredly-btn {
+                padding: 10px 14px;
+                font-size: 12.5px !important;
+                gap: 6px;
+                border-radius: 10px;
+            }
+        }
+
+        @media (max-width: 360px) {
+            .tailoredly-icon-box {
+                display: none;
+            }
+            .tailoredly-madeby {
+                font-size: 14px !important;
+            }
+            .tailoredly-btn {
+                padding: 9px 12px;
+                font-size: 12px !important;
+            }
+        }
+    </style>
+</head>
+<body class="antialiased selection:bg-brand-lime selection:text-black">
+
+    <!-- Top Demo Ticker Bar -->
+    <div class="fixed top-0 left-0 right-0 z-50 bg-amber-400 text-slate-950 font-extrabold text-xs uppercase tracking-wider py-1.5 overflow-hidden whitespace-nowrap select-none border-b border-amber-500 shadow-sm">
+        <div class="animate-marquee flex items-center space-x-8">
+            <span class="flex items-center space-x-8">
+                <span>PRZYKŁADOWA STRONA</span><span class="text-amber-800">•</span>
+                <span>DEMO WEBSITE</span><span class="text-amber-800">•</span>
+                <span>PRZYKŁADOWA STRONA</span><span class="text-amber-800">•</span>
+                <span>DEMO WEBSITE</span><span class="text-amber-800">•</span>
+                <span>PRZYKŁADOWA STRONA</span><span class="text-amber-800">•</span>
+                <span>DEMO WEBSITE</span><span class="text-amber-800">•</span>
+            </span>
+            <span class="flex items-center space-x-8" aria-hidden="true">
+                <span>PRZYKŁADOWA STRONA</span><span class="text-amber-800">•</span>
+                <span>DEMO WEBSITE</span><span class="text-amber-800">•</span>
+                <span>PRZYKŁADOWA STRONA</span><span class="text-amber-800">•</span>
+                <span>DEMO WEBSITE</span><span class="text-amber-800">•</span>
+                <span>PRZYKŁADOWA STRONA</span><span class="text-amber-800">•</span>
+                <span>DEMO WEBSITE</span><span class="text-amber-800">•</span>
+            </span>
+        </div>
+    </div>
+
+    <!-- Header Navigation -->
+    <header class="fixed top-[29px] left-0 right-0 z-40 bg-black/95 backdrop-blur-md border-b border-white/10 transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <!-- Logo -->
+            <a href="#home" data-section="home" class="flex items-center space-x-3 group">
+                <div class="w-9 h-9 rounded-sm bg-brand-lime/10 border border-brand-lime/50 flex items-center justify-center text-brand-lime group-hover:bg-brand-lime group-hover:text-black transition-all">
+                    <i class="fa-solid fa-dumbbell text-sm"></i>
+                </div>
+                <div class="flex flex-col">
+                    <span class="font-heading font-black text-white text-lg tracking-wider uppercase leading-none">EXAMPLE</span>
+                    <span class="text-[10px] text-brand-lime tracking-widest uppercase mt-0.5 font-bold">PERSONAL TRAINER</span>
+                </div>
+            </a>
+
+            <!-- Desktop Nav Links -->
+            <nav class="hidden md:flex items-center space-x-8 text-xs font-heading font-bold tracking-wider uppercase" id="desktop-nav">
+                <a href="#home" data-section="home" class="nav-item active text-white hover:text-brand-lime">Home</a>
+                <a href="#about" data-section="about" class="nav-item text-gray-300 hover:text-brand-lime">About Us</a>
+                <a href="#services" data-section="services" class="nav-item text-gray-300 hover:text-brand-lime">Services & Prices</a>
+                <a href="#transformations" data-section="transformations" class="nav-item text-gray-300 hover:text-brand-lime">Transformations</a>
+                <a href="#contact" data-section="contact" class="nav-item text-gray-300 hover:text-brand-lime">Contact</a>
+            </nav>
+
+            <!-- CTA Button -->
+            <div class="hidden sm:flex items-center">
+                <button onclick="openBookingModal()" class="bg-brand-lime hover:bg-brand-limedark text-black font-heading font-black text-xs uppercase px-5 py-2.5 rounded-sm transition-all flex items-center space-x-2 shadow-lg hover:-translate-y-0.5 transform">
+                    <span>BOOK A SESSION</span>
+                    <i class="fa-solid fa-arrow-right text-xs"></i>
+                </button>
+            </div>
+
+            <!-- Polished Mobile Hamburger Button -->
+            <button id="mobileMenuBtn" type="button" class="md:hidden w-10 h-10 rounded-lg border border-white/15 bg-zinc-900/90 flex items-center justify-center text-gray-200 hover:text-brand-lime hover:border-brand-lime/50 transition-all focus:outline-none" aria-label="Toggle Menu">
+                <i class="fa-solid fa-bars text-lg" id="mobileMenuIcon"></i>
+            </button>
+        </div>
+
+        <!-- Polished Compact Mobile Navigation Menu Dropdown -->
+        <div id="mobileMenu" class="hidden md:hidden absolute top-full left-0 right-0 bg-zinc-950/98 border-b border-brand-lime/30 shadow-2xl overflow-hidden z-50 backdrop-blur-xl">
+            <!-- Subtle gym background accent on right -->
+            <div class="absolute inset-y-0 right-0 w-1/2 opacity-10 pointer-events-none bg-cover bg-center mix-blend-luminosity" style="background-image: url('https://images.unsplash.com/photo-1534438327276-14e5300c3a48?q=80&w=600&auto=format&fit=crop');"></div>
+            <div class="absolute inset-0 bg-gradient-to-r from-zinc-950 via-zinc-950/95 to-zinc-950/75 pointer-events-none"></div>
+
+            <div class="relative z-10 max-w-md mx-auto px-5 py-3">
+                <div class="divide-y divide-white/10">
+                    <a href="#home" data-section="home" class="mobile-nav-link flex items-center justify-between py-3 text-brand-lime font-heading font-bold text-xs uppercase tracking-wider transition-colors">
+                        <div class="flex items-center gap-3.5">
+                            <i class="fa-solid fa-house w-5 text-center text-brand-lime text-sm"></i>
+                            <span>Home</span>
+                        </div>
+                        <i class="fa-solid fa-chevron-right text-[10px] opacity-60"></i>
+                    </a>
+
+                    <a href="#about" data-section="about" class="mobile-nav-link flex items-center justify-between py-3 text-gray-200 hover:text-brand-lime font-heading font-bold text-xs uppercase tracking-wider transition-colors">
+                        <div class="flex items-center gap-3.5">
+                            <i class="fa-solid fa-user-check w-5 text-center text-gray-400 text-sm"></i>
+                            <span>About Us</span>
+                        </div>
+                        <i class="fa-solid fa-chevron-right text-[10px] opacity-40"></i>
+                    </a>
+
+                    <a href="#services" data-section="services" class="mobile-nav-link flex items-center justify-between py-3 text-gray-200 hover:text-brand-lime font-heading font-bold text-xs uppercase tracking-wider transition-colors">
+                        <div class="flex items-center gap-3.5">
+                            <i class="fa-solid fa-dumbbell w-5 text-center text-gray-400 text-sm"></i>
+                            <span>Services & Prices</span>
+                        </div>
+                        <i class="fa-solid fa-chevron-right text-[10px] opacity-40"></i>
+                    </a>
+
+                    <a href="#transformations" data-section="transformations" class="mobile-nav-link flex items-center justify-between py-3 text-gray-200 hover:text-brand-lime font-heading font-bold text-xs uppercase tracking-wider transition-colors">
+                        <div class="flex items-center gap-3.5">
+                            <i class="fa-solid fa-bolt w-5 text-center text-gray-400 text-sm"></i>
+                            <span>Transformations</span>
+                        </div>
+                        <i class="fa-solid fa-chevron-right text-[10px] opacity-40"></i>
+                    </a>
+
+                    <a href="#contact" data-section="contact" class="mobile-nav-link flex items-center justify-between py-3 text-gray-200 hover:text-brand-lime font-heading font-bold text-xs uppercase tracking-wider transition-colors">
+                        <div class="flex items-center gap-3.5">
+                            <i class="fa-regular fa-envelope w-5 text-center text-gray-400 text-sm"></i>
+                            <span>Contact</span>
+                        </div>
+                        <i class="fa-solid fa-chevron-right text-[10px] opacity-40"></i>
+                    </a>
+                </div>
+
+                <!-- Action Buttons inside Mobile Menu -->
+                <div class="pt-3 mt-1 border-t border-white/10 space-y-2.5 pb-1">
+                    <a href="tel:+356000000" class="w-full flex items-center justify-center gap-2.5 py-2.5 rounded-sm text-xs font-heading font-bold text-white border border-white/15 bg-zinc-900/90 hover:border-brand-lime/60 transition-colors">
+                        <i class="fa-solid fa-phone text-brand-lime text-xs"></i>
+                        <span>+356 000 000</span>
+                    </a>
+                    <button onclick="closeMobileMenu(); openBookingModal();" class="w-full bg-brand-lime hover:bg-brand-limedark text-black font-heading font-black text-xs uppercase py-3.5 rounded-sm flex items-center justify-center space-x-2 shadow-md">
+                        <span>BOOK A SESSION</span>
+                        <i class="fa-solid fa-arrow-right text-xs"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- TAILOREDLY DEMO BANNER -->
+    <div class="tailoredly-banner-wrap" role="region" aria-label="Tailoredly Demo Banner">
+        <div class="tailoredly-banner-box">
+            <div class="tailoredly-left">
+                <div class="tailoredly-icon-box" aria-hidden="true">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="3" y="4" width="18" height="12" rx="2" ry="2"></rect>
+                        <line x1="8" y1="20" x2="16" y2="20"></line>
+                        <line x1="12" y1="16" x2="12" y2="20"></line>
+                    </svg>
+                </div>
+                <div class="tailoredly-brand-text">
+                    <span class="tailoredly-demo-label">WEBSITE DEMO</span>
+                    <div class="tailoredly-madeby">
+                        Made by <strong class="tailoredly-logo-mark">TAILORED<span>LY</span></strong>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tailoredly-divider" aria-hidden="true"></div>
+
+            <div class="tailoredly-middle">
+                <p class="tailoredly-question">Like this design?</p>
+                <p class="tailoredly-subtext">Get a website for your business.</p>
+            </div>
+
+            <a href="file:///C:/Users/Bobik/Desktop/Website creator/index.html" class="tailoredly-btn">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="19" y1="12" x2="5" y2="12"></line>
+                    <polyline points="12 19 5 12 12 5"></polyline>
+                </svg>
+                <span>Back to Portfolio</span>
+            </a>
+        </div>
+    </div>
+    <!-- END TAILOREDLY BANNER -->
+
+    <!-- Hero Section -->
+    <section id="home" class="relative pt-28 min-h-screen flex flex-col justify-between bg-black overflow-hidden">
+        <!-- Background Hero Graphic/Image -->
+        <div class="absolute inset-0 z-0">
+            <img src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?q=80&w=2070&auto=format&fit=crop" 
+                 alt="Personal Trainer Gym Background" 
+                 class="w-full h-full object-cover object-center sm:object-right-top opacity-55 filter contrast-125 brightness-90">
+            <div class="absolute inset-0 bg-gradient-to-r from-black via-black/85 to-black/30 sm:to-transparent"></div>
+            <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-black/70"></div>
+            
+            <!-- Graphic "DISCIPLINE BUILDS RESULTS" Wall Accent (Positioned cleanly below the Tailoredly banner on desktop) -->
+            <div class="absolute right-12 top-44 hidden lg:block select-none text-right z-10 opacity-80">
+                <p class="wall-stencil text-5xl xl:text-6xl text-gray-300 uppercase leading-none">DISCIPLINE</p>
+                <p class="wall-stencil text-5xl xl:text-6xl text-gray-300 uppercase leading-none">BUILDS</p>
+                <p class="wall-stencil text-5xl xl:text-6xl text-brand-lime uppercase leading-none green-brush-underline">RESULTS</p>
+            </div>
+        </div>
+
+        <!-- Main Hero Content -->
+        <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-12 sm:pt-16 pb-12 w-full flex-grow flex items-center">
+            <div class="max-w-xl">
+                <!-- Subtitle -->
+                <p class="text-xs font-heading font-bold tracking-widest text-brand-lime sm:text-gray-300 uppercase mb-2">EXAMPLE SUBTITLE</p>
+                
+                <!-- Main Big Headline -->
+                <h1 class="font-heading font-black text-5xl sm:text-7xl lg:text-8xl tracking-tight leading-none uppercase mb-3">
+                    STRONGER <br>
+                    <span class="text-brand-lime">YOU</span>
+                </h1>
+
+                <!-- Secondary Subtitle -->
+                <h2 class="font-heading font-extrabold text-sm sm:text-lg text-white tracking-wider uppercase mb-5">
+                    EXAMPLE PERSONAL TRAINER
+                </h2>
+
+                <!-- Description Paragraph -->
+                <p class="text-gray-300 text-xs sm:text-sm leading-relaxed max-w-md mb-8">
+                    Place for a short description of your business, your approach and what makes your training unique.
+                </p>
+
+                <!-- Action CTA -->
+                <div class="flex flex-col sm:flex-row gap-3.5">
+                    <button onclick="openBookingModal()" class="w-full sm:w-auto justify-center bg-brand-lime hover:bg-brand-limedark text-black font-heading font-black text-xs uppercase px-7 py-4 rounded-sm transition-all inline-flex items-center space-x-2 shadow-xl hover:-translate-y-0.5 transform">
+                        <span>BOOK A SESSION</span>
+                        <i class="fa-solid fa-arrow-right text-xs"></i>
+                    </button>
+                    <a href="#services" class="w-full sm:w-auto justify-center border border-white/25 hover:border-brand-lime text-white hover:text-brand-lime font-heading font-bold text-xs uppercase px-7 py-4 rounded-sm transition-all inline-flex items-center space-x-2 bg-black/50 backdrop-blur-sm">
+                        <span>EXPLORE SERVICES</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Hero Bottom Features Banner (4 Items - Fixed mobile borders so there are no duplicate uneven lines) -->
+        <div class="relative z-10 border-t border-white/10 bg-black/90 backdrop-blur-md">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid grid-cols-2 md:grid-cols-4 md:divide-x divide-white/10">
+                    
+                    <!-- Feature Item 1 -->
+                    <div class="py-5 px-3 sm:px-6 flex items-center space-x-3 sm:space-x-4">
+                        <div class="text-brand-lime text-xl sm:text-2xl flex-shrink-0">
+                            <i class="fa-solid fa-dumbbell"></i>
+                        </div>
+                        <div>
+                            <p class="font-heading font-black text-[11px] sm:text-xs uppercase tracking-wider text-white">EXAMPLE TEXT</p>
+                            <p class="text-[9.5px] sm:text-[10px] text-gray-400 uppercase tracking-widest mt-0.5">YOUR TEXT HERE</p>
+                        </div>
+                    </div>
+
+                    <!-- Feature Item 2 -->
+                    <div class="py-5 px-3 sm:px-6 flex items-center space-x-3 sm:space-x-4 border-l border-white/10 md:border-l-0">
+                        <div class="text-brand-lime text-xl sm:text-2xl flex-shrink-0">
+                            <i class="fa-regular fa-heart"></i>
+                        </div>
+                        <div>
+                            <p class="font-heading font-black text-[11px] sm:text-xs uppercase tracking-wider text-white">EXAMPLE TEXT</p>
+                            <p class="text-[9.5px] sm:text-[10px] text-gray-400 uppercase tracking-widest mt-0.5">YOUR TEXT HERE</p>
+                        </div>
+                    </div>
+
+                    <!-- Feature Item 3 -->
+                    <div class="py-5 px-3 sm:px-6 flex items-center space-x-3 sm:space-x-4 border-t border-white/10 md:border-t-0">
+                        <div class="text-brand-lime text-xl sm:text-2xl flex-shrink-0">
+                            <i class="fa-solid fa-bullseye"></i>
+                        </div>
+                        <div>
+                            <p class="font-heading font-black text-[11px] sm:text-xs uppercase tracking-wider text-white">EXAMPLE TEXT</p>
+                            <p class="text-[9.5px] sm:text-[10px] text-gray-400 uppercase tracking-widest mt-0.5">YOUR TEXT HERE</p>
+                        </div>
+                    </div>
+
+                    <!-- Feature Item 4 -->
+                    <div class="py-5 px-3 sm:px-6 flex items-center space-x-3 sm:space-x-4 border-t border-l border-white/10 md:border-t-0 md:border-l-0">
+                        <div class="text-brand-lime text-xl sm:text-2xl flex-shrink-0">
+                            <i class="fa-solid fa-leaf"></i>
+                        </div>
+                        <div>
+                            <p class="font-heading font-black text-[11px] sm:text-xs uppercase tracking-wider text-white">EXAMPLE TEXT</p>
+                            <p class="text-[9.5px] sm:text-[10px] text-gray-400 uppercase tracking-widest mt-0.5">YOUR TEXT HERE</p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Us Section (Light Textured Section) -->
+    <section id="about" class="light-texture-bg text-gray-900 py-16 lg:py-20 relative overflow-hidden border-t border-b border-gray-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+                
+                <!-- Left Trainer Image with Paint Splash Background Effect -->
+                <div class="lg:col-span-5 relative flex justify-center py-4 px-3 sm:px-0">
+                    <div class="splash-green-bg w-full max-w-sm">
+                        <div class="relative z-10 bg-black rounded-sm overflow-hidden shadow-2xl border-2 border-white">
+                            <img src="https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?q=80&w=1000&auto=format&fit=crop" 
+                                 alt="Example Personal Trainer" 
+                                 class="w-full h-80 sm:h-96 object-cover object-top filter contrast-110">
+                            <!-- Example Photo Overlay Badge -->
+                            <div class="absolute inset-0 flex items-center justify-center pointer-events-none z-20">
+                                <div class="bg-slate-900/90 border-2 border-dashed border-yellow-400 px-5 py-2 rounded-full -rotate-12 shadow-2xl backdrop-blur-sm">
+                                    <span class="font-heading font-black text-sm text-yellow-400 tracking-widest uppercase">EXAMPLE PHOTO</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Center Content Text -->
+                <div class="lg:col-span-4 space-y-3 text-center sm:text-left">
+                    <p class="font-heading font-bold text-xs uppercase tracking-widest text-gray-600">ABOUT US</p>
+                    <h2 class="font-heading font-black text-3xl text-black uppercase tracking-tight leading-none">
+                        EXAMPLE PERSONAL TRAINER
+                    </h2>
+                    <p class="font-heading font-bold text-[11px] uppercase tracking-wider text-brand-lime bg-black px-2.5 py-1 inline-block">
+                        PLACE FOR YOUR BUSINESS DETAILS
+                    </p>
+                    
+                    <div class="space-y-3 text-xs sm:text-sm text-gray-700 leading-relaxed pt-2">
+                        <p>
+                            This is a place for your text. You can write a short story about your background, how you started, your approach to training and what makes your coaching different.
+                        </p>
+                        <p>
+                            This is a place for additional information about your experience, qualifications or anything you want your clients to know.
+                        </p>
+                    </div>
+
+                    <div class="pt-3">
+                        <a href="#services" class="w-full sm:w-auto justify-center bg-brand-lime hover:bg-black hover:text-brand-lime text-black font-heading font-black text-xs uppercase px-6 py-3.5 rounded-sm transition-all inline-flex items-center space-x-2 shadow-md transform hover:-translate-y-0.5">
+                            <span>LEARN MORE</span>
+                            <i class="fa-solid fa-arrow-right text-xs"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Right Feature Grid (2x2 on mobile for clean symmetry, 3 top + 1 bottom on desktop) -->
+                <div class="lg:col-span-3 space-y-6 pt-6 lg:pt-0 border-t lg:border-t-0 lg:border-l border-gray-300 lg:pl-6">
+                    <div class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-3 gap-6 text-center">
+                        <!-- Item 1 -->
+                        <div class="flex flex-col items-center">
+                            <div class="text-black text-2xl mb-1.5">
+                                <i class="fa-solid fa-users"></i>
+                            </div>
+                            <p class="font-heading font-black text-[10px] uppercase text-black">EXAMPLE TEXT</p>
+                            <p class="text-[9px] text-gray-600 uppercase tracking-wider">YOUR TEXT HERE</p>
+                        </div>
+
+                        <!-- Item 2 -->
+                        <div class="flex flex-col items-center">
+                            <div class="text-black text-2xl mb-1.5">
+                                <i class="fa-solid fa-award"></i>
+                            </div>
+                            <p class="font-heading font-black text-[10px] uppercase text-black">EXAMPLE TEXT</p>
+                            <p class="text-[9px] text-gray-600 uppercase tracking-wider">YOUR TEXT HERE</p>
+                        </div>
+
+                        <!-- Item 3 -->
+                        <div class="flex flex-col items-center">
+                            <div class="text-black text-2xl mb-1.5">
+                                <i class="fa-regular fa-heart"></i>
+                            </div>
+                            <p class="font-heading font-black text-[10px] uppercase text-black">EXAMPLE TEXT</p>
+                            <p class="text-[9px] text-gray-600 uppercase tracking-wider">YOUR TEXT HERE</p>
+                        </div>
+
+                        <!-- Item 4 (Centered on Desktop) -->
+                        <div class="flex flex-col items-center lg:col-span-3 lg:pt-2">
+                            <div class="text-black text-2xl mb-1.5">
+                                <i class="fa-solid fa-chart-simple"></i>
+                            </div>
+                            <p class="font-heading font-black text-[10px] uppercase text-black">EXAMPLE TEXT</p>
+                            <p class="text-[9px] text-gray-600 uppercase tracking-wider">YOUR TEXT HERE</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="py-20 bg-black relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+                
+                <!-- Section Left Title -->
+                <div class="lg:col-span-3">
+                    <p class="text-xs font-heading font-bold text-gray-400 tracking-widest uppercase">SERVICES</p>
+                    <h2 class="font-heading font-black text-3xl sm:text-4xl text-white uppercase tracking-tight mt-1 mb-1">
+                        EXAMPLE SERVICES
+                    </h2>
+                    <p class="text-xs font-heading font-bold text-brand-lime tracking-widest uppercase">
+                        PLACE FOR YOUR BUSINESS DETAILS
+                    </p>
+                </div>
+
+                <!-- Services Cards Row (4 Cards) -->
+                <div class="lg:col-span-9 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                    
+                    <!-- Service 1 -->
+                    <div class="bg-brand-card border border-white/10 rounded-sm overflow-hidden group hover:border-brand-lime transition-all duration-300 flex flex-col justify-between">
+                        <div>
+                            <div class="h-44 sm:h-36 overflow-hidden relative">
+                                <img src="https://images.unsplash.com/photo-1517838277536-f5f99be501cd?q=80&w=800&auto=format&fit=crop" 
+                                     alt="Personal Training" 
+                                     class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500 opacity-80">
+                                <div class="absolute inset-0 bg-gradient-to-t from-brand-card via-transparent to-transparent"></div>
+                                <!-- Example Photo Overlay Badge -->
+                                <div class="absolute inset-0 flex items-center justify-center pointer-events-none z-10">
+                                    <div class="bg-slate-900/90 border-2 border-dashed border-yellow-400 px-3 py-1 rounded-full -rotate-12 shadow-lg backdrop-blur-xs scale-90">
+                                        <span class="font-heading font-black text-[11px] text-yellow-400 tracking-wider uppercase">EXAMPLE PHOTO</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="p-4">
+                                <h3 class="font-heading font-black text-xs text-white uppercase tracking-wider mb-1">PERSONAL TRAINING</h3>
+                                <p class="text-[11px] text-gray-400">Example text.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Service 2 -->
+                    <div class="bg-brand-card border border-white/10 rounded-sm overflow-hidden group hover:border-brand-lime transition-all duration-300 flex flex-col justify-between">
+                        <div>
+                            <div class="h-44 sm:h-36 overflow-hidden relative">
+                                <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?q=80&w=800&auto=format&fit=crop" 
+                                     alt="Online Coaching" 
+                                     class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500 opacity-80">
+                                <div class="absolute inset-0 bg-gradient-to-t from-brand-card via-transparent to-transparent"></div>
+                                <!-- Example Photo Overlay Badge -->
+                                <div class="absolute inset-0 flex items-center justify-center pointer-events-none z-10">
+                                    <div class="bg-slate-900/90 border-2 border-dashed border-yellow-400 px-3 py-1 rounded-full -rotate-12 shadow-lg backdrop-blur-xs scale-90">
+                                        <span class="font-heading font-black text-[11px] text-yellow-400 tracking-wider uppercase">EXAMPLE PHOTO</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="p-4">
+                                <h3 class="font-heading font-black text-xs text-white uppercase tracking-wider mb-1">ONLINE COACHING</h3>
+                                <p class="text-[11px] text-gray-400">Example text.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Service 3 -->
+                    <div class="bg-brand-card border border-white/10 rounded-sm overflow-hidden group hover:border-brand-lime transition-all duration-300 flex flex-col justify-between">
+                        <div>
+                            <div class="h-44 sm:h-36 overflow-hidden relative">
+                                <img src="https://images.unsplash.com/photo-1498837167922-ddd27525d352?q=80&w=800&auto=format&fit=crop" 
+                                     alt="Nutrition Plans" 
+                                     class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500 opacity-80">
+                                <div class="absolute inset-0 bg-gradient-to-t from-brand-card via-transparent to-transparent"></div>
+                                <!-- Example Photo Overlay Badge -->
+                                <div class="absolute inset-0 flex items-center justify-center pointer-events-none z-10">
+                                    <div class="bg-slate-900/90 border-2 border-dashed border-yellow-400 px-3 py-1 rounded-full -rotate-12 shadow-lg backdrop-blur-xs scale-90">
+                                        <span class="font-heading font-black text-[11px] text-yellow-400 tracking-wider uppercase">EXAMPLE PHOTO</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="p-4">
+                                <h3 class="font-heading font-black text-xs text-white uppercase tracking-wider mb-1">NUTRITION PLANS</h3>
+                                <p class="text-[11px] text-gray-400">Example text.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Service 4 -->
+                    <div class="bg-brand-card border border-white/10 rounded-sm overflow-hidden group hover:border-brand-lime transition-all duration-300 flex flex-col justify-between">
+                        <div>
+                            <div class="h-44 sm:h-36 overflow-hidden relative">
+                                <img src="https://images.unsplash.com/photo-1518611012118-696072aa579a?q=80&w=800&auto=format&fit=crop" 
+                                     alt="Group Sessions" 
+                                     class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500 opacity-80">
+                                <div class="absolute inset-0 bg-gradient-to-t from-brand-card via-transparent to-transparent"></div>
+                                <!-- Example Photo Overlay Badge -->
+                                <div class="absolute inset-0 flex items-center justify-center pointer-events-none z-10">
+                                    <div class="bg-slate-900/90 border-2 border-dashed border-yellow-400 px-3 py-1 rounded-full -rotate-12 shadow-lg backdrop-blur-xs scale-90">
+                                        <span class="font-heading font-black text-[11px] text-yellow-400 tracking-wider uppercase">EXAMPLE PHOTO</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="p-4">
+                                <h3 class="font-heading font-black text-xs text-white uppercase tracking-wider mb-1">GROUP SESSIONS</h3>
+                                <p class="text-[11px] text-gray-400">Example text.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Transformations Section -->
+    <section id="transformations" class="py-20 bg-black border-t border-white/10 relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                
+                <!-- Section Header Left -->
+                <div class="lg:col-span-3">
+                    <p class="text-xs font-heading font-bold text-gray-400 tracking-widest uppercase">TRANSFORMATIONS</p>
+                    <h2 class="font-heading font-black text-3xl sm:text-4xl text-white uppercase tracking-tight mt-1 mb-1">
+                        REAL RESULTS
+                    </h2>
+                    <p class="text-xs font-heading font-bold text-brand-lime tracking-widest uppercase">
+                        PLACE FOR YOUR BUSINESS DETAILS
+                    </p>
+                </div>
+
+                <!-- 3 Transformation Cards + Testimonial Box -->
+                <div class="lg:col-span-9 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                    
+                    <!-- Transformation 1 -->
+                    <div class="bg-brand-card border border-white/15 rounded-sm overflow-hidden flex flex-col justify-between group">
+                        <div class="relative h-60 sm:h-64 flex overflow-hidden bg-black/40">
+                            <!-- Left Box (BEFORE) -->
+                            <div class="w-1/2 h-full flex items-center justify-center border-r border-white/10 bg-white/5 p-2 text-center">
+                                <span class="font-heading font-black text-lg sm:text-xl text-gray-400 uppercase tracking-widest">BEFORE</span>
+                            </div>
+                            <!-- Right Box (AFTER) -->
+                            <div class="w-1/2 h-full flex items-center justify-center bg-brand-lime/10 p-2 text-center">
+                                <span class="font-heading font-black text-lg sm:text-xl text-brand-lime uppercase tracking-widest">AFTER</span>
+                            </div>
+                            <!-- Center Arrow Indicator -->
+                            <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
+                                <div class="w-7 h-7 rounded-full bg-black/80 border border-white/40 text-white flex items-center justify-center text-[10px] shadow-lg">
+                                    <i class="fa-solid fa-arrow-right"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Bottom Yellow / Lime Labels -->
+                        <div class="grid grid-cols-2 font-heading font-black text-[10px] uppercase text-black text-center py-1">
+                            <div class="bg-brand-yellow py-1">BEFORE</div>
+                            <div class="bg-brand-lime py-1">AFTER</div>
+                        </div>
+                    </div>
+
+                    <!-- Transformation 2 -->
+                    <div class="bg-brand-card border border-white/15 rounded-sm overflow-hidden flex flex-col justify-between group">
+                        <div class="relative h-60 sm:h-64 flex overflow-hidden bg-black/40">
+                            <div class="w-1/2 h-full flex items-center justify-center border-r border-white/10 bg-white/5 p-2 text-center">
+                                <span class="font-heading font-black text-lg sm:text-xl text-gray-400 uppercase tracking-widest">BEFORE</span>
+                            </div>
+                            <div class="w-1/2 h-full flex items-center justify-center bg-brand-lime/10 p-2 text-center">
+                                <span class="font-heading font-black text-lg sm:text-xl text-brand-lime uppercase tracking-widest">AFTER</span>
+                            </div>
+                            <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
+                                <div class="w-7 h-7 rounded-full bg-black/80 border border-white/40 text-white flex items-center justify-center text-[10px] shadow-lg">
+                                    <i class="fa-solid fa-arrow-right"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-2 font-heading font-black text-[10px] uppercase text-black text-center py-1">
+                            <div class="bg-brand-yellow py-1">BEFORE</div>
+                            <div class="bg-brand-lime py-1">AFTER</div>
+                        </div>
+                    </div>
+
+                    <!-- Transformation 3 -->
+                    <div class="bg-brand-card border border-white/15 rounded-sm overflow-hidden flex flex-col justify-between group">
+                        <div class="relative h-60 sm:h-64 flex overflow-hidden bg-black/40">
+                            <div class="w-1/2 h-full flex items-center justify-center border-r border-white/10 bg-white/5 p-2 text-center">
+                                <span class="font-heading font-black text-lg sm:text-xl text-gray-400 uppercase tracking-widest">BEFORE</span>
+                            </div>
+                            <div class="w-1/2 h-full flex items-center justify-center bg-brand-lime/10 p-2 text-center">
+                                <span class="font-heading font-black text-lg sm:text-xl text-brand-lime uppercase tracking-widest">AFTER</span>
+                            </div>
+                            <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
+                                <div class="w-7 h-7 rounded-full bg-black/80 border border-white/40 text-white flex items-center justify-center text-[10px] shadow-lg">
+                                    <i class="fa-solid fa-arrow-right"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-2 font-heading font-black text-[10px] uppercase text-black text-center py-1">
+                            <div class="bg-brand-yellow py-1">BEFORE</div>
+                            <div class="bg-brand-lime py-1">AFTER</div>
+                        </div>
+                    </div>
+
+                    <!-- Testimonial Box -->
+                    <div class="bg-brand-card border border-white/15 rounded-sm p-5 flex flex-col justify-between min-h-[16rem]">
+                        <div>
+                            <div class="text-brand-lime text-2xl font-serif mb-2">
+                                <i class="fa-solid fa-quote-left"></i>
+                            </div>
+                            <p id="testimonialText" class="text-xs text-gray-300 leading-relaxed transition-opacity duration-300">
+                                Example text. This is a place for a client review or success story. You can write a few sentences about their experience and results.
+                            </p>
+                        </div>
+                        <div class="pt-4 border-t border-white/10 flex items-center justify-between">
+                            <p id="testimonialAuthor" class="font-heading font-bold text-xs uppercase text-white tracking-wider transition-opacity duration-300">
+                                - Example Name
+                            </p>
+                            <div class="flex items-center space-x-2">
+                                <button onclick="prevTestimonial()" class="w-8 h-8 rounded-full border border-white/20 flex items-center justify-center text-gray-300 hover:text-white hover:border-brand-lime transition-all" aria-label="Previous Testimonial">
+                                    <i class="fa-solid fa-arrow-left text-[10px]"></i>
+                                </button>
+                                <button onclick="nextTestimonial()" class="w-8 h-8 rounded-full border border-white/20 flex items-center justify-center text-gray-300 hover:text-white hover:border-brand-lime transition-all" aria-label="Next Testimonial">
+                                    <i class="fa-solid fa-arrow-right text-[10px]"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact / Footer Section -->
+    <section id="contact" class="relative py-20 bg-black overflow-hidden border-t border-white/10">
+        <!-- Background Gym Photo Overlay -->
+        <div class="absolute inset-0 z-0">
+            <img src="https://images.unsplash.com/photo-1540497077202-7c8a3999166f?q=80&w=2000&auto=format&fit=crop" 
+                 alt="Gym Darkness" 
+                 class="w-full h-full object-cover object-right opacity-30 filter brightness-70">
+            <div class="absolute inset-0 bg-gradient-to-r from-black via-black/90 to-transparent"></div>
+            
+            <!-- Graphic Wall Text "GOOD THINGS TAKE TIME" on Bottom Right -->
+            <div class="absolute right-8 bottom-12 hidden lg:block select-none text-right opacity-70 z-10">
+                <p class="wall-stencil text-4xl xl:text-5xl text-gray-300 uppercase leading-none">GOOD</p>
+                <p class="wall-stencil text-4xl xl:text-5xl text-gray-300 uppercase leading-none">THINGS</p>
+                <p class="wall-stencil text-4xl xl:text-5xl text-brand-lime uppercase leading-none green-brush-underline">TAKE TIME</p>
+            </div>
+        </div>
+
+        <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+                
+                <!-- Left Title & Social Links -->
+                <div class="lg:col-span-3 space-y-5">
+                    <div>
+                        <p class="text-xs font-heading font-bold text-gray-400 tracking-widest uppercase">GET IN TOUCH</p>
+                        <h2 class="font-heading font-black text-4xl text-white uppercase tracking-tight mt-1 mb-1">
+                            CONTACT
+                        </h2>
+                        <p class="text-xs font-heading font-bold text-brand-lime tracking-widest uppercase">
+                            PLACE FOR YOUR BUSINESS DETAILS
+                        </p>
+                    </div>
+
+                    <!-- Social Icons -->
+                    <div class="flex items-center space-x-2.5 pt-1">
+                        <a href="#home" aria-label="Instagram" class="w-9 h-9 rounded-sm border border-white/20 flex items-center justify-center text-white hover:text-black hover:bg-brand-lime hover:border-brand-lime transition-all">
+                            <i class="fa-brands fa-instagram text-xs"></i>
+                        </a>
+                        <a href="#home" aria-label="Facebook" class="w-9 h-9 rounded-sm border border-white/20 flex items-center justify-center text-white hover:text-black hover:bg-brand-lime hover:border-brand-lime transition-all">
+                            <i class="fa-brands fa-facebook-f text-xs"></i>
+                        </a>
+                        <a href="#home" aria-label="TikTok" class="w-9 h-9 rounded-sm border border-white/20 flex items-center justify-center text-white hover:text-black hover:bg-brand-lime hover:border-brand-lime transition-all">
+                            <i class="fa-brands fa-tiktok text-xs"></i>
+                        </a>
+                        <a href="#home" aria-label="YouTube" class="w-9 h-9 rounded-sm border border-white/20 flex items-center justify-center text-white hover:text-black hover:bg-brand-lime hover:border-brand-lime transition-all">
+                            <i class="fa-brands fa-youtube text-xs"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Middle Contact Information -->
+                <div class="lg:col-span-4 space-y-4 text-xs sm:text-sm pt-1">
+                    
+                    <div class="flex items-center space-x-3.5">
+                        <div class="w-8 h-8 rounded-full border border-brand-lime flex items-center justify-center text-brand-lime flex-shrink-0">
+                            <i class="fa-solid fa-location-dot text-xs"></i>
+                        </div>
+                        <p class="text-gray-300">Your Street Address, City</p>
+                    </div>
+
+                    <div class="flex items-center space-x-3.5">
+                        <div class="w-8 h-8 rounded-full border border-brand-lime flex items-center justify-center text-brand-lime flex-shrink-0">
+                            <i class="fa-solid fa-phone text-xs"></i>
+                        </div>
+                        <p class="text-gray-300">+356 000 000</p>
+                    </div>
+
+                    <div class="flex items-center space-x-3.5">
+                        <div class="w-8 h-8 rounded-full border border-brand-lime flex items-center justify-center text-brand-lime flex-shrink-0">
+                            <i class="fa-solid fa-envelope text-xs"></i>
+                        </div>
+                        <p class="text-gray-300">your@email.com</p>
+                    </div>
+
+                    <div class="flex items-center space-x-3.5">
+                        <div class="w-8 h-8 rounded-full border border-brand-lime flex items-center justify-center text-brand-lime flex-shrink-0">
+                            <i class="fa-regular fa-clock text-xs"></i>
+                        </div>
+                        <p class="text-gray-300">Mon - Sat: 08:00 - 20:00</p>
+                    </div>
+
+                </div>
+
+                <!-- Right Contact Form -->
+                <div class="lg:col-span-5 w-full max-w-md">
+                    <form id="contactForm" onsubmit="handleFormSubmit(event)" class="space-y-3">
+                        <div>
+                            <input type="text" required placeholder="Your Name" 
+                                   class="w-full bg-brand-card/90 border border-white/15 focus:border-brand-lime text-white text-xs sm:text-sm rounded-sm px-4 py-3 outline-none transition-colors placeholder-gray-500">
+                        </div>
+                        <div>
+                            <input type="email" required placeholder="Your Email" 
+                                   class="w-full bg-brand-card/90 border border-white/15 focus:border-brand-lime text-white text-xs sm:text-sm rounded-sm px-4 py-3 outline-none transition-colors placeholder-gray-500">
+                        </div>
+                        <div>
+                            <textarea rows="3" required placeholder="Your Message" 
+                                      class="w-full bg-brand-card/90 border border-white/15 focus:border-brand-lime text-white text-xs sm:text-sm rounded-sm px-4 py-3 outline-none transition-colors placeholder-gray-500 resize-none"></textarea>
+                        </div>
+                        <div>
+                            <button type="submit" class="w-full sm:w-auto justify-center bg-brand-lime hover:bg-brand-limedark text-black font-heading font-black text-xs uppercase px-7 py-3.5 rounded-sm transition-all inline-flex items-center space-x-2 shadow-lg transform hover:-translate-y-0.5">
+                                <span>SEND MESSAGE</span>
+                                <i class="fa-solid fa-arrow-right text-xs"></i>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+
+            <!-- Footer Bottom Line -->
+            <div class="mt-16 pt-6 border-t border-white/10 flex flex-col sm:flex-row justify-between items-center text-[11px] text-gray-500 text-center sm:text-left">
+                <p>&copy; 2026 Example Personal Trainer. All rights reserved.</p>
+                <p class="mt-1 sm:mt-0">Preview Demo Website</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Interactive Booking Modal -->
+    <div id="bookingModal" onclick="if(event.target === this) closeBookingModal()" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 bg-black/85 backdrop-blur-sm">
+        <div class="bg-brand-card border border-brand-lime/40 w-full max-w-md rounded-sm p-6 relative shadow-2xl">
+            <button onclick="closeBookingModal()" class="absolute top-4 right-4 text-gray-400 hover:text-white p-1">
+                <i class="fa-solid fa-xmark text-lg"></i>
+            </button>
+            <div class="mb-4">
+                <span class="text-[10px] font-heading font-bold text-brand-lime uppercase tracking-widest">START YOUR JOURNEY</span>
+                <h3 class="font-heading font-black text-2xl text-white uppercase mt-1">BOOK A SESSION</h3>
+            </div>
+            <form onsubmit="handleBookingSubmit(event)" class="space-y-3">
+                <input type="text" placeholder="Full Name" required class="w-full bg-black border border-white/20 text-white text-xs sm:text-sm p-3 rounded-sm focus:border-brand-lime outline-none">
+                <input type="email" placeholder="Email Address" required class="w-full bg-black border border-white/20 text-white text-xs sm:text-sm p-3 rounded-sm focus:border-brand-lime outline-none">
+                <input type="tel" placeholder="Phone Number" required class="w-full bg-black border border-white/20 text-white text-xs sm:text-sm p-3 rounded-sm focus:border-brand-lime outline-none">
+                <select class="w-full bg-black border border-white/20 text-gray-300 text-xs sm:text-sm p-3 rounded-sm focus:border-brand-lime outline-none">
+                    <option>Select Goal: Personal Training</option>
+                    <option>Select Goal: Online Coaching</option>
+                    <option>Select Goal: Nutrition Plan</option>
+                    <option>Select Goal: Group Session</option>
+                </select>
+                <button type="submit" class="w-full bg-brand-lime text-black font-heading font-black text-xs uppercase py-3.5 rounded-sm mt-2 hover:bg-brand-limedark transition-all shadow-md">
+                    CONFIRM BOOKING
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Demo Enquiry Success Modal -->
+    <div id="demoSuccessModal" onclick="if(event.target === this) closeDemoSuccessModal()" class="fixed inset-0 z-[100] hidden flex items-center justify-center p-4 bg-black/85 backdrop-blur-sm">
+        <div class="bg-brand-card border border-brand-lime/50 w-full max-w-md rounded-sm p-6 sm:p-8 relative shadow-2xl text-center space-y-4">
+            <div class="w-16 h-16 rounded-full bg-brand-lime/15 border border-brand-lime text-brand-lime flex items-center justify-center mx-auto text-2xl shadow-inner">
+                <i class="fa-solid fa-check"></i>
+            </div>
+            <h3 class="font-heading font-black text-xl sm:text-2xl text-white uppercase tracking-wide">
+                Thank you for your enquiry!
+            </h3>
+            <p class="text-xs sm:text-sm text-gray-300 leading-relaxed">
+                Your demo request has been submitted successfully.
+            </p>
+            <p class="text-xs sm:text-sm font-heading font-bold text-brand-lime pt-1">
+                Ready to create a website for your business? Get in touch with Tailoredly!
+            </p>
+            <div class="pt-2">
+                <button onclick="closeDemoSuccessModal()" class="w-full bg-brand-lime hover:bg-brand-limedark text-black font-heading font-black text-xs uppercase py-3.5 rounded-sm transition-all shadow-md">
+                    CLOSE WINDOW
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Mobile Menu Toggle Logic
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+        const mobileMenuIcon = document.getElementById('mobileMenuIcon');
+
+        function toggleMobileMenu() {
+            mobileMenu.classList.toggle('hidden');
+            if (mobileMenu.classList.contains('hidden')) {
+                mobileMenuIcon.className = 'fa-solid fa-bars text-lg';
+                mobileMenuBtn.classList.remove('border-brand-lime/60', 'text-brand-lime');
+            } else {
+                mobileMenuIcon.className = 'fa-solid fa-xmark text-lg text-brand-lime';
+                mobileMenuBtn.classList.add('border-brand-lime/60', 'text-brand-lime');
+            }
+        }
+
+        function closeMobileMenu() {
+            mobileMenu.classList.add('hidden');
+            mobileMenuIcon.className = 'fa-solid fa-bars text-lg';
+            mobileMenuBtn.classList.remove('border-brand-lime/60', 'text-brand-lime');
+        }
+
+        if (mobileMenuBtn) {
+            mobileMenuBtn.addEventListener('click', toggleMobileMenu);
+        }
+
+        document.querySelectorAll('#mobileMenu a').forEach(link => {
+            link.addEventListener('click', closeMobileMenu);
+        });
+
+        // Active Navigation Highlight on Click & Scroll
+        const desktopNavLinks = document.querySelectorAll('#desktop-nav .nav-item');
+        const mobileNavLinks = document.querySelectorAll('.mobile-nav-link');
+        const sectionIds = ['home', 'about', 'services', 'transformations', 'contact'];
+
+        function setActiveNav(sectionId) {
+            desktopNavLinks.forEach(link => {
+                if (link.getAttribute('data-section') === sectionId) {
+                    link.classList.add('active', 'text-white');
+                    link.classList.remove('text-gray-300');
+                } else {
+                    link.classList.remove('active', 'text-white');
+                    link.classList.add('text-gray-300');
+                }
+            });
+
+            mobileNavLinks.forEach(link => {
+                const icon = link.querySelector('i');
+                if (link.getAttribute('data-section') === sectionId) {
+                    link.classList.add('text-brand-lime');
+                    link.classList.remove('text-gray-200');
+                    if (icon) {
+                        icon.classList.add('text-brand-lime');
+                        icon.classList.remove('text-gray-400');
+                    }
+                } else {
+                    link.classList.remove('text-brand-lime');
+                    link.classList.add('text-gray-200');
+                    if (icon) {
+                        icon.classList.remove('text-brand-lime');
+                        icon.classList.add('text-gray-400');
+                    }
+                }
+            });
+        }
+
+        window.addEventListener('scroll', () => {
+            const scrollPos = window.scrollY + 240;
+            if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight - 40) {
+                setActiveNav('contact');
+                return;
+            }
+            let current = 'home';
+            sectionIds.forEach(id => {
+                const el = document.getElementById(id);
+                if (el && el.offsetTop <= scrollPos) {
+                    current = id;
+                }
+            });
+            setActiveNav(current);
+        }, { passive: true });
+
+        // Testimonial Carousel Data & Logic
+        const testimonials = [
+            {
+                text: "Example text. This is a place for a client review or success story. You can write a few sentences about their experience and results.",
+                author: "- Example Name"
+            },
+            {
+                text: "Working with this personal trainer completely transformed my energy and physical fitness in just 12 weeks. Highly recommended!",
+                author: "- Sarah J."
+            },
+            {
+                text: "The nutrition plan combined with structured 1:1 sessions helped me achieve goals I never thought were possible before.",
+                author: "- Mark T."
+            }
+        ];
+
+        let currentTestimonialIndex = 0;
+
+        function updateTestimonial() {
+            const textElem = document.getElementById('testimonialText');
+            const authorElem = document.getElementById('testimonialAuthor');
+
+            textElem.style.opacity = 0;
+            authorElem.style.opacity = 0;
+
+            setTimeout(() => {
+                textElem.innerText = testimonials[currentTestimonialIndex].text;
+                authorElem.innerText = testimonials[currentTestimonialIndex].author;
+                textElem.style.opacity = 1;
+                authorElem.style.opacity = 1;
+            }, 200);
+        }
+
+        function nextTestimonial() {
+            currentTestimonialIndex = (currentTestimonialIndex + 1) % testimonials.length;
+            updateTestimonial();
+        }
+
+        function prevTestimonial() {
+            currentTestimonialIndex = (currentTestimonialIndex - 1 + testimonials.length) % testimonials.length;
+            updateTestimonial();
+        }
+
+        // Modal Controls
+        function openBookingModal() {
+            document.getElementById('bookingModal').classList.remove('hidden');
+        }
+
+        function closeBookingModal() {
+            document.getElementById('bookingModal').classList.add('hidden');
+        }
+
+        function openDemoSuccessModal() {
+            document.getElementById('demoSuccessModal').classList.remove('hidden');
+        }
+
+        function closeDemoSuccessModal() {
+            document.getElementById('demoSuccessModal').classList.add('hidden');
+        }
+
+        // Form Submit Handlers
+        function handleFormSubmit(e) {
+            e.preventDefault();
+            document.getElementById('contactForm').reset();
+            openDemoSuccessModal();
+        }
+
+        function handleBookingSubmit(e) {
+            e.preventDefault();
+            e.target.reset();
+            closeBookingModal();
+            openDemoSuccessModal();
+        }
+    </script>
+</body>
+</html>

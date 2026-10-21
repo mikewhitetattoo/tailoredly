@@ -1,0 +1,1203 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>EXAMPLE LAWYER | Law Firm</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome Icons CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- Google Fonts: Cormorant Garamond & Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        gold: {
+                            300: '#E8CA8C',
+                            400: '#D7B478',
+                            500: '#C59B51',
+                            600: '#B2853C',
+                            700: '#8E6728',
+                        },
+                        navy: {
+                            800: '#111B29',
+                            900: '#0B131E',
+                            950: '#070C14',
+                        },
+                        cream: {
+                            50: '#FBF9F5',
+                            100: '#F6F2EA',
+                            200: '#ECE5D8',
+                            300: '#DED3BF',
+                        }
+                    },
+                    fontFamily: {
+                        serif: ['"Cormorant Garamond"', 'Georgia', 'serif'],
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            overflow-x: hidden;
+        }
+        .gold-btn {
+            background-color: #D7B478;
+            color: #0B131E;
+        }
+        .gold-btn:hover {
+            background-color: #C8A362;
+        }
+        .hero-bg-overlay {
+            background: linear-gradient(90deg, rgba(11, 19, 30, 0.96) 0%, rgba(11, 19, 30, 0.88) 50%, rgba(11, 19, 30, 0.65) 100%);
+        }
+        /* Custom dashed border for EXAMPLE PHOTO watermark badge */
+        .example-photo-badge {
+            border: 2px dashed #D7B478;
+            background: rgba(11, 19, 30, 0.85);
+            backdrop-filter: blur(4px);
+        }
+
+        /* Continuous smooth marquee animation for top demo banner */
+        @keyframes marquee {
+            0% { transform: translateX(0%); }
+            100% { transform: translateX(-50%); }
+        }
+        .animate-marquee {
+            display: flex;
+            width: max-content;
+            animation: marquee 22s linear infinite;
+        }
+        .animate-marquee:hover {
+            animation-play-state: paused;
+        }
+
+        /* Active navigation link underline */
+        .nav-item {
+            position: relative;
+            padding-bottom: 4px;
+            transition: color 0.2s ease;
+        }
+        .nav-item.active {
+            color: #ffffff !important;
+            border-bottom: 2px solid #D7B478;
+        }
+
+        /* ========================================================= */
+        /* EXACT TAILOREDLY DEMO BANNER STYLES                       */
+        /* ========================================================= */
+        .tailoredly-banner-wrap {
+            position: fixed !important;
+            top: 132px !important;
+            right: 24px !important;
+            bottom: auto !important;
+            left: auto !important;
+            transform: none !important;
+            z-index: 2147483647 !important;
+            width: auto;
+            max-width: calc(100vw - 48px);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif !important;
+            box-sizing: border-box;
+            pointer-events: auto;
+        }
+
+        .tailoredly-banner-box {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            padding: 10px 16px;
+            background: radial-gradient(circle at 85% 50%, rgba(190, 18, 74, 0.08) 0%, rgba(6, 6, 8, 0.98) 55%), #060608;
+            border: 1px solid rgba(244, 37, 100, 0.45);
+            border-radius: 16px;
+            box-shadow: 
+                0 0 25px rgba(235, 20, 85, 0.22),
+                0 12px 32px rgba(0, 0, 0, 0.92),
+                inset 0 0 8px rgba(244, 37, 100, 0.04);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif !important;
+        }
+
+        .tailoredly-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            min-width: 0;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif !important;
+        }
+
+        .tailoredly-icon-box {
+            width: 38px;
+            height: 38px;
+            min-width: 38px;
+            border-radius: 10px;
+            border: 1px solid rgba(244, 37, 100, 0.4);
+            background: rgba(14, 8, 12, 0.95);
+            box-shadow: 0 0 12px rgba(244, 37, 100, 0.15);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #f42564;
+        }
+
+        .tailoredly-brand-text {
+            display: flex;
+            flex-direction: column;
+            line-height: 1.2;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif !important;
+        }
+
+        .tailoredly-demo-label {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif !important;
+            font-size: 9.5px !important;
+            font-weight: 700 !important;
+            letter-spacing: 0.18em !important;
+            text-transform: uppercase !important;
+            color: #f42564 !important;
+            margin-bottom: 2px !important;
+        }
+
+        .tailoredly-madeby {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif !important;
+            font-size: 16px !important;
+            font-weight: 700 !important;
+            color: #d1d5db !important;
+            letter-spacing: -0.01em !important;
+            white-space: nowrap !important;
+            display: flex !important;
+            align-items: baseline !important;
+            gap: 5px !important;
+        }
+
+        .tailoredly-logo-mark {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif !important;
+            font-weight: 900 !important;
+            letter-spacing: 0.02em !important;
+            text-transform: uppercase !important;
+            color: #ffffff !important;
+        }
+
+        .tailoredly-logo-mark span {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif !important;
+            color: #f42564 !important;
+        }
+
+        .tailoredly-divider {
+            width: 1px;
+            height: 32px;
+            background: rgba(255, 255, 255, 0.1);
+            flex-shrink: 0;
+        }
+
+        .tailoredly-middle {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            line-height: 1.3;
+            min-width: 0;
+            padding-right: 4px;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif !important;
+        }
+
+        .tailoredly-question {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif !important;
+            font-size: 13px !important;
+            font-weight: 500 !important;
+            color: #f3f4f6 !important;
+            margin: 0 !important;
+            white-space: nowrap !important;
+        }
+
+        .tailoredly-subtext {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif !important;
+            font-size: 12px !important;
+            font-weight: 400 !important;
+            color: #8e8e99 !important;
+            margin: 0 !important;
+            white-space: nowrap !important;
+        }
+
+        .tailoredly-btn {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif !important;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 9px 16px;
+            border-radius: 11px;
+            background: linear-gradient(90deg, #f72564 0%, #c11248 100%);
+            color: #ffffff !important;
+            font-size: 13px !important;
+            font-weight: 700 !important;
+            text-decoration: none !important;
+            white-space: nowrap;
+            box-shadow: 0 0 22px rgba(247, 37, 100, 0.5), inset 0 1px 1px rgba(255, 255, 255, 0.25);
+            transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
+            flex-shrink: 0;
+        }
+
+        .tailoredly-btn:hover {
+            transform: translateY(-1px);
+            filter: brightness(1.08);
+            box-shadow: 0 0 30px rgba(247, 37, 100, 0.75), inset 0 1px 1px rgba(255, 255, 255, 0.35);
+        }
+
+        .tailoredly-btn svg {
+            transition: transform 0.2s ease;
+        }
+
+        .tailoredly-btn:hover svg {
+            transform: translateX(-3px);
+        }
+
+        @media (max-width: 1250px) and (min-width: 769px) {
+            .tailoredly-divider,
+            .tailoredly-middle {
+                display: none;
+            }
+        }
+
+        @media (max-width: 768px) {
+            html body {
+                padding-bottom: calc(144px + env(safe-area-inset-bottom, 0px)) !important;
+            }
+            .tailoredly-banner-wrap {
+                top: auto !important;
+                right: auto !important;
+                bottom: calc(56px + env(safe-area-inset-bottom, 0px)) !important;
+                left: 50% !important;
+                transform: translateX(-50%) !important;
+                width: calc(100% - 16px);
+                max-width: 540px;
+            }
+            .tailoredly-banner-box {
+                padding: 10px 12px;
+                gap: 10px;
+                border-radius: 15px;
+            }
+            .tailoredly-divider,
+            .tailoredly-middle {
+                display: none;
+            }
+            .tailoredly-icon-box {
+                width: 36px;
+                height: 36px;
+                min-width: 36px;
+                border-radius: 9px;
+            }
+            .tailoredly-icon-box svg {
+                width: 17px;
+                height: 17px;
+            }
+            .tailoredly-demo-label {
+                font-size: 8.5px !important;
+                letter-spacing: 0.14em !important;
+                margin-bottom: 1px !important;
+            }
+            .tailoredly-madeby {
+                font-size: 15px !important;
+            }
+            .tailoredly-btn {
+                padding: 10px 14px;
+                font-size: 12.5px !important;
+                gap: 6px;
+                border-radius: 10px;
+            }
+        }
+
+        @media (max-width: 360px) {
+            .tailoredly-icon-box {
+                display: none;
+            }
+            .tailoredly-madeby {
+                font-size: 14px !important;
+            }
+            .tailoredly-btn {
+                padding: 9px 12px;
+                font-size: 12px !important;
+            }
+        }
+    </style>
+</head>
+<body class="font-sans text-slate-800 bg-cream-50 antialiased selection:bg-gold-500 selection:text-white">
+
+    <div class="sticky top-0 z-50">
+        <!-- Demo Banner as requested - Sticky so it stays visible on scroll -->
+        <div class="bg-amber-500 text-stone-950 font-bold text-sm py-2 overflow-hidden whitespace-nowrap border-b border-amber-600 shadow-sm">
+            <div class="animate-marquee flex items-center uppercase tracking-widest text-xs sm:text-sm select-none">
+                <span class="flex items-center"><span class="w-2 h-2 bg-stone-950 rounded-full inline-block mx-4"></span> PRZYKŁADOWA STRONA</span>
+                <span class="flex items-center"><span class="w-2 h-2 bg-stone-950 rounded-full inline-block mx-4"></span> DEMO WEBSITE</span>
+                <span class="flex items-center"><span class="w-2 h-2 bg-stone-950 rounded-full inline-block mx-4"></span> PRZYKŁADOWA STRONA</span>
+                <span class="flex items-center"><span class="w-2 h-2 bg-stone-950 rounded-full inline-block mx-4"></span> DEMO WEBSITE</span>
+                <span class="flex items-center"><span class="w-2 h-2 bg-stone-950 rounded-full inline-block mx-4"></span> PRZYKŁADOWA STRONA</span>
+                <span class="flex items-center"><span class="w-2 h-2 bg-stone-950 rounded-full inline-block mx-4"></span> DEMO WEBSITE</span>
+                <span class="flex items-center"><span class="w-2 h-2 bg-stone-950 rounded-full inline-block mx-4"></span> PRZYKŁADOWA STRONA</span>
+                <span class="flex items-center"><span class="w-2 h-2 bg-stone-950 rounded-full inline-block mx-4"></span> DEMO WEBSITE</span>
+                <!-- Duplicate set for seamless continuous marquee loop -->
+                <span class="flex items-center"><span class="w-2 h-2 bg-stone-950 rounded-full inline-block mx-4"></span> PRZYKŁADOWA STRONA</span>
+                <span class="flex items-center"><span class="w-2 h-2 bg-stone-950 rounded-full inline-block mx-4"></span> DEMO WEBSITE</span>
+                <span class="flex items-center"><span class="w-2 h-2 bg-stone-950 rounded-full inline-block mx-4"></span> PRZYKŁADOWA STRONA</span>
+                <span class="flex items-center"><span class="w-2 h-2 bg-stone-950 rounded-full inline-block mx-4"></span> DEMO WEBSITE</span>
+                <span class="flex items-center"><span class="w-2 h-2 bg-stone-950 rounded-full inline-block mx-4"></span> PRZYKŁADOWA STRONA</span>
+                <span class="flex items-center"><span class="w-2 h-2 bg-stone-950 rounded-full inline-block mx-4"></span> DEMO WEBSITE</span>
+                <span class="flex items-center"><span class="w-2 h-2 bg-stone-950 rounded-full inline-block mx-4"></span> PRZYKŁADOWA STRONA</span>
+                <span class="flex items-center"><span class="w-2 h-2 bg-stone-950 rounded-full inline-block mx-4"></span> DEMO WEBSITE</span>
+            </div>
+        </div>
+
+        <header class="bg-navy-900 border-b border-slate-800/80 transition-all duration-300 relative">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex items-center justify-between h-20">
+                    
+                    <!-- Logo -->
+                    <a href="#home" data-section="home" class="flex items-center gap-3 group">
+                        <div class="w-10 h-10 border border-gold-400/60 flex items-center justify-center text-gold-400 group-hover:border-gold-400 transition-colors">
+                            <svg class="w-6 h-6 fill-current" viewBox="0 0 24 24">
+                                <path d="M2 4h20v2H2V4zm2 4h3v11H4V8zm5 0h3v11H9V8zm5 0h3v11h-3V8zm5 0h3v11h-3V8zM2 20h20v2H2v-2z"/>
+                            </svg>
+                        </div>
+                        <div class="flex flex-col">
+                            <span class="font-serif text-lg sm:text-xl tracking-[0.15em] text-white font-semibold uppercase leading-none">EXAMPLE LAWYER</span>
+                            <span class="text-[9px] tracking-[0.3em] text-gold-400 font-medium uppercase mt-1">LAW FIRM</span>
+                        </div>
+                    </a>
+
+                    <!-- Desktop Navigation Links with dynamic gold underline -->
+                    <nav class="hidden lg:flex items-center space-x-8 text-xs font-medium uppercase tracking-wider text-slate-300" id="desktop-nav">
+                        <a href="#home" data-section="home" class="nav-item active hover:text-gold-400">Home</a>
+                        <a href="#about" data-section="about" class="nav-item hover:text-gold-400">About Us</a>
+                        <a href="#services" data-section="services" class="nav-item hover:text-gold-400">Services</a>
+                        <a href="#news" data-section="news" class="nav-item hover:text-gold-400">News</a>
+                        <a href="#contact" data-section="contact" class="nav-item hover:text-gold-400">Contact</a>
+                    </nav>
+
+                    <!-- Desktop CTA and Phone Number -->
+                    <div class="hidden sm:flex items-center space-x-4">
+                        <a href="tel:+35612345678" class="flex items-center gap-2 px-3.5 py-2 rounded-full text-xs font-medium text-slate-200 border border-slate-700 bg-navy-800 hover:border-gold-400 transition-colors">
+                            <i class="fa-solid fa-phone text-gold-400 text-xs"></i>
+                            <span>+356 1234 5678</span>
+                        </a>
+                        <a href="#contact" data-section="contact" class="gold-btn font-semibold px-4 py-2.5 rounded text-xs tracking-wider uppercase transition-all shadow hover:shadow-gold-500/20 flex items-center gap-2 transform hover:-translate-y-0.5">
+                            <span>Book a Consultation</span>
+                            <i class="fa-solid fa-arrow-right text-[10px]"></i>
+                        </a>
+                    </div>
+
+                    <!-- Mobile Navigation Hamburger / Close Button matching screenshot -->
+                    <button id="mobile-menu-btn" type="button" class="lg:hidden w-10 h-10 rounded-lg border border-slate-700/80 bg-navy-800/70 flex items-center justify-center text-slate-300 hover:text-gold-400 hover:border-gold-400/50 transition-all focus:outline-none" aria-label="Toggle Navigation">
+                        <i class="fa-solid fa-bars text-lg" id="menu-icon"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- COMPACT MOBILE DROPDOWN MENU (Reasonable size, not full screen, styled like the screenshot) -->
+            <div id="mobile-menu" class="hidden lg:hidden absolute top-full left-0 right-0 bg-navy-950/98 border-b border-gold-400/25 shadow-2xl overflow-hidden z-50">
+                <!-- Subtle Lady Justice / Scales background watermark on the right side like screenshot -->
+                <div class="absolute inset-y-0 right-0 w-3/5 opacity-15 pointer-events-none bg-cover bg-right-top mix-blend-luminosity" style="background-image: url('https://images.unsplash.com/photo-1589829545856-d10d557cf95f?auto=format&fit=crop&w=600&q=80');"></div>
+                <div class="absolute inset-0 bg-gradient-to-r from-navy-950 via-navy-950/95 to-navy-950/75 pointer-events-none"></div>
+
+                <div class="relative z-10 max-w-md mx-auto px-5 py-3">
+                    <!-- Menu Links List -->
+                    <div class="divide-y divide-slate-800/80">
+                        <a href="#home" data-section="home" class="mobile-nav-link flex items-center justify-between py-2.5 text-gold-400 text-[15px] font-medium transition-colors">
+                            <div class="flex items-center gap-3.5">
+                                <i class="fa-solid fa-house w-5 text-center text-gold-400 text-base"></i>
+                                <span>Home</span>
+                            </div>
+                        </a>
+
+                        <a href="#about" data-section="about" class="mobile-nav-link flex items-center justify-between py-2.5 text-slate-200 hover:text-gold-400 text-[15px] font-normal transition-colors">
+                            <div class="flex items-center gap-3.5">
+                                <i class="fa-solid fa-users w-5 text-center text-slate-400 text-base"></i>
+                                <span>About Us</span>
+                            </div>
+                        </a>
+
+                        <a href="#services" data-section="services" class="mobile-nav-link flex items-center justify-between py-2.5 text-slate-200 hover:text-gold-400 text-[15px] font-normal transition-colors">
+                            <div class="flex items-center gap-3.5">
+                                <i class="fa-solid fa-scale-balanced w-5 text-center text-slate-400 text-base"></i>
+                                <span>Services</span>
+                            </div>
+                            <i class="fa-solid fa-chevron-right text-xs text-slate-400 pr-1"></i>
+                        </a>
+
+                        <a href="#news" data-section="news" class="mobile-nav-link flex items-center justify-between py-2.5 text-slate-200 hover:text-gold-400 text-[15px] font-normal transition-colors">
+                            <div class="flex items-center gap-3.5">
+                                <i class="fa-regular fa-file-lines w-5 text-center text-slate-400 text-base"></i>
+                                <span>News</span>
+                            </div>
+                        </a>
+
+                        <a href="#contact" data-section="contact" class="mobile-nav-link flex items-center justify-between py-2.5 text-slate-200 hover:text-gold-400 text-[15px] font-normal transition-colors">
+                            <div class="flex items-center gap-3.5">
+                                <i class="fa-regular fa-envelope w-5 text-center text-slate-400 text-base"></i>
+                                <span>Contact</span>
+                            </div>
+                        </a>
+                    </div>
+
+                    <!-- Bottom Action Buttons matching screenshot & main page rounding -->
+                    <div class="pt-3 mt-1 border-t border-slate-800/80 space-y-2.5 pb-1">
+                        <a href="tel:+35612345678" class="w-full flex items-center justify-center gap-2.5 py-2.5 rounded-full text-sm font-medium text-white border border-slate-700/90 bg-navy-900/90 hover:border-gold-400/60 transition-colors shadow-inner">
+                            <i class="fa-solid fa-phone text-gold-400 text-xs"></i>
+                            <span>+356 1234 5678</span>
+                        </a>
+                        <a href="#contact" data-section="contact" class="w-full gold-btn font-semibold py-3.5 rounded text-center text-xs tracking-wider uppercase flex items-center justify-center gap-2 shadow-md">
+                            <span>BOOK A CONSULTATION</span>
+                            <i class="fa-solid fa-arrow-right text-[10px]"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </header>
+    </div>
+
+    <!-- TAILOREDLY DEMO BANNER -->
+    <div class="tailoredly-banner-wrap" role="region" aria-label="Tailoredly Demo Banner">
+        <div class="tailoredly-banner-box">
+            <div class="tailoredly-left">
+                <div class="tailoredly-icon-box" aria-hidden="true">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="3" y="4" width="18" height="12" rx="2" ry="2"></rect>
+                        <line x1="8" y1="20" x2="16" y2="20"></line>
+                        <line x1="12" y1="16" x2="12" y2="20"></line>
+                    </svg>
+                </div>
+                <div class="tailoredly-brand-text">
+                    <span class="tailoredly-demo-label">WEBSITE DEMO</span>
+                    <div class="tailoredly-madeby">
+                        Made by <strong class="tailoredly-logo-mark">TAILORED<span>LY</span></strong>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tailoredly-divider" aria-hidden="true"></div>
+
+            <div class="tailoredly-middle">
+                <p class="tailoredly-question">Like this design?</p>
+                <p class="tailoredly-subtext">Get a website for your business.</p>
+            </div>
+
+            <a href="file:///C:/Users/Bobik/Desktop/Website creator/index.html" class="tailoredly-btn">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="19" y1="12" x2="5" y2="12"></line>
+                    <polyline points="12 19 5 12 12 5"></polyline>
+                </svg>
+                <span>Back to Portfolio</span>
+            </a>
+        </div>
+    </div>
+    <!-- END TAILOREDLY BANNER -->
+
+    <section id="home" class="relative bg-navy-900 text-white min-h-[560px] sm:min-h-[600px] lg:min-h-[680px] flex items-center overflow-hidden">
+        <!-- Hero Background Image & Gradient Overlay -->
+        <div class="absolute inset-0 z-0">
+            <img src="https://images.unsplash.com/photo-1589829545856-d10d557cf95f?auto=format&fit=crop&w=2000&q=80" alt="Law Office Library" class="w-full h-full object-cover object-center">
+            <div class="absolute inset-0 hero-bg-overlay"></div>
+        </div>
+
+        <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14 sm:py-16 lg:py-20 w-full">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                
+                <!-- Left Main Content -->
+                <div class="lg:col-span-7 space-y-6 text-left">
+                    <span class="text-gold-400 text-xs sm:text-sm tracking-[0.25em] uppercase font-semibold block">
+                        YOUR TRUSTED LEGAL PARTNER
+                    </span>
+                    <h1 class="font-serif text-4xl sm:text-5xl lg:text-6xl text-white font-normal leading-[1.15]">
+                        Clear Advice <br class="hidden sm:inline">
+                        <span class="font-serif italic text-gold-300">for Brighter Futures</span>
+                    </h1>
+                    <div class="w-12 h-[2px] bg-gold-400"></div>
+                    <p class="text-slate-300 text-sm sm:text-base max-w-xl font-light leading-relaxed">
+                        Professional legal support for individuals and businesses. We provide practical solutions, clear advice and dedicated representation in every matter.
+                    </p>
+                    <div class="pt-2 flex flex-col sm:flex-row items-stretch sm:items-center gap-3.5 sm:gap-4">
+                        <a href="#contact" data-nav-target="contact" class="gold-btn font-semibold px-7 py-3.5 rounded text-xs tracking-wider uppercase transition-all shadow-md flex items-center justify-center gap-2 transform hover:-translate-y-0.5">
+                            <span>Book a Consultation</span>
+                            <i class="fa-solid fa-arrow-right text-[10px]"></i>
+                        </a>
+                        <a href="#services" data-nav-target="services" class="border border-slate-500/80 hover:border-gold-400 text-slate-200 hover:text-white font-medium px-7 py-3.5 rounded text-xs tracking-wider uppercase transition-all text-center transform hover:-translate-y-0.5">
+                            Our Services
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Right Visual Showcase with Book Spine Overlay Badges -->
+                <div class="lg:col-span-5 relative hidden md:flex justify-end items-center">
+                    <div class="relative w-full max-w-md">
+                        <div class="relative rounded border border-gold-400/30 overflow-hidden shadow-2xl bg-navy-800">
+                            <img src="https://images.unsplash.com/photo-1505664194779-8beaceb93744?auto=format&fit=crop&w=800&q=80" alt="Scales of Justice" class="w-full h-80 lg:h-96 object-cover">
+                        </div>
+
+                        <!-- Stacked Book Badges -->
+                        <div class="absolute top-1/2 -translate-y-1/2 -right-4 lg:-right-6 flex flex-col space-y-2 z-20">
+                            <div class="bg-navy-900/90 border border-gold-400/40 px-3.5 py-2 rounded text-[11px] font-serif font-bold text-gold-300 tracking-widest shadow-xl backdrop-blur flex items-center gap-2">
+                                <i class="fa-solid fa-scale-unbalanced-flip text-gold-400 text-xs"></i>
+                                <span>CIVIL LAW</span>
+                            </div>
+                            <div class="bg-navy-900/90 border border-gold-400/40 px-3.5 py-2 rounded text-[11px] font-serif font-bold text-gold-300 tracking-widest shadow-xl backdrop-blur flex items-center gap-2">
+                                <i class="fa-solid fa-gavel text-gold-400 text-xs"></i>
+                                <span>CRIMINAL LAW</span>
+                            </div>
+                            <div class="bg-navy-900/90 border border-gold-400/40 px-3.5 py-2 rounded text-[11px] font-serif font-bold text-gold-300 tracking-widest shadow-xl backdrop-blur flex items-center gap-2">
+                                <i class="fa-solid fa-briefcase text-gold-400 text-xs"></i>
+                                <span>COMMERCIAL LAW</span>
+                            </div>
+                            <div class="bg-navy-900/90 border border-gold-400/40 px-3.5 py-2 rounded text-[11px] font-serif font-bold text-gold-300 tracking-widest shadow-xl backdrop-blur flex items-center gap-2">
+                                <i class="fa-solid fa-users text-gold-400 text-xs"></i>
+                                <span>FAMILY LAW</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <section class="bg-cream-100 border-b border-cream-200 py-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 sm:gap-6">
+                
+                <div class="flex items-center space-x-4 bg-white/60 sm:bg-transparent p-3.5 sm:p-0 rounded-lg border border-cream-200/80 sm:border-0">
+                    <div class="w-12 h-12 rounded border border-gold-400/40 bg-white flex items-center justify-center text-gold-600 flex-shrink-0 text-xl shadow-sm">
+                        <i class="fa-regular fa-user"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-serif text-base font-bold text-navy-900">Individuals</h3>
+                        <p class="text-xs text-slate-600 leading-snug">Legal support for your personal matters.</p>
+                    </div>
+                </div>
+
+                <div class="flex items-center space-x-4 bg-white/60 sm:bg-transparent p-3.5 sm:p-0 rounded-lg border border-cream-200/80 sm:border-0">
+                    <div class="w-12 h-12 rounded border border-gold-400/40 bg-white flex items-center justify-center text-gold-600 flex-shrink-0 text-xl shadow-sm">
+                        <i class="fa-solid fa-briefcase"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-serif text-base font-bold text-navy-900">Businesses</h3>
+                        <p class="text-xs text-slate-600 leading-snug">Practical advice for your business goals.</p>
+                    </div>
+                </div>
+
+                <div class="flex items-center space-x-4 bg-white/60 sm:bg-transparent p-3.5 sm:p-0 rounded-lg border border-cream-200/80 sm:border-0">
+                    <div class="w-12 h-12 rounded border border-gold-400/40 bg-white flex items-center justify-center text-gold-600 flex-shrink-0 text-xl shadow-sm">
+                        <i class="fa-regular fa-file-lines"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-serif text-base font-bold text-navy-900">Case Representation</h3>
+                        <p class="text-xs text-slate-600 leading-snug">Dedicated support in and out of court.</p>
+                    </div>
+                </div>
+
+                <div class="flex items-center space-x-4 bg-white/60 sm:bg-transparent p-3.5 sm:p-0 rounded-lg border border-cream-200/80 sm:border-0">
+                    <div class="w-12 h-12 rounded border border-gold-400/40 bg-white flex items-center justify-center text-gold-600 flex-shrink-0 text-xl shadow-sm">
+                        <i class="fa-regular fa-square-check"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-serif text-base font-bold text-navy-900">Trusted Advice</h3>
+                        <p class="text-xs text-slate-600 leading-snug">Clear, honest and professional guidance.</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <section id="about" class="py-16 sm:py-24 bg-cream-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center">
+                
+                <!-- Left Descriptive Text -->
+                <div class="lg:col-span-6 space-y-5">
+                    <span class="text-xs text-gold-600 tracking-[0.2em] font-semibold uppercase">ABOUT YOUR BUSINESS</span>
+                    <h2 class="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold text-navy-900 leading-tight">
+                        A place to introduce your business
+                    </h2>
+                    <p class="text-slate-600 text-sm sm:text-base leading-relaxed font-light">
+                        Tell your story, showcase what makes your business special, and let your customers discover what you have to offer. This section is the perfect place to introduce your brand and build trust with your audience.
+                    </p>
+                    <div class="pt-2">
+                        <a href="#contact" data-nav-target="contact" class="gold-btn font-semibold px-6 py-3.5 rounded text-xs tracking-wider uppercase transition-all inline-flex items-center justify-center w-full sm:w-auto gap-2 shadow hover:shadow-md transform hover:-translate-y-0.5">
+                            <span>LEARN MORE ABOUT US</span>
+                            <i class="fa-solid fa-arrow-right text-[10px]"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Right Image Showcase with "EXAMPLE PHOTO" Overlay Badge -->
+                <div class="lg:col-span-6">
+                    <div class="relative rounded-lg overflow-hidden shadow-xl border border-cream-200 group">
+                        <!-- Main Image -->
+                        <img src="https://images.unsplash.com/photo-1450133064473-71024230f91b?auto=format&fit=crop&w=1200&q=80" alt="About Your Business photo" class="w-full h-72 sm:h-[400px] object-cover">
+                        
+                        <!-- EXAMPLE PHOTO Overlay Badge -->
+                        <div class="absolute inset-0 flex items-center justify-center p-4">
+                            <div class="example-photo-badge px-5 sm:px-6 py-2.5 sm:py-3 rounded-2xl shadow-2xl -rotate-6 transform transition-transform group-hover:scale-105">
+                                <span class="font-serif text-gold-400 font-extrabold text-lg sm:text-2xl lg:text-3xl tracking-[0.2em] uppercase drop-shadow-md">
+                                    EXAMPLE PHOTO
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <section id="services" class="py-16 sm:py-24 bg-cream-100 border-t border-b border-cream-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <!-- Section Header -->
+            <div class="flex flex-col sm:flex-row sm:items-end justify-between mb-10 sm:mb-12">
+                <div>
+                    <span class="text-xs text-gold-600 tracking-[0.2em] font-semibold uppercase">OUR SERVICES</span>
+                    <h2 class="font-serif text-3xl sm:text-4xl font-bold text-navy-900 mt-1">How We Can Help</h2>
+                </div>
+                <a href="#contact" data-nav-target="contact" class="mt-4 sm:mt-0 text-gold-600 hover:text-gold-700 font-semibold text-xs tracking-wider uppercase flex items-center gap-1 group w-fit">
+                    <span>View All Services</span>
+                    <i class="fa-solid fa-arrow-right text-[10px] transition-transform group-hover:translate-x-1"></i>
+                </a>
+            </div>
+
+            <!-- 4 Column Services Cards Grid -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                
+                <!-- Card 1: Civil Law -->
+                <div class="bg-white rounded-lg overflow-hidden border border-slate-200 shadow-sm hover:shadow-md transition-all flex flex-col justify-between">
+                    <div>
+                        <div class="relative h-48 sm:h-44 overflow-hidden group/img">
+                            <img src="https://images.unsplash.com/photo-1589829545856-d10d557cf95f?auto=format&fit=crop&w=600&q=80" alt="Civil Law" class="w-full h-full object-cover">
+                            <!-- Top Left Icon -->
+                            <div class="absolute top-2.5 left-2.5 bg-white/95 p-2 rounded border border-gold-400/40 text-gold-600 shadow-sm z-10 flex items-center justify-center">
+                                <i class="fa-regular fa-file-lines text-sm"></i>
+                            </div>
+                            <!-- EXAMPLE PHOTO Overlay Badge -->
+                            <div class="absolute inset-0 flex items-center justify-center p-2">
+                                <div class="example-photo-badge px-3 py-1.5 rounded-xl shadow-xl -rotate-6 transform transition-transform group-hover/img:scale-105">
+                                    <span class="font-serif text-gold-400 font-extrabold text-xs sm:text-sm tracking-[0.15em] uppercase drop-shadow">
+                                        EXAMPLE PHOTO
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="p-5">
+                            <h3 class="font-serif text-lg font-bold text-navy-900 mb-1">Civil Law</h3>
+                            <p class="text-xs text-slate-600 leading-relaxed">Property, contracts, disputes and more.</p>
+                        </div>
+                    </div>
+                    <div class="px-5 pb-5">
+                        <a href="#contact" data-nav-target="contact" class="text-gold-600 hover:text-gold-700 font-semibold text-xs flex items-center gap-1 group w-fit">
+                            <span>Learn More</span>
+                            <i class="fa-solid fa-arrow-right text-[9px] transition-transform group-hover:translate-x-1"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Card 2: Family Law -->
+                <div class="bg-white rounded-lg overflow-hidden border border-slate-200 shadow-sm hover:shadow-md transition-all flex flex-col justify-between">
+                    <div>
+                        <div class="relative h-48 sm:h-44 overflow-hidden group/img">
+                            <img src="https://images.unsplash.com/photo-1521791136064-7986c2920216?auto=format&fit=crop&w=600&q=80" alt="Family Law" class="w-full h-full object-cover">
+                            <!-- Top Left Icon -->
+                            <div class="absolute top-2.5 left-2.5 bg-white/95 p-2 rounded border border-gold-400/40 text-gold-600 shadow-sm z-10 flex items-center justify-center">
+                                <i class="fa-solid fa-users text-sm"></i>
+                            </div>
+                            <!-- EXAMPLE PHOTO Overlay Badge -->
+                            <div class="absolute inset-0 flex items-center justify-center p-2">
+                                <div class="example-photo-badge px-3 py-1.5 rounded-xl shadow-xl -rotate-6 transform transition-transform group-hover/img:scale-105">
+                                    <span class="font-serif text-gold-400 font-extrabold text-xs sm:text-sm tracking-[0.15em] uppercase drop-shadow">
+                                        EXAMPLE PHOTO
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="p-5">
+                            <h3 class="font-serif text-lg font-bold text-navy-900 mb-1">Family Law</h3>
+                            <p class="text-xs text-slate-600 leading-relaxed">Support with divorce, child custody and family matters.</p>
+                        </div>
+                    </div>
+                    <div class="px-5 pb-5">
+                        <a href="#contact" data-nav-target="contact" class="text-gold-600 hover:text-gold-700 font-semibold text-xs flex items-center gap-1 group w-fit">
+                            <span>Learn More</span>
+                            <i class="fa-solid fa-arrow-right text-[9px] transition-transform group-hover:translate-x-1"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Card 3: Commercial Law -->
+                <div class="bg-white rounded-lg overflow-hidden border border-slate-200 shadow-sm hover:shadow-md transition-all flex flex-col justify-between">
+                    <div>
+                        <div class="relative h-48 sm:h-44 overflow-hidden group/img">
+                            <img src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=600&q=80" alt="Commercial Law" class="w-full h-full object-cover">
+                            <!-- Top Left Icon -->
+                            <div class="absolute top-2.5 left-2.5 bg-white/95 p-2 rounded border border-gold-400/40 text-gold-600 shadow-sm z-10 flex items-center justify-center">
+                                <i class="fa-solid fa-briefcase text-sm"></i>
+                            </div>
+                            <!-- EXAMPLE PHOTO Overlay Badge -->
+                            <div class="absolute inset-0 flex items-center justify-center p-2">
+                                <div class="example-photo-badge px-3 py-1.5 rounded-xl shadow-xl -rotate-6 transform transition-transform group-hover/img:scale-105">
+                                    <span class="font-serif text-gold-400 font-extrabold text-xs sm:text-sm tracking-[0.15em] uppercase drop-shadow">
+                                        EXAMPLE PHOTO
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="p-5">
+                            <h3 class="font-serif text-lg font-bold text-navy-900 mb-1">Commercial Law</h3>
+                            <p class="text-xs text-slate-600 leading-relaxed">Legal advice for companies and entrepreneurs.</p>
+                        </div>
+                    </div>
+                    <div class="px-5 pb-5">
+                        <a href="#contact" data-nav-target="contact" class="text-gold-600 hover:text-gold-700 font-semibold text-xs flex items-center gap-1 group w-fit">
+                            <span>Learn More</span>
+                            <i class="fa-solid fa-arrow-right text-[9px] transition-transform group-hover:translate-x-1"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Card 4: Criminal Law -->
+                <div class="bg-white rounded-lg overflow-hidden border border-slate-200 shadow-sm hover:shadow-md transition-all flex flex-col justify-between">
+                    <div>
+                        <div class="relative h-48 sm:h-44 overflow-hidden group/img">
+                            <img src="https://images.unsplash.com/photo-1436450412740-6b988f486c6b?auto=format&fit=crop&w=600&q=80" alt="Criminal Law" class="w-full h-full object-cover">
+                            <!-- Top Left Icon -->
+                            <div class="absolute top-2.5 left-2.5 bg-white/95 p-2 rounded border border-gold-400/40 text-gold-600 shadow-sm z-10 flex items-center justify-center">
+                                <svg class="w-4 h-4 fill-current text-gold-600" viewBox="0 0 24 24">
+                                    <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-5.45 9-12V5l-9-4zm-2 16l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z"/>
+                                </svg>
+                            </div>
+                            <!-- EXAMPLE PHOTO Overlay Badge -->
+                            <div class="absolute inset-0 flex items-center justify-center p-2">
+                                <div class="example-photo-badge px-3 py-1.5 rounded-xl shadow-xl -rotate-6 transform transition-transform group-hover/img:scale-105">
+                                    <span class="font-serif text-gold-400 font-extrabold text-xs sm:text-sm tracking-[0.15em] uppercase drop-shadow">
+                                        EXAMPLE PHOTO
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="p-5">
+                            <h3 class="font-serif text-lg font-bold text-navy-900 mb-1">Criminal Law</h3>
+                            <p class="text-xs text-slate-600 leading-relaxed">Experienced representation and legal support.</p>
+                        </div>
+                    </div>
+                    <div class="px-5 pb-5">
+                        <a href="#contact" data-nav-target="contact" class="text-gold-600 hover:text-gold-700 font-semibold text-xs flex items-center gap-1 group w-fit">
+                            <span>Learn More</span>
+                            <i class="fa-solid fa-arrow-right text-[9px] transition-transform group-hover:translate-x-1"></i>
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <section id="news" class="bg-navy-900 text-white py-16 sm:py-24 relative overflow-hidden">
+        <!-- Subtle background texture -->
+        <div class="absolute inset-0 opacity-10 pointer-events-none bg-center bg-cover" style="background-image: url('https://images.unsplash.com/photo-1541872703-74c5e44368f9?auto=format&fit=crop&w=1600&q=80');"></div>
+
+        <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center">
+                
+                <!-- Left Title & Navigation Buttons -->
+                <div class="lg:col-span-5 space-y-4 sm:space-y-6 text-center lg:text-left">
+                    <span class="text-xs text-gold-400 tracking-[0.2em] font-semibold uppercase block">CLIENT TESTIMONIALS</span>
+                    <h2 class="font-serif text-3xl sm:text-4xl font-bold text-white leading-tight">
+                        What Our Clients Say
+                    </h2>
+                    <div class="flex items-center justify-center lg:justify-start space-x-3 pt-1 sm:pt-2">
+                        <button id="prev-btn" class="w-10 h-10 rounded-full border border-slate-700 flex items-center justify-center text-slate-300 hover:border-gold-400 hover:text-gold-400 transition-colors" aria-label="Previous Testimonial">
+                            <i class="fa-solid fa-chevron-left text-xs"></i>
+                        </button>
+                        <button id="next-btn" class="w-10 h-10 rounded-full border border-slate-700 flex items-center justify-center text-slate-300 hover:border-gold-400 hover:text-gold-400 transition-colors" aria-label="Next Testimonial">
+                            <i class="fa-solid fa-chevron-right text-xs"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Right Testimonial Quote Box -->
+                <div class="lg:col-span-7">
+                    <div class="bg-navy-800/80 border border-slate-800 rounded-lg p-6 sm:p-10 relative">
+                        <span class="text-gold-400 font-serif text-5xl leading-none absolute top-4 left-6 select-none opacity-80">“</span>
+                        <div class="relative z-10 pt-4">
+                            <p id="quote-text" class="text-slate-200 text-sm sm:text-base leading-relaxed font-light min-h-[72px] sm:min-h-[60px]">
+                                Professional, knowledgeable and very supportive throughout the entire process. I highly recommend Example Lawyer.
+                            </p>
+                            <div class="mt-6 pt-4 border-t border-slate-700/60 flex items-center justify-between">
+                                <div>
+                                    <div id="quote-author" class="font-bold text-gold-400 text-sm">John D.</div>
+                                    <div id="quote-role" class="text-[11px] text-slate-400">Private Client</div>
+                                </div>
+                                <!-- Dots Nav -->
+                                <div class="flex space-x-2" id="dots-container">
+                                    <span class="w-2.5 h-2.5 rounded-full bg-gold-400 cursor-pointer"></span>
+                                    <span class="w-2.5 h-2.5 rounded-full bg-slate-600 cursor-pointer"></span>
+                                    <span class="w-2.5 h-2.5 rounded-full bg-slate-600 cursor-pointer"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="py-16 sm:py-24 bg-cream-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12">
+                
+                <!-- Left Information Column -->
+                <div class="lg:col-span-5 space-y-6">
+                    <div>
+                        <span class="text-xs text-gold-600 tracking-[0.2em] font-semibold uppercase">GET IN TOUCH</span>
+                        <h2 class="font-serif text-3xl sm:text-4xl font-bold text-navy-900 leading-tight mt-1">
+                            Book a Consultation
+                        </h2>
+                        <p class="text-slate-600 text-sm leading-relaxed font-light mt-3">
+                            Have a question or need legal advice? Get in touch with our team and book a consultation. We are here to help.
+                        </p>
+                    </div>
+
+                    <!-- Contact Details with Perfectly Aligned Icon Containers -->
+                    <div class="space-y-4 pt-2">
+                        <!-- Phone -->
+                        <div class="flex items-center space-x-3.5">
+                            <div class="w-8 h-8 rounded bg-cream-100 border border-gold-400/40 flex items-center justify-center flex-shrink-0 text-gold-600">
+                                <i class="fa-solid fa-phone text-xs leading-none"></i>
+                            </div>
+                            <div class="text-xs sm:text-sm font-medium text-slate-800 leading-none">
+                                <a href="tel:+35612345678" class="hover:text-gold-600 transition-colors">+356 1234 5678</a>
+                            </div>
+                        </div>
+
+                        <!-- Email -->
+                        <div class="flex items-center space-x-3.5">
+                            <div class="w-8 h-8 rounded bg-cream-100 border border-gold-400/40 flex items-center justify-center flex-shrink-0 text-gold-600">
+                                <i class="fa-solid fa-envelope text-xs leading-none"></i>
+                            </div>
+                            <div class="text-xs sm:text-sm font-medium text-slate-800 leading-none">
+                                <a href="mailto:info@examplelawyer.com" class="hover:text-gold-600 transition-colors">info@examplelawyer.com</a>
+                            </div>
+                        </div>
+
+                        <!-- Address -->
+                        <div class="flex items-center space-x-3.5">
+                            <div class="w-8 h-8 rounded bg-cream-100 border border-gold-400/40 flex items-center justify-center flex-shrink-0 text-gold-600">
+                                <i class="fa-solid fa-location-dot text-xs leading-none"></i>
+                            </div>
+                            <div class="text-xs sm:text-sm font-medium text-slate-800 leading-none">
+                                123 Legal Street, Valletta, Malta
+                            </div>
+                        </div>
+
+                        <!-- Working Hours -->
+                        <div class="flex items-center space-x-3.5">
+                            <div class="w-8 h-8 rounded bg-cream-100 border border-gold-400/40 flex items-center justify-center flex-shrink-0 text-gold-600">
+                                <i class="fa-regular fa-clock text-xs leading-none"></i>
+                            </div>
+                            <div class="text-xs sm:text-sm font-medium text-slate-800 leading-none">
+                                Mon – Fri: 09:00 – 17:00
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Form Box -->
+                <div class="lg:col-span-7">
+                    <div class="bg-cream-100 border border-cream-200 rounded-lg p-6 sm:p-8 shadow-sm">
+                        
+                        <form id="consultation-form-el" class="space-y-4">
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-[11px] font-semibold text-slate-700 mb-1">Full Name <span class="text-gold-600">*</span></label>
+                                    <input type="text" required placeholder="Your name" class="w-full px-3.5 py-2.5 rounded border border-slate-300 bg-white text-xs sm:text-sm text-slate-800 placeholder-slate-400 focus:outline-none focus:border-gold-500 focus:ring-1 focus:ring-gold-500">
+                                </div>
+                                <div>
+                                    <label class="block text-[11px] font-semibold text-slate-700 mb-1">Email Address <span class="text-gold-600">*</span></label>
+                                    <input type="email" required placeholder="you@example.com" class="w-full px-3.5 py-2.5 rounded border border-slate-300 bg-white text-xs sm:text-sm text-slate-800 placeholder-slate-400 focus:outline-none focus:border-gold-500 focus:ring-1 focus:ring-gold-500">
+                                </div>
+                            </div>
+
+                            <div>
+                                <label class="block text-[11px] font-semibold text-slate-700 mb-1">Phone Number</label>
+                                <input type="tel" placeholder="+356 1234 5678" class="w-full px-3.5 py-2.5 rounded border border-slate-300 bg-white text-xs sm:text-sm text-slate-800 placeholder-slate-400 focus:outline-none focus:border-gold-500 focus:ring-1 focus:ring-gold-500">
+                            </div>
+
+                            <div>
+                                <label class="block text-[11px] font-semibold text-slate-700 mb-1">How can we help? <span class="text-gold-600">*</span></label>
+                                <textarea required rows="3" placeholder="Please provide a brief description..." class="w-full px-3.5 py-2.5 rounded border border-slate-300 bg-white text-xs sm:text-sm text-slate-800 placeholder-slate-400 focus:outline-none focus:border-gold-500 focus:ring-1 focus:ring-gold-500 resize-none"></textarea>
+                            </div>
+
+                            <button type="submit" class="w-full gold-btn font-semibold py-3.5 rounded text-xs tracking-wider uppercase transition-all shadow hover:shadow-md flex items-center justify-center gap-2 transform hover:-translate-y-0.5">
+                                <span>Send Message</span>
+                                <i class="fa-solid fa-arrow-right text-[10px]"></i>
+                            </button>
+
+                            <!-- Demo Success Notification Box -->
+                            <div id="contact-alert" class="hidden mt-4 p-5 rounded-lg bg-navy-900 border border-gold-400/50 text-center space-y-1.5 shadow-lg">
+                                <p class="font-serif font-bold text-gold-400 text-base sm:text-lg flex items-center justify-center gap-2">
+                                    <i class="fa-solid fa-circle-check text-gold-400 text-sm"></i>
+                                    <span>Thank you for your enquiry!</span>
+                                </p>
+                                <p class="text-xs sm:text-sm text-slate-200 font-light">
+                                    Your demo request has been submitted successfully.
+                                </p>
+                                <p class="text-xs sm:text-sm font-semibold text-gold-300 pt-1">
+                                    Ready to create a website for your business? Get in touch with Tailoredly!
+                                </p>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-navy-900 text-slate-400 border-t border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+            <div class="flex flex-col md:flex-row items-center justify-between gap-6 border-b border-slate-800/80 pb-8 text-center md:text-left">
+                
+                <!-- Footer Logo -->
+                <a href="#home" data-section="home" class="flex items-center gap-3">
+                    <div class="w-8 h-8 border border-gold-400/60 flex items-center justify-center text-gold-400">
+                        <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24">
+                            <path d="M2 4h20v2H2V4zm2 4h3v11H4V8zm5 0h3v11H9V8zm5 0h3v11h-3V8zm5 0h3v11h-3V8zM2 20h20v2H2v-2z"/>
+                        </svg>
+                    </div>
+                    <div class="flex flex-col text-left">
+                        <span class="font-serif text-base tracking-[0.15em] text-white font-semibold uppercase leading-none">EXAMPLE LAWYER</span>
+                        <span class="text-[8px] tracking-[0.3em] text-gold-400 font-medium uppercase mt-1">LAW FIRM</span>
+                    </div>
+                </a>
+
+                <!-- Footer Navigation -->
+                <nav class="flex flex-wrap justify-center gap-6 text-xs font-medium text-slate-300">
+                    <a href="#home" data-section="home" class="hover:text-gold-400 transition-colors">Home</a>
+                    <a href="#about" data-section="about" class="hover:text-gold-400 transition-colors">About Us</a>
+                    <a href="#services" data-section="services" class="hover:text-gold-400 transition-colors">Services</a>
+                    <a href="#contact" data-section="contact" class="hover:text-gold-400 transition-colors">Contact</a>
+                </nav>
+
+                <!-- Social Icons -->
+                <div class="flex items-center space-x-3 text-slate-400">
+                    <a href="#home" aria-label="LinkedIn" class="w-8 h-8 rounded border border-slate-800 flex items-center justify-center hover:border-gold-400 hover:text-gold-400 transition-colors text-xs">
+                        <i class="fa-brands fa-linkedin-in"></i>
+                    </a>
+                    <a href="#home" aria-label="Facebook" class="w-8 h-8 rounded border border-slate-800 flex items-center justify-center hover:border-gold-400 hover:text-gold-400 transition-colors text-xs">
+                        <i class="fa-brands fa-facebook-f"></i>
+                    </a>
+                    <a href="#home" aria-label="Instagram" class="w-8 h-8 rounded border border-slate-800 flex items-center justify-center hover:border-gold-400 hover:text-gold-400 transition-colors text-xs">
+                        <i class="fa-brands fa-instagram"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Copyright Notice -->
+            <div class="pt-6 text-center md:text-left text-[11px] text-slate-500">
+                <p>© 2026 Example Lawyer. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Compact Mobile Menu Toggle Logic
+            const menuBtn = document.getElementById('mobile-menu-btn');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const menuIcon = document.getElementById('menu-icon');
+
+            function toggleMobileMenu() {
+                if (mobileMenu) {
+                    mobileMenu.classList.toggle('hidden');
+                    if (mobileMenu.classList.contains('hidden')) {
+                        menuIcon.className = 'fa-solid fa-bars text-lg';
+                        menuBtn.classList.remove('border-gold-400/60', 'text-gold-400');
+                    } else {
+                        menuIcon.className = 'fa-solid fa-xmark text-lg text-gold-400';
+                        menuBtn.classList.add('border-gold-400/60', 'text-gold-400');
+                    }
+                }
+            }
+
+            if (menuBtn) {
+                menuBtn.addEventListener('click', toggleMobileMenu);
+            }
+
+            mobileMenu.querySelectorAll('a').forEach(link => {
+                link.addEventListener('click', () => {
+                    mobileMenu.classList.add('hidden');
+                    menuIcon.className = 'fa-solid fa-bars text-lg';
+                    menuBtn.classList.remove('border-gold-400/60', 'text-gold-400');
+                });
+            });
+
+            // Active Navigation Underline Logic (Click + Scroll Spy)
+            const desktopNavLinks = document.querySelectorAll('#desktop-nav .nav-item');
+            const mobileNavLinks = document.querySelectorAll('.mobile-nav-link');
+            const sections = ['home', 'about', 'services', 'news', 'contact'];
+
+            function setActiveNav(sectionId) {
+                desktopNavLinks.forEach(link => {
+                    if (link.getAttribute('data-section') === sectionId) {
+                        link.classList.add('active');
+                    } else {
+                        link.classList.remove('active');
+                    }
+                });
+
+                mobileNavLinks.forEach(link => {
+                    const icon = link.querySelector('i');
+                    if (link.getAttribute('data-section') === sectionId) {
+                        link.classList.add('text-gold-400', 'font-medium');
+                        link.classList.remove('text-slate-200', 'font-normal');
+                        if (icon) {
+                            icon.classList.add('text-gold-400');
+                            icon.classList.remove('text-slate-400');
+                        }
+                    } else {
+                        link.classList.remove('text-gold-400', 'font-medium');
+                        link.classList.add('text-slate-200', 'font-normal');
+                        if (icon) {
+                            icon.classList.remove('text-gold-400');
+                            icon.classList.add('text-slate-400');
+                        }
+                    }
+                });
+            }
+
+            desktopNavLinks.forEach(link => {
+                link.addEventListener('click', function() {
+                    const target = this.getAttribute('data-section');
+                    if (target) setActiveNav(target);
+                });
+            });
+
+            mobileNavLinks.forEach(link => {
+                link.addEventListener('click', function() {
+                    const target = this.getAttribute('data-section');
+                    if (target) setActiveNav(target);
+                });
+            });
+
+            document.querySelectorAll('[data-nav-target]').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const target = this.getAttribute('data-nav-target');
+                    if (target) setActiveNav(target);
+                });
+            });
+
+            window.addEventListener('scroll', function() {
+                const scrollPosition = window.scrollY + 240;
+
+                if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight - 40) {
+                    setActiveNav('contact');
+                    return;
+                }
+
+                let currentSection = 'home';
+                sections.forEach(secId => {
+                    const el = document.getElementById(secId);
+                    if (el && el.offsetTop <= scrollPosition) {
+                        currentSection = secId;
+                    }
+                });
+
+                setActiveNav(currentSection);
+            }, { passive: true });
+
+            // Testimonials Slider Logic
+            const testimonialsData = [
+                {
+                    quote: "Professional, knowledgeable and very supportive throughout the entire process. I highly recommend Example Lawyer.",
+                    author: "John D.",
+                    role: "Private Client"
+                },
+                {
+                    quote: "Exceptional legal service! Their commercial law team handled our corporate acquisition seamlessly and efficiently.",
+                    author: "Sarah M.",
+                    role: "Corporate Client"
+                },
+                {
+                    quote: "Outstanding advice and guidance in family law matters. They provided clear answers during a challenging time.",
+                    author: "Michael T.",
+                    role: "Private Client"
+                }
+            ];
+
+            let currentIndex = 0;
+            const quoteEl = document.getElementById('quote-text');
+            const authorEl = document.getElementById('quote-author');
+            const roleEl = document.getElementById('quote-role');
+            const dotsContainer = document.getElementById('dots-container');
+
+            function renderTestimonial(idx) {
+                currentIndex = idx;
+                if (quoteEl) quoteEl.textContent = testimonialsData[idx].quote;
+                if (authorEl) authorEl.textContent = testimonialsData[idx].author;
+                if (roleEl) roleEl.textContent = testimonialsData[idx].role;
+
+                if (dotsContainer) {
+                    const dots = dotsContainer.querySelectorAll('span');
+                    dots.forEach((dot, i) => {
+                        dot.className = i === idx ? 
+                            'w-2.5 h-2.5 rounded-full bg-gold-400 cursor-pointer transition-all' : 
+                            'w-2.5 h-2.5 rounded-full bg-slate-600 cursor-pointer transition-all';
+                    });
+                }
+            }
+
+            const prevBtn = document.getElementById('prev-btn');
+            const nextBtn = document.getElementById('next-btn');
+
+            if (prevBtn) {
+                prevBtn.addEventListener('click', () => {
+                    let prevIdx = (currentIndex - 1 + testimonialsData.length) % testimonialsData.length;
+                    renderTestimonial(prevIdx);
+                });
+            }
+
+            if (nextBtn) {
+                nextBtn.addEventListener('click', () => {
+                    let nextIdx = (currentIndex + 1) % testimonialsData.length;
+                    renderTestimonial(nextIdx);
+                });
+            }
+
+            if (dotsContainer) {
+                dotsContainer.querySelectorAll('span').forEach((dot, i) => {
+                    dot.addEventListener('click', () => renderTestimonial(i));
+                });
+            }
+
+            // Form Submit Simulation
+            const form = document.getElementById('consultation-form-el');
+            const alertBox = document.getElementById('contact-alert');
+
+            if (form) {
+                form.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    if (alertBox) alertBox.classList.remove('hidden');
+                    form.reset();
+                    setTimeout(() => {
+                        if (alertBox) alertBox.classList.add('hidden');
+                    }, 8000);
+                });
+            }
+        });
+    </script>
+</body>
+</html>

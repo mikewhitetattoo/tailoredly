@@ -1,0 +1,1522 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Example Pizza - Italian Kitchen</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts: Cinzel, Playfair Display, Plus Jakarta Sans, Pacifico & Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800;900&family=Inter:wght@400;500;600;700;800;900&family=Pacifico&family=Playfair+Display:ital,wght@0,600;0,700;0,800;0,900;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        serif: ['"Playfair Display"', 'Georgia', 'serif'],
+                        display: ['"Cinzel"', 'Georgia', 'serif'],
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                        neon: ['"Pacifico"', 'cursive'],
+                        inter: ['Inter', 'sans-serif']
+                    },
+                    colors: {
+                        cream: '#EFECE6',
+                        creamBar: '#F5F2EC',
+                        darkBg: '#090808',
+                        pizzaRed: '#ED2939',
+                        darkRed: '#C81E2B'
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #EFECE6;
+            color: #181818;
+            overflow-x: hidden;
+        }
+
+        .bg-paper {
+            background-color: #EFECE6;
+        }
+
+        .mobile-menu-opaque {
+            background-color: rgba(8, 7, 7, 0.985) !important;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+
+        .nav-link {
+            position: relative;
+            padding-bottom: 6px;
+            transition: color 0.2s ease;
+        }
+        .nav-link.active-nav {
+            color: #ED2939 !important;
+        }
+        .nav-link.active-nav::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: #ED2939;
+        }
+
+        .neon-pizza-sign {
+            font-family: 'Pacifico', cursive;
+            color: #fff0f3;
+            text-shadow:
+                0 0 6px #ff2a4b,
+                0 0 14px #ff2a4b,
+                0 0 28px #ed2939,
+                0 0 55px #c81e2b;
+        }
+
+        .example-badge {
+            background: rgba(12, 14, 20, 0.88);
+            color: #fbbf24;
+            border: 2px dashed #fbbf24;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.14em;
+            padding: 5px 14px;
+            border-radius: 9999px;
+            transform: rotate(-8deg);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.75);
+            font-size: 11px;
+            pointer-events: none;
+            white-space: nowrap;
+            display: inline-block;
+            z-index: 25;
+        }
+
+        .pizza-board-thumb {
+            background: radial-gradient(circle, #8B572A 65%, #5E3714 100%);
+            padding: 2px;
+            border: 1px solid #4A2B11;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.18);
+        }
+
+        .pizza-zoom {
+            transform: scale(1.18);
+        }
+        .group:hover .pizza-zoom {
+            transform: scale(1.26);
+        }
+
+        @keyframes marquee {
+            0% { transform: translateX(0%); }
+            100% { transform: translateX(-50%); }
+        }
+        .animate-marquee {
+            display: flex;
+            width: max-content;
+            animation: marquee 25s linear infinite;
+        }
+
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        /* TAILOREDLY DEMO BANNER STYLES */
+        .tailoredly-banner-wrap {
+            position: fixed !important;
+            top: 120px !important;
+            right: 24px !important;
+            bottom: auto !important;
+            left: auto !important;
+            transform: none !important;
+            z-index: 2147483647 !important;
+            width: auto;
+            max-width: calc(100vw - 48px);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif !important;
+            box-sizing: border-box;
+            pointer-events: auto;
+        }
+
+        .tailoredly-banner-box {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            padding: 10px 16px;
+            background: radial-gradient(circle at 85% 50%, rgba(190, 18, 74, 0.08) 0%, rgba(6, 6, 8, 0.98) 55%), #060608;
+            border: 1px solid rgba(244, 37, 100, 0.45);
+            border-radius: 16px;
+            box-shadow: 
+                0 0 25px rgba(235, 20, 85, 0.22),
+                0 12px 32px rgba(0, 0, 0, 0.92),
+                inset 0 0 8px rgba(244, 37, 100, 0.04);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+        }
+
+        .tailoredly-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            min-width: 0;
+        }
+
+        .tailoredly-icon-box {
+            width: 38px;
+            height: 38px;
+            min-width: 38px;
+            border-radius: 10px;
+            border: 1px solid rgba(244, 37, 100, 0.4);
+            background: rgba(14, 8, 12, 0.95);
+            box-shadow: 0 0 12px rgba(244, 37, 100, 0.15);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #f42564;
+        }
+
+        .tailoredly-brand-text {
+            display: flex;
+            flex-direction: column;
+            line-height: 1.2;
+        }
+
+        .tailoredly-demo-label {
+            font-size: 9.5px !important;
+            font-weight: 700 !important;
+            letter-spacing: 0.18em !important;
+            text-transform: uppercase !important;
+            color: #f42564 !important;
+            margin-bottom: 2px !important;
+        }
+
+        .tailoredly-madeby {
+            font-size: 16px !important;
+            font-weight: 700 !important;
+            color: #d1d5db !important;
+            letter-spacing: -0.01em !important;
+            white-space: nowrap !important;
+            display: flex !important;
+            align-items: baseline !important;
+            gap: 5px !important;
+        }
+
+        .tailoredly-logo-mark {
+            font-weight: 900 !important;
+            letter-spacing: 0.02em !important;
+            text-transform: uppercase !important;
+            color: #ffffff !important;
+        }
+
+        .tailoredly-logo-mark span {
+            color: #f42564 !important;
+        }
+
+        .tailoredly-divider {
+            width: 1px;
+            height: 32px;
+            background: rgba(255, 255, 255, 0.1);
+            flex-shrink: 0;
+        }
+
+        .tailoredly-middle {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            line-height: 1.3;
+            min-width: 0;
+            padding-right: 4px;
+        }
+
+        .tailoredly-question {
+            font-size: 13px !important;
+            font-weight: 500 !important;
+            color: #f3f4f6 !important;
+            margin: 0 !important;
+            white-space: nowrap !important;
+        }
+
+        .tailoredly-subtext {
+            font-size: 12px !important;
+            font-weight: 400 !important;
+            color: #8e8e99 !important;
+            margin: 0 !important;
+            white-space: nowrap !important;
+        }
+
+        .tailoredly-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 9px 16px;
+            border-radius: 11px;
+            background: linear-gradient(90deg, #f72564 0%, #c11248 100%);
+            color: #ffffff !important;
+            font-size: 13px !important;
+            font-weight: 700 !important;
+            text-decoration: none !important;
+            white-space: nowrap;
+            box-shadow: 0 0 22px rgba(247, 37, 100, 0.5), inset 0 1px 1px rgba(255, 255, 255, 0.25);
+            transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
+            flex-shrink: 0;
+        }
+
+        .tailoredly-btn:hover {
+            transform: translateY(-1px);
+            filter: brightness(1.08);
+            box-shadow: 0 0 30px rgba(247, 37, 100, 0.75), inset 0 1px 1px rgba(255, 255, 255, 0.35);
+        }
+
+        .tailoredly-btn svg {
+            transition: transform 0.2s ease;
+        }
+
+        .tailoredly-btn:hover svg {
+            transform: translateX(-3px);
+        }
+
+        @media (max-width: 1250px) and (min-width: 769px) {
+            .tailoredly-divider,
+            .tailoredly-middle {
+                display: none;
+            }
+        }
+
+        @media (max-width: 768px) {
+            html body {
+                padding-bottom: calc(144px + env(safe-area-inset-bottom, 0px)) !important;
+            }
+            .tailoredly-banner-wrap {
+                top: auto !important;
+                right: auto !important;
+                bottom: calc(56px + env(safe-area-inset-bottom, 0px)) !important;
+                left: 50% !important;
+                transform: translateX(-50%) !important;
+                width: calc(100% - 16px);
+                max-width: 540px;
+            }
+            .tailoredly-banner-box {
+                padding: 10px 12px;
+                gap: 10px;
+                border-radius: 15px;
+            }
+            .tailoredly-divider,
+            .tailoredly-middle {
+                display: none;
+            }
+            .tailoredly-icon-box {
+                width: 36px;
+                height: 36px;
+                min-width: 36px;
+                border-radius: 9px;
+            }
+            .tailoredly-icon-box svg {
+                width: 17px;
+                height: 17px;
+            }
+            .tailoredly-demo-label {
+                font-size: 8.5px !important;
+                letter-spacing: 0.14em !important;
+                margin-bottom: 1px !important;
+            }
+            .tailoredly-madeby {
+                font-size: 15px !important;
+            }
+            .tailoredly-btn {
+                padding: 10px 14px;
+                font-size: 12.5px !important;
+                gap: 6px;
+                border-radius: 10px;
+            }
+        }
+
+        @media (max-width: 360px) {
+            .tailoredly-icon-box {
+                display: none;
+            }
+            .tailoredly-madeby {
+                font-size: 14px !important;
+            }
+            .tailoredly-btn {
+                padding: 9px 12px;
+                font-size: 12px !important;
+            }
+        }
+    </style>
+</head>
+<body class="bg-paper min-h-screen flex flex-col justify-between selection:bg-pizzaRed selection:text-white">
+
+    <!-- Top Demo Ticker Bar -->
+    <div class="fixed top-0 left-0 right-0 z-[60] bg-amber-400 text-slate-950 font-extrabold text-xs uppercase tracking-wider py-1.5 overflow-hidden whitespace-nowrap select-none border-b border-amber-500 shadow-sm">
+        <div class="animate-marquee flex items-center space-x-8">
+            <span class="flex items-center space-x-8">
+                <span>PRZYKŁADOWA STRONA</span><span class="text-amber-800">•</span>
+                <span>DEMO WEBSITE</span><span class="text-amber-800">•</span>
+                <span>PRZYKŁADOWA STRONA</span><span class="text-amber-800">•</span>
+                <span>DEMO WEBSITE</span><span class="text-amber-800">•</span>
+                <span>PRZYKŁADOWA STRONA</span><span class="text-amber-800">•</span>
+                <span>DEMO WEBSITE</span><span class="text-amber-800">•</span>
+            </span>
+            <span class="flex items-center space-x-8" aria-hidden="true">
+                <span>PRZYKŁADOWA STRONA</span><span class="text-amber-800">•</span>
+                <span>DEMO WEBSITE</span><span class="text-amber-800">•</span>
+                <span>PRZYKŁADOWA STRONA</span><span class="text-amber-800">•</span>
+                <span>DEMO WEBSITE</span><span class="text-amber-800">•</span>
+                <span>PRZYKŁADOWA STRONA</span><span class="text-amber-800">•</span>
+                <span>DEMO WEBSITE</span><span class="text-amber-800">•</span>
+            </span>
+        </div>
+    </div>
+
+    <!-- Header Navigation -->
+    <header class="fixed top-[28px] left-0 right-0 z-50 bg-[#070606] border-b border-white/10 text-white shadow-lg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <a href="#home" onclick="switchPage('home')" class="flex items-center gap-3 group">
+                <div class="w-11 h-11 flex items-center justify-center text-pizzaRed group-hover:scale-105 transition-transform">
+                    <svg class="w-10 h-10" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M7 31C14 35 26 35 33 31L20 6L7 31Z" />
+                        <path d="M9.5 26.5C15 29.5 25 29.5 30.5 26.5" />
+                        <circle cx="20" cy="17" r="2.2" />
+                        <circle cx="16" cy="22.5" r="2" />
+                        <circle cx="23.5" cy="23" r="1.8" />
+                    </svg>
+                </div>
+                <div>
+                    <span class="text-xl sm:text-2xl font-extrabold tracking-wider font-sans uppercase block leading-none">EXAMPLE <span class="text-pizzaRed">PIZZA</span></span>
+                    <span class="block text-[9.5px] tracking-[0.32em] uppercase text-neutral-400 mt-1 font-medium">ITALIAN KITCHEN</span>
+                </div>
+            </a>
+
+            <nav class="hidden lg:flex items-center gap-9 font-medium text-sm">
+                <button onclick="switchPage('home')" id="nav-home" class="nav-link active-nav text-white transition hover:text-pizzaRed">Home</button>
+                <button onclick="switchPage('about')" id="nav-about" class="nav-link text-neutral-300 transition hover:text-pizzaRed">About Us</button>
+                <button onclick="switchPage('menu')" id="nav-menu" class="nav-link text-neutral-300 transition hover:text-pizzaRed">Menu</button>
+                <button onclick="switchPage('gallery')" id="nav-gallery" class="nav-link text-neutral-300 transition hover:text-pizzaRed">Gallery</button>
+                <button onclick="switchPage('contact')" id="nav-contact" class="nav-link text-neutral-300 transition hover:text-pizzaRed">Contact</button>
+            </nav>
+
+            <div class="hidden sm:flex items-center gap-3">
+                <button onclick="switchPage('order')" class="bg-pizzaRed hover:bg-darkRed text-white px-4 py-2.5 rounded-md font-bold text-xs tracking-wider uppercase transition shadow-lg shadow-pizzaRed/25 flex items-center gap-2">
+                    <i class="fa-solid fa-motorcycle"></i>
+                    <span>ORDER ONLINE</span>
+                </button>
+                <button onclick="openBookingModal()" class="bg-pizzaRed hover:bg-darkRed text-white px-5 py-2.5 rounded-md font-bold text-xs tracking-wider uppercase transition shadow-lg shadow-pizzaRed/25 flex items-center gap-2">
+                    <i class="fa-regular fa-calendar-days"></i>
+                    <span>BOOK A TABLE</span>
+                </button>
+            </div>
+
+            <button id="mobile-menu-btn" onclick="toggleMobileMenu()" class="lg:hidden w-10 h-10 rounded-lg border border-white/20 bg-[#141212] flex items-center justify-center text-white hover:text-pizzaRed transition-all focus:outline-none" aria-label="Toggle Menu">
+                <i class="fa-solid fa-bars text-lg" id="mobile-menu-icon"></i>
+            </button>
+        </div>
+
+        <div id="mobile-menu" class="hidden lg:hidden absolute top-full left-0 right-0 mobile-menu-opaque border-b-2 border-pizzaRed/50 shadow-[0_25px_50px_rgba(0,0,0,0.95)] overflow-hidden z-50">
+            <div class="max-w-md mx-auto px-5 py-4">
+                <div class="divide-y divide-white/15">
+                    <button onclick="switchPage('home'); closeMobileMenu();" data-mobile-nav="home" class="mobile-nav-item w-full flex items-center justify-between py-3.5 text-pizzaRed font-extrabold text-xs uppercase tracking-wider">
+                        <span class="flex items-center gap-3.5"><i class="fa-solid fa-house w-5 text-center"></i><span>Home</span></span>
+                        <i class="fa-solid fa-chevron-right text-[10px] opacity-80"></i>
+                    </button>
+                    <button onclick="switchPage('about'); closeMobileMenu();" data-mobile-nav="about" class="mobile-nav-item w-full flex items-center justify-between py-3.5 text-white hover:text-pizzaRed font-bold text-xs uppercase tracking-wider">
+                        <span class="flex items-center gap-3.5"><i class="fa-solid fa-fire-burner w-5 text-center text-pizzaRed/80"></i><span>About Us</span></span>
+                        <i class="fa-solid fa-chevron-right text-[10px] opacity-50"></i>
+                    </button>
+                    <button onclick="switchPage('menu'); closeMobileMenu();" data-mobile-nav="menu" class="mobile-nav-item w-full flex items-center justify-between py-3.5 text-white hover:text-pizzaRed font-bold text-xs uppercase tracking-wider">
+                        <span class="flex items-center gap-3.5"><i class="fa-solid fa-pizza-slice w-5 text-center text-pizzaRed/80"></i><span>Menu</span></span>
+                        <i class="fa-solid fa-chevron-right text-[10px] opacity-50"></i>
+                    </button>
+                    <button onclick="switchPage('gallery'); closeMobileMenu();" data-mobile-nav="gallery" class="mobile-nav-item w-full flex items-center justify-between py-3.5 text-white hover:text-pizzaRed font-bold text-xs uppercase tracking-wider">
+                        <span class="flex items-center gap-3.5"><i class="fa-regular fa-images w-5 text-center text-pizzaRed/80"></i><span>Gallery</span></span>
+                        <i class="fa-solid fa-chevron-right text-[10px] opacity-50"></i>
+                    </button>
+                    <button onclick="switchPage('order'); closeMobileMenu();" data-mobile-nav="order" class="mobile-nav-item w-full flex items-center justify-between py-3.5 text-white hover:text-pizzaRed font-bold text-xs uppercase tracking-wider">
+                        <span class="flex items-center gap-3.5"><i class="fa-solid fa-motorcycle w-5 text-center text-pizzaRed/80"></i><span>Order Online</span></span>
+                        <i class="fa-solid fa-chevron-right text-[10px] opacity-50"></i>
+                    </button>
+                    <button onclick="switchPage('contact'); closeMobileMenu();" data-mobile-nav="contact" class="mobile-nav-item w-full flex items-center justify-between py-3.5 text-white hover:text-pizzaRed font-bold text-xs uppercase tracking-wider">
+                        <span class="flex items-center gap-3.5"><i class="fa-solid fa-location-dot w-5 text-center text-pizzaRed/80"></i><span>Contact</span></span>
+                        <i class="fa-solid fa-chevron-right text-[10px] opacity-50"></i>
+                    </button>
+                </div>
+                <div class="pt-3.5 mt-1 border-t border-white/15 grid grid-cols-2 gap-2.5 pb-1">
+                    <button onclick="switchPage('order'); closeMobileMenu();" class="w-full bg-pizzaRed hover:bg-darkRed text-white font-bold text-xs uppercase tracking-wider py-3 rounded-md flex items-center justify-center gap-2 shadow-md">
+                        <i class="fa-solid fa-motorcycle"></i><span>ORDER ONLINE</span>
+                    </button>
+                    <button onclick="closeMobileMenu(); openBookingModal();" class="w-full bg-pizzaRed hover:bg-darkRed text-white font-bold text-xs uppercase tracking-wider py-3 rounded-md flex items-center justify-center gap-2 shadow-md">
+                        <i class="fa-regular fa-calendar-days"></i><span>BOOK A TABLE</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- TAILOREDLY DEMO BANNER -->
+    <div class="tailoredly-banner-wrap" role="region" aria-label="Tailoredly Demo Banner">
+        <div class="tailoredly-banner-box">
+            <div class="tailoredly-left">
+                <div class="tailoredly-icon-box" aria-hidden="true">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="3" y="4" width="18" height="12" rx="2" ry="2"></rect>
+                        <line x1="8" y1="20" x2="16" y2="20"></line>
+                        <line x1="12" y1="16" x2="12" y2="20"></line>
+                    </svg>
+                </div>
+                <div class="tailoredly-brand-text">
+                    <span class="tailoredly-demo-label">WEBSITE DEMO</span>
+                    <div class="tailoredly-madeby">
+                        Made by <strong class="tailoredly-logo-mark">TAILORED<span>LY</span></strong>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tailoredly-divider" aria-hidden="true"></div>
+
+            <div class="tailoredly-middle">
+                <p class="tailoredly-question">Like this design?</p>
+                <p class="tailoredly-subtext">Get a website for your business.</p>
+            </div>
+
+            <a href="file:///C:/Users/Bobik/Desktop/Website creator/index.html" class="tailoredly-btn">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="19" y1="12" x2="5" y2="12"></line>
+                    <polyline points="12 19 5 12 12 5"></polyline>
+                </svg>
+                <span>Back to Portfolio</span>
+            </a>
+        </div>
+    </div>
+    <!-- END TAILOREDLY BANNER -->
+
+    <main class="flex-grow pt-[108px]">
+
+        <!-- PAGE 1: HOME -->
+        <div id="page-home" class="page-section">
+            <section class="relative bg-[#070505] text-white min-h-[600px] lg:min-h-[680px] flex flex-col justify-between overflow-hidden">
+                <div class="absolute inset-0 z-0 select-none pointer-events-none">
+                    <img src="https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&q=90&w=1920" 
+                         alt="Authentic Wood-Fired Italian Pizza" 
+                         class="w-full h-full object-cover object-center opacity-85 contrast-105">
+                    <div class="absolute inset-0 bg-gradient-to-r from-[#070606] via-[#070606]/85 lg:via-[#070606]/55 to-transparent"></div>
+                    <div class="absolute inset-0 bg-gradient-to-t from-[#070606]/90 via-transparent to-black/40"></div>
+                    <div class="hidden md:flex absolute right-[18%] bottom-[26%] z-20">
+                        <div class="example-badge">EXAMPLE PHOTO</div>
+                    </div>
+                </div>
+
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-14 sm:pt-20 pb-16 relative z-10 w-full flex-grow flex items-center">
+                    <div class="max-w-xl space-y-3 text-left">
+                        <span class="text-pizzaRed font-sans font-semibold uppercase text-xs sm:text-sm tracking-[0.32em] block">
+                            AUTHENTIC ITALIAN
+                        </span>
+                        
+                        <h1 class="leading-[0.92] tracking-tight uppercase">
+                            <span class="block text-6xl sm:text-7xl lg:text-[92px] font-serif font-black text-white">PIZZA</span>
+                            <span class="block text-4xl sm:text-5xl lg:text-[62px] font-display font-bold text-pizzaRed mt-1">&amp; MORE</span>
+                        </h1>
+
+                        <div class="flex items-center gap-3 text-xs sm:text-sm font-bold tracking-[0.22em] text-neutral-300 uppercase pt-1">
+                            <span>GOOD FOOD</span>
+                            <span class="w-1.5 h-1.5 rounded-full bg-pizzaRed"></span>
+                            <span>GOOD COMPANY</span>
+                        </div>
+
+                        <div class="w-16 h-[3px] bg-pizzaRed my-3"></div>
+
+                        <p class="text-neutral-200 text-sm sm:text-base lg:text-[17px] max-w-lg leading-relaxed font-normal pb-3">
+                            Place for your description. Tell here about your business, craft, and passion for baking wood-fired artisan pizza with top-tier Italian ingredients.
+                        </p>
+
+                        <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 pt-2">
+                            <button onclick="switchPage('menu')" class="bg-pizzaRed hover:bg-darkRed text-white px-8 py-3.5 rounded-md font-bold text-xs sm:text-sm tracking-wider uppercase transition flex items-center justify-center gap-3 shadow-xl shadow-pizzaRed/30">
+                                <span>VIEW OUR MENU</span>
+                                <i class="fa-solid fa-arrow-right text-xs"></i>
+                            </button>
+                            <button onclick="openBookingModal()" class="bg-black/45 hover:bg-white/10 border border-white/40 hover:border-white text-white px-8 py-3.5 rounded-md font-bold text-xs sm:text-sm tracking-wider uppercase transition flex items-center justify-center gap-3">
+                                <span>BOOK A TABLE</span>
+                                <i class="fa-solid fa-arrow-right text-xs"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="relative z-20 flex flex-col items-center">
+                    <button onclick="document.getElementById('home-discover').scrollIntoView({behavior: 'smooth'})" aria-label="Scroll Down" class="mb-4 w-10 h-10 rounded-full border border-white/45 hover:border-pizzaRed text-white hover:text-pizzaRed flex items-center justify-center transition bg-black/40 backdrop-blur-sm">
+                        <i class="fa-solid fa-chevron-down text-xs"></i>
+                    </button>
+                    <svg class="w-full h-7 sm:h-12 text-[#EFECE6] fill-current block" viewBox="0 0 1440 54" preserveAspectRatio="none">
+                        <path d="M0,54 L1440,54 L1440,28 C1260,56 1040,4 740,20 C440,36 220,48 0,10 Z"></path>
+                    </svg>
+                </div>
+            </section>
+
+            <section id="home-discover" class="relative py-16 sm:py-20 px-4 sm:px-6 lg:px-8 overflow-hidden">
+                <div class="max-w-7xl mx-auto relative z-10">
+                    <div class="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-4">
+                        <div>
+                            <span class="text-xs uppercase tracking-[0.28em] text-pizzaRed font-bold block mb-2">DISCOVER</span>
+                            <h2 class="text-4xl lg:text-5xl font-serif font-bold text-neutral-900 uppercase">OUR MENU</h2>
+                            <div class="w-12 h-[3px] bg-pizzaRed mt-3 mb-4"></div>
+                            <p class="text-neutral-700 max-w-xl text-sm sm:text-base leading-relaxed">
+                                Place for your description. Tell here about your business specialties, fresh artisan dough, and savory handmade dishes.
+                            </p>
+                        </div>
+                        <button onclick="switchPage('menu')" class="w-full sm:w-auto bg-pizzaRed hover:bg-darkRed text-white px-7 py-3.5 rounded-md font-bold text-xs uppercase tracking-wider transition shadow-md inline-flex items-center justify-center gap-2 shrink-0">
+                            <span>EXPLORE MENU</span>
+                            <i class="fa-solid fa-arrow-right text-xs"></i>
+                        </button>
+                    </div>
+
+                    <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+                        <div onclick="switchPage('menu'); filterMenu('pizza');" class="group cursor-pointer bg-white/80 rounded-xl overflow-hidden shadow-sm hover:shadow-xl border border-stone-300/80 transition-all p-4 sm:p-5 text-center">
+                            <div class="w-full aspect-square rounded-full overflow-hidden mb-4 pizza-board-thumb relative flex items-center justify-center">
+                                <img src="https://images.unsplash.com/photo-1593560708920-61dd98c46a4e?auto=format&fit=crop&q=85&w=600" alt="Pizzas" class="w-full h-full object-cover object-center rounded-full pizza-zoom transition duration-500">
+                                <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
+                                    <div class="example-badge scale-75">EXAMPLE PHOTO</div>
+                                </div>
+                            </div>
+                            <h3 class="font-serif font-bold text-lg sm:text-xl text-neutral-900 group-hover:text-pizzaRed transition-colors uppercase">Pizzas</h3>
+                        </div>
+
+                        <div onclick="switchPage('menu'); filterMenu('pasta');" class="group cursor-pointer bg-white/80 rounded-xl overflow-hidden shadow-sm hover:shadow-xl border border-stone-300/80 transition-all p-4 sm:p-5 text-center">
+                            <div class="w-full aspect-square rounded-full overflow-hidden mb-4 pizza-board-thumb relative flex items-center justify-center">
+                                <img src="https://images.unsplash.com/photo-1551183053-bf91a1d81141?auto=format&fit=crop&q=80&w=500" alt="Pasta" class="w-full h-full object-cover rounded-full group-hover:scale-110 transition duration-500">
+                                <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
+                                    <div class="example-badge scale-75">EXAMPLE PHOTO</div>
+                                </div>
+                            </div>
+                            <h3 class="font-serif font-bold text-lg sm:text-xl text-neutral-900 group-hover:text-pizzaRed transition-colors uppercase">Pasta</h3>
+                        </div>
+
+                        <div onclick="switchPage('menu'); filterMenu('starters');" class="group cursor-pointer bg-white/80 rounded-xl overflow-hidden shadow-sm hover:shadow-xl border border-stone-300/80 transition-all p-4 sm:p-5 text-center">
+                            <div class="w-full aspect-square rounded-full overflow-hidden mb-4 pizza-board-thumb relative flex items-center justify-center">
+                                <img src="https://images.unsplash.com/photo-1572695157366-5e585ab2b69f?auto=format&fit=crop&q=80&w=500" alt="Starters" class="w-full h-full object-cover rounded-full group-hover:scale-110 transition duration-500">
+                                <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
+                                    <div class="example-badge scale-75">EXAMPLE PHOTO</div>
+                                </div>
+                            </div>
+                            <h3 class="font-serif font-bold text-lg sm:text-xl text-neutral-900 group-hover:text-pizzaRed transition-colors uppercase">Starters</h3>
+                        </div>
+
+                        <div onclick="switchPage('menu'); filterMenu('desserts');" class="group cursor-pointer bg-white/80 rounded-xl overflow-hidden shadow-sm hover:shadow-xl border border-stone-300/80 transition-all p-4 sm:p-5 text-center">
+                            <div class="w-full aspect-square rounded-full overflow-hidden mb-4 pizza-board-thumb relative flex items-center justify-center">
+                                <img src="https://images.unsplash.com/photo-1571877227200-a0d98ea607e9?auto=format&fit=crop&q=80&w=500" alt="Desserts" class="w-full h-full object-cover rounded-full group-hover:scale-110 transition duration-500">
+                                <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
+                                    <div class="example-badge scale-75">EXAMPLE PHOTO</div>
+                                </div>
+                            </div>
+                            <h3 class="font-serif font-bold text-lg sm:text-xl text-neutral-900 group-hover:text-pizzaRed transition-colors uppercase">Desserts</h3>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- PAGE 2: ABOUT US -->
+        <div id="page-about" class="page-section hidden">
+            <section class="relative bg-[#070505] text-white min-h-[390px] lg:min-h-[450px] flex items-center overflow-hidden">
+                <div class="absolute inset-0 z-0 select-none pointer-events-none">
+                    <img src="https://images.unsplash.com/photo-1590947132387-155cc02f3212?auto=format&fit=crop&q=90&w=1920" 
+                         alt="Wood Fired Brick Oven Pizza" 
+                         class="w-full h-full object-cover object-center opacity-80">
+                    <div class="absolute inset-0 bg-gradient-to-r from-[#070606] via-[#070606]/90 lg:via-[#070606]/65 to-transparent"></div>
+                    <div class="hidden md:flex absolute right-[20%] bottom-[22%] z-20">
+                        <div class="example-badge">EXAMPLE PHOTO</div>
+                    </div>
+                </div>
+
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14 relative z-10 w-full">
+                    <div class="max-w-xl">
+                        <span class="text-pizzaRed uppercase font-bold text-xs sm:text-sm tracking-[0.28em] block mb-2">ABOUT US</span>
+                        <h1 class="text-5xl sm:text-6xl lg:text-[68px] font-display font-bold tracking-tight uppercase leading-none text-white">OUR STORY</h1>
+                        <h2 class="text-3xl sm:text-4xl lg:text-[46px] font-display font-bold text-pizzaRed uppercase leading-tight mt-1 mb-5">A LOVE FOR PIZZA</h2>
+                        <p class="text-neutral-200 text-sm sm:text-base leading-relaxed">
+                            Place for your description. Tell here about your business, craft, and passion for baking wood-fired artisan pizza with top-tier Italian ingredients.
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="bg-[#060505] text-white py-9 border-y border-white/10">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div class="grid grid-cols-2 lg:grid-cols-4 gap-y-8 gap-x-4 lg:divide-x divide-white/15 text-center">
+                        <div class="flex flex-col items-center px-4">
+                            <div class="text-pizzaRed text-2xl sm:text-3xl mb-2.5"><i class="fa-solid fa-leaf"></i></div>
+                            <h4 class="font-bold text-xs sm:text-sm tracking-widest uppercase">FRESH INGREDIENTS</h4>
+                            <p class="text-xs text-neutral-400 mt-1">Carefully selected for<br>the best taste</p>
+                        </div>
+                        <div class="flex flex-col items-center px-4">
+                            <div class="text-pizzaRed text-2xl sm:text-3xl mb-2.5"><i class="fa-solid fa-pizza-slice"></i></div>
+                            <h4 class="font-bold text-xs sm:text-sm tracking-widest uppercase">AUTHENTIC RECIPES</h4>
+                            <p class="text-xs text-neutral-400 mt-1">Traditional Italian<br>flavours</p>
+                        </div>
+                        <div class="flex flex-col items-center px-4 pt-6 lg:pt-0 border-t border-white/10 lg:border-t-0">
+                            <div class="text-pizzaRed text-2xl sm:text-3xl mb-2.5"><i class="fa-solid fa-kitchen-set"></i></div>
+                            <h4 class="font-bold text-xs sm:text-sm tracking-widest uppercase">PASSIONATE TEAM</h4>
+                            <p class="text-xs text-neutral-400 mt-1">People who love<br>what they do</p>
+                        </div>
+                        <div class="flex flex-col items-center px-4 pt-6 lg:pt-0 border-t border-white/10 lg:border-t-0">
+                            <div class="text-pizzaRed text-2xl sm:text-3xl mb-2.5"><i class="fa-solid fa-users"></i></div>
+                            <h4 class="font-bold text-xs sm:text-sm tracking-widest uppercase">GREAT ATMOSPHERE</h4>
+                            <p class="text-xs text-neutral-400 mt-1">Good food, good company</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="relative py-16 sm:py-24 px-4 sm:px-6 lg:px-8 overflow-hidden">
+                <div class="max-w-6xl mx-auto relative z-10">
+                    <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center">
+                        <div class="lg:col-span-6 relative rounded-xl overflow-hidden shadow-2xl border border-stone-300 aspect-[16/10] flex items-center justify-center bg-[#181210]">
+                            <img src="https://images.unsplash.com/photo-1577219491135-ce391730fb2c?auto=format&fit=crop&q=85&w=1000" 
+                                 alt="Pizza Master preparing artisan pizza" 
+                                 class="w-full h-full object-cover object-center"
+                                 onerror="this.src='https://images.unsplash.com/photo-1556910103-1c02745aae4d?auto=format&fit=crop&q=85&w=1000'">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/35 via-transparent to-black/15 pointer-events-none"></div>
+                            <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
+                                <div class="example-badge">EXAMPLE PHOTO</div>
+                            </div>
+                        </div>
+
+                        <div class="lg:col-span-6 space-y-5">
+                            <span class="text-xs uppercase tracking-[0.25em] text-pizzaRed font-bold block">TRADITION MEETS QUALITY</span>
+                            <h2 class="text-3xl sm:text-4xl lg:text-[44px] font-display font-bold text-neutral-900 leading-[1.1] uppercase">
+                                ITALIAN ROOTS,<br>LOCAL HEART
+                            </h2>
+                            <p class="text-neutral-700 text-sm sm:text-base leading-relaxed">
+                                Example Pizza was founded with a clear vision – to provide a cozy destination where guests can savor authentic wood-fired pizzas and homemade Italian specialties.
+                            </p>
+                            <p class="text-neutral-700 text-sm sm:text-base leading-relaxed pb-1">
+                                Place for your description. Tell here about your business ethos, ingredient sourcing from local and Italian partners, and commitment to memorable dining moments.
+                            </p>
+                            <button onclick="switchPage('menu')" class="bg-pizzaRed hover:bg-darkRed text-white px-7 py-3.5 rounded-md font-bold text-xs uppercase tracking-wider transition shadow-md inline-flex items-center gap-2.5">
+                                <span>OUR MENU</span>
+                                <i class="fa-solid fa-arrow-right text-xs"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- PAGE 3: MENU -->
+        <div id="page-menu" class="page-section hidden">
+            <section class="relative bg-[#080707] text-white min-h-[300px] lg:min-h-[340px] flex items-center overflow-hidden">
+                <div class="absolute inset-0 z-0 select-none pointer-events-none">
+                    <img src="https://images.unsplash.com/photo-1574071318508-1cdbab80d002?auto=format&fit=crop&q=90&w=1920" 
+                         alt="Authentic Italian Pizza" 
+                         class="w-full h-full object-cover object-center opacity-80 contrast-105">
+                    <div class="absolute inset-0 bg-gradient-to-r from-[#070606] via-[#070606]/85 lg:via-[#070606]/60 to-transparent"></div>
+                    <div class="hidden md:flex absolute right-[22%] bottom-[25%] z-20">
+                        <div class="example-badge">EXAMPLE PHOTO</div>
+                    </div>
+                </div>
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 relative z-10 w-full">
+                    <span class="text-pizzaRed uppercase font-bold text-xs sm:text-sm tracking-[0.28em] block mb-2">OUR MENU</span>
+                    <h1 class="text-4xl sm:text-6xl lg:text-[64px] font-display font-bold leading-[0.98] mb-3 uppercase">
+                        <span class="text-white block">AUTHENTIC</span>
+                        <span class="text-pizzaRed block">ITALIAN PIZZA</span>
+                    </h1>
+                    <p class="text-neutral-200 text-sm sm:text-base max-w-xl">
+                        Place for your description. Tell here about your business specialties and artisan recipes.
+                    </p>
+                </div>
+            </section>
+
+            <div class="bg-[#F5F2EC] border-b border-stone-300 sticky top-[108px] z-30 shadow-sm">
+                <div class="max-w-5xl mx-auto px-2 sm:px-6">
+                    <div class="flex items-center justify-start sm:justify-center overflow-x-auto no-scrollbar divide-x divide-stone-300">
+                        <button onclick="filterMenu('pizza')" id="tab-pizza" class="menu-tab flex-1 min-w-[100px] py-3.5 px-4 flex flex-col items-center justify-center gap-1.5 border-b-[3px] border-pizzaRed text-pizzaRed font-bold text-[11px] tracking-widest uppercase transition">
+                            <i class="fa-solid fa-pizza-slice text-lg"></i>
+                            <span>PIZZA</span>
+                        </button>
+                        <button onclick="filterMenu('pasta')" id="tab-pasta" class="menu-tab flex-1 min-w-[100px] py-3.5 px-4 flex flex-col items-center justify-center gap-1.5 border-b-[3px] border-transparent text-stone-700 hover:text-pizzaRed font-bold text-[11px] tracking-widest uppercase transition">
+                            <i class="fa-solid fa-bowl-food text-lg"></i>
+                            <span>PASTA</span>
+                        </button>
+                        <button onclick="filterMenu('starters')" id="tab-starters" class="menu-tab flex-1 min-w-[100px] py-3.5 px-4 flex flex-col items-center justify-center gap-1.5 border-b-[3px] border-transparent text-stone-700 hover:text-pizzaRed font-bold text-[11px] tracking-widest uppercase transition">
+                            <i class="fa-solid fa-utensils text-lg"></i>
+                            <span>STARTERS</span>
+                        </button>
+                        <button onclick="filterMenu('salads')" id="tab-salads" class="menu-tab flex-1 min-w-[100px] py-3.5 px-4 flex flex-col items-center justify-center gap-1.5 border-b-[3px] border-transparent text-stone-700 hover:text-pizzaRed font-bold text-[11px] tracking-widest uppercase transition">
+                            <i class="fa-solid fa-seedling text-lg"></i>
+                            <span>SALADS</span>
+                        </button>
+                        <button onclick="filterMenu('desserts')" id="tab-desserts" class="menu-tab flex-1 min-w-[100px] py-3.5 px-4 flex flex-col items-center justify-center gap-1.5 border-b-[3px] border-transparent text-stone-700 hover:text-pizzaRed font-bold text-[11px] tracking-widest uppercase transition">
+                            <i class="fa-solid fa-cake-candles text-lg"></i>
+                            <span>DESSERTS</span>
+                        </button>
+                        <button onclick="filterMenu('drinks')" id="tab-drinks" class="menu-tab flex-1 min-w-[100px] py-3.5 px-4 flex flex-col items-center justify-center gap-1.5 border-b-[3px] border-transparent text-stone-700 hover:text-pizzaRed font-bold text-[11px] tracking-widest uppercase transition">
+                            <i class="fa-solid fa-wine-glass text-lg"></i>
+                            <span>DRINKS</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <section class="relative py-14 sm:py-16 px-4 sm:px-6 lg:px-8 overflow-hidden">
+                <div class="max-w-5xl mx-auto relative z-10" id="menu-content-area"></div>
+            </section>
+        </div>
+
+        <!-- PAGE 4: GALLERY -->
+        <div id="page-gallery" class="page-section hidden">
+            <section class="relative bg-[#080707] text-white min-h-[290px] lg:min-h-[330px] flex items-center overflow-hidden">
+                <div class="absolute inset-0 z-0 select-none pointer-events-none">
+                    <img src="https://images.unsplash.com/photo-1574071318508-1cdbab80d002?auto=format&fit=crop&q=90&w=1920" 
+                         alt="Gallery Hero Pizza" 
+                         class="w-full h-full object-cover object-center opacity-80 contrast-105">
+                    <div class="absolute inset-0 bg-gradient-to-r from-[#070606] via-[#070606]/85 lg:via-[#070606]/60 to-transparent"></div>
+                </div>
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 relative z-10 w-full">
+                    <span class="text-pizzaRed uppercase font-bold text-xs sm:text-sm tracking-[0.28em] block mb-2">OUR GALLERY</span>
+                    <h1 class="text-5xl sm:text-6xl lg:text-[68px] font-display font-bold mb-3 uppercase">GALLERY</h1>
+                    <p class="text-neutral-200 text-sm sm:text-base max-w-xl">
+                        Place for your description. Tell here about your business atmosphere and photo gallery.
+                    </p>
+                </div>
+            </section>
+
+            <section class="py-10 sm:py-14 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+                <div class="flex items-center justify-start sm:justify-center gap-2.5 sm:gap-3 overflow-x-auto no-scrollbar pb-3 mb-8">
+                    <button onclick="filterGallery('ALL')" data-gal-tab="ALL" class="gal-tab-btn shrink-0 px-7 py-2.5 rounded text-xs font-bold uppercase tracking-wider bg-pizzaRed text-white shadow-sm transition">ALL</button>
+                    <button onclick="filterGallery('PIZZA')" data-gal-tab="PIZZA" class="gal-tab-btn shrink-0 px-7 py-2.5 rounded text-xs font-bold uppercase tracking-wider bg-transparent border border-stone-300 text-stone-800 hover:border-pizzaRed transition">PIZZA</button>
+                    <button onclick="filterGallery('PASTA')" data-gal-tab="PASTA" class="gal-tab-btn shrink-0 px-7 py-2.5 rounded text-xs font-bold uppercase tracking-wider bg-transparent border border-stone-300 text-stone-800 hover:border-pizzaRed transition">PASTA</button>
+                    <button onclick="filterGallery('STARTERS')" data-gal-tab="STARTERS" class="gal-tab-btn shrink-0 px-7 py-2.5 rounded text-xs font-bold uppercase tracking-wider bg-transparent border border-stone-300 text-stone-800 hover:border-pizzaRed transition">STARTERS</button>
+                    <button onclick="filterGallery('DESSERTS')" data-gal-tab="DESSERTS" class="gal-tab-btn shrink-0 px-7 py-2.5 rounded text-xs font-bold uppercase tracking-wider bg-transparent border border-stone-300 text-stone-800 hover:border-pizzaRed transition">DESSERTS</button>
+                    <button onclick="filterGallery('INTERIOR')" data-gal-tab="INTERIOR" class="gal-tab-btn shrink-0 px-7 py-2.5 rounded text-xs font-bold uppercase tracking-wider bg-transparent border border-stone-300 text-stone-800 hover:border-pizzaRed transition">INTERIOR</button>
+                </div>
+
+                <div id="gallery-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5"></div>
+            </section>
+        </div>
+
+        <!-- PAGE 5: ORDER ONLINE -->
+        <div id="page-order" class="page-section hidden">
+            <section class="relative bg-[#080707] text-white min-h-[290px] lg:min-h-[330px] flex items-center overflow-hidden">
+                <div class="absolute inset-0 z-0 select-none pointer-events-none">
+                    <img src="https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&q=90&w=1920" alt="Order Online" class="w-full h-full object-cover object-center opacity-75">
+                    <div class="absolute inset-0 bg-gradient-to-r from-[#070606] via-[#070606]/85 lg:via-[#070606]/60 to-transparent"></div>
+                </div>
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 relative z-10 w-full">
+                    <span class="text-pizzaRed uppercase font-bold text-xs sm:text-sm tracking-[0.28em] block mb-2">ORDER ONLINE</span>
+                    <h1 class="text-4xl sm:text-5xl lg:text-6xl font-display font-bold mb-3 uppercase">ENJOY EXAMPLE PIZZA AT HOME</h1>
+                    <p class="text-neutral-200 text-sm sm:text-base max-w-xl leading-relaxed">
+                        Place for your description. Tell here about your business delivery service and quick ordering options.
+                    </p>
+                </div>
+            </section>
+
+            <section class="py-16 sm:py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                    <div class="bg-[#121111] border border-white/10 rounded-2xl overflow-hidden p-6 sm:p-8 flex flex-col sm:flex-row items-center justify-between gap-6 shadow-2xl relative">
+                        <div class="space-y-4 max-w-xs text-center sm:text-left">
+                            <div class="h-20 sm:h-24 flex items-center justify-center sm:justify-start">
+                                <img src="bolt.png" alt="Bolt Food" class="h-16 sm:h-24 w-auto object-contain" onerror="this.onerror=null; this.src='https://placehold.co/320x120/00d66c/ffffff?text=Bolt+Food';">
+                            </div>
+                            <p class="text-neutral-300 text-sm">Order Example Pizza on Bolt Food and get it delivered to your place.</p>
+                            <a href="https://bolt.eu" target="_blank" rel="noopener noreferrer" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-[#00d66c] hover:bg-[#00be60] text-black font-bold px-6 py-3.5 rounded-xl text-sm transition shadow-lg">
+                                <span>Order on Bolt Food</span>
+                                <i class="fa-solid fa-arrow-right"></i>
+                            </a>
+                        </div>
+                        <div class="relative w-full sm:w-48 h-48 rounded-xl overflow-hidden shadow-md shrink-0 flex items-center justify-center bg-neutral-800">
+                            <img src="https://images.unsplash.com/photo-1526367790999-0150786686a2?auto=format&fit=crop&q=80&w=400" alt="Delivery Courier" class="w-full h-full object-cover" onerror="this.src='https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&q=80&w=400';">
+                            <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
+                                <div class="example-badge scale-75">EXAMPLE PHOTO</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-[#121111] border border-white/10 rounded-2xl overflow-hidden p-6 sm:p-8 flex flex-col sm:flex-row items-center justify-between gap-6 shadow-2xl relative">
+                        <div class="space-y-4 max-w-xs text-center sm:text-left">
+                            <div class="h-20 sm:h-24 flex items-center justify-center sm:justify-start">
+                                <img src="wolt.png" alt="Wolt" class="h-16 sm:h-24 w-auto object-contain" onerror="this.onerror=null; this.src='https://placehold.co/320x120/00c2e8/ffffff?text=Wolt';">
+                            </div>
+                            <p class="text-neutral-300 text-sm">Find Example Pizza on Wolt and enjoy fast delivery in your area.</p>
+                            <a href="https://wolt.com" target="_blank" rel="noopener noreferrer" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-[#00c2e8] hover:bg-[#00aed4] text-black font-bold px-6 py-3.5 rounded-xl text-sm transition shadow-lg">
+                                <span>Order on Wolt</span>
+                                <i class="fa-solid fa-arrow-right"></i>
+                            </a>
+                        </div>
+                        <div class="relative w-full sm:w-48 h-48 rounded-xl overflow-hidden shadow-md shrink-0 flex items-center justify-center bg-neutral-800">
+                            <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&q=80&w=400" alt="Food Spread" class="w-full h-full object-cover" onerror="this.src='https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&q=80&w=400';">
+                            <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
+                                <div class="example-badge scale-75">EXAMPLE PHOTO</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- PAGE 6: CONTACT -->
+        <div id="page-contact" class="page-section hidden">
+            <section class="relative bg-[#080707] text-white min-h-[300px] lg:min-h-[360px] flex items-center overflow-hidden">
+                <div class="absolute inset-0 z-0 select-none pointer-events-none">
+                    <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&q=90&w=1920" 
+                         alt="Italian Restaurant Interior" 
+                         class="w-full h-full object-cover object-center opacity-80 contrast-105"
+                         onerror="this.src='https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&q=90&w=1920'">
+                    <div class="absolute inset-0 bg-gradient-to-r from-[#070606] via-[#070606]/80 lg:via-[#070606]/55 to-transparent"></div>
+                    <div class="hidden md:flex absolute right-[20%] bottom-[24%] z-20">
+                        <div class="example-badge">EXAMPLE PHOTO</div>
+                    </div>
+                </div>
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 relative z-10 w-full">
+                    <span class="text-pizzaRed uppercase font-bold text-xs sm:text-sm tracking-[0.28em] block mb-2">CONTACT US</span>
+                    <h1 class="text-5xl sm:text-6xl lg:text-[68px] font-display font-bold mb-3 uppercase leading-none">
+                        <span class="text-white">GET IN</span> <span class="text-pizzaRed">TOUCH</span>
+                    </h1>
+                    <p class="text-neutral-200 text-sm sm:text-base max-w-xl">
+                        Place for your description. Tell here about your business contact details and location.
+                    </p>
+                </div>
+            </section>
+
+            <section class="relative py-14 sm:py-20 px-4 sm:px-6 lg:px-8 overflow-hidden">
+                <div class="max-w-6xl mx-auto relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+                    
+                    <div class="lg:col-span-5 space-y-7">
+                        <div>
+                            <span class="text-pizzaRed font-bold text-xs uppercase tracking-[0.24em] block">VISIT US</span>
+                            <div class="w-8 h-[2px] bg-pizzaRed mt-2"></div>
+                        </div>
+
+                        <div class="space-y-6">
+                            <div class="flex items-start gap-4">
+                                <div class="w-10 h-10 rounded-full bg-pizzaRed/15 text-pizzaRed flex items-center justify-center shrink-0 mt-0.5">
+                                    <i class="fa-solid fa-location-dot text-sm"></i>
+                                </div>
+                                <div>
+                                    <h5 class="font-bold text-xs sm:text-sm uppercase tracking-wider text-neutral-900">OUR ADDRESS</h5>
+                                    <p class="text-neutral-700 text-sm mt-1 leading-relaxed">Your location<br>Malta</p>
+                                </div>
+                            </div>
+
+                            <div class="flex items-start gap-4">
+                                <div class="w-10 h-10 rounded-full bg-pizzaRed/15 text-pizzaRed flex items-center justify-center shrink-0 mt-0.5">
+                                    <i class="fa-solid fa-phone text-sm"></i>
+                                </div>
+                                <div>
+                                    <h5 class="font-bold text-xs sm:text-sm uppercase tracking-wider text-neutral-900">CALL US</h5>
+                                    <p class="text-neutral-700 text-sm mt-1">+356 1234 5678</p>
+                                </div>
+                            </div>
+
+                            <div class="flex items-start gap-4">
+                                <div class="w-10 h-10 rounded-full bg-pizzaRed/15 text-pizzaRed flex items-center justify-center shrink-0 mt-0.5">
+                                    <i class="fa-solid fa-envelope text-sm"></i>
+                                </div>
+                                <div>
+                                    <h5 class="font-bold text-xs sm:text-sm uppercase tracking-wider text-neutral-900">EMAIL US</h5>
+                                    <p class="text-neutral-700 text-sm mt-1">hello@examplepizza.mt</p>
+                                </div>
+                            </div>
+
+                            <div class="flex items-start gap-4">
+                                <div class="w-10 h-10 rounded-full bg-pizzaRed/15 text-pizzaRed flex items-center justify-center shrink-0 mt-0.5">
+                                    <i class="fa-regular fa-clock text-sm"></i>
+                                </div>
+                                <div class="w-full max-w-[230px]">
+                                    <h5 class="font-bold text-xs sm:text-sm uppercase tracking-wider text-neutral-900">OPENING HOURS</h5>
+                                    <div class="text-neutral-700 text-xs sm:text-sm mt-1.5 space-y-1">
+                                        <p class="flex justify-between"><span>Mon – Thu</span> <span>12:00 – 22:00</span></p>
+                                        <p class="flex justify-between"><span>Fri – Sat</span> <span>12:00 – 23:00</span></p>
+                                        <p class="flex justify-between"><span>Sun</span> <span>12:00 – 22:00</span></p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="pt-3 flex gap-3">
+                                <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" aria-label="Instagram" class="w-10 h-10 rounded-full bg-pizzaRed hover:bg-darkRed text-white flex items-center justify-center transition shadow-md">
+                                    <i class="fa-brands fa-instagram text-base"></i>
+                                </a>
+                                <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" aria-label="Facebook" class="w-10 h-10 rounded-full bg-pizzaRed hover:bg-darkRed text-white flex items-center justify-center transition shadow-md">
+                                    <i class="fa-brands fa-facebook-f text-sm"></i>
+                                </a>
+                                <a href="https://tripadvisor.com" target="_blank" rel="noopener noreferrer" aria-label="TripAdvisor" class="w-10 h-10 rounded-full bg-pizzaRed hover:bg-darkRed text-white flex items-center justify-center transition shadow-md">
+                                    <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24" aria-hidden="true">
+                                        <path d="M12 6.2c-3.6 0-6.8 1.4-9 3.6l2.1 1.7a5.5 5.5 0 1 0 9.8 3.5c0-1.3-.5-2.5-1.2-3.4h-3.4c-.7.9-1.2 2.1-1.2 3.4a5.5 5.5 0 1 0 9.8-3.5L21 9.8c-2.2-2.2-5.4-3.6-9-3.6zm-4.9 8.8a3.2 3.2 0 1 1 0-6.4 3.2 3.2 0 0 1 0 6.4zm9.8 0a3.2 3.2 0 1 1 0-6.4 3.2 3.2 0 0 1 0 6.4zm-4.9 1.6L10.3 19h3.4L12 16.6zm-4.9-6.4a1.6 1.6 0 1 0 0 3.2 1.6 1.6 0 0 0 0-3.2zm9.8 0a1.6 1.6 0 1 0 0 3.2 1.6 1.6 0 0 0 0-3.2z"/>
+                                    </svg>
+                                </a>
+                                <a href="https://tiktok.com" target="_blank" rel="noopener noreferrer" aria-label="TikTok" class="w-10 h-10 rounded-full bg-pizzaRed hover:bg-darkRed text-white flex items-center justify-center transition shadow-md">
+                                    <i class="fa-brands fa-tiktok text-sm"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="lg:col-span-7 space-y-5">
+                        <div>
+                            <span class="text-pizzaRed font-bold text-xs uppercase tracking-[0.24em] block">FIND US</span>
+                            <div class="w-8 h-[2px] bg-pizzaRed mt-2"></div>
+                        </div>
+
+                        <div class="w-full h-56 sm:h-64 rounded-xl overflow-hidden border border-stone-300 shadow-md bg-white">
+                            <iframe 
+                                width="100%" 
+                                height="100%" 
+                                frameborder="0" 
+                                style="border:0;" 
+                                allowfullscreen="" 
+                                loading="lazy" 
+                                referrerpolicy="no-referrer-when-downgrade"
+                                title="Example Pizza Malta Location"
+                                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d12574.6397241258!2d14.3644!3d35.9576!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x130e51e9b251a375%3A0x401e7d2ec24f9f0!2sMellie%C4%A7a%2C%20Malta!5e0!3m2!1sen!2smt!4v1650000000000!5m2!1sen!2smt">
+                            </iframe>
+                        </div>
+
+                        <div class="relative w-full h-60 sm:h-64 rounded-xl overflow-hidden shadow-xl border border-stone-300 flex items-center justify-center bg-neutral-900">
+                            <img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&q=85&w=1000" alt="Good Pizza Good People Interior" class="w-full h-full object-cover brightness-75 contrast-125">
+                            <div class="absolute inset-0 bg-gradient-to-r from-black/80 via-black/35 to-transparent"></div>
+                            <div class="absolute left-7 sm:left-12 top-1/2 -translate-y-1/2 text-center pointer-events-none select-none">
+                                <p class="neon-pizza-sign text-2xl sm:text-3xl leading-snug">
+                                    Good<br>Pizza<br>Good<br>People
+                                </p>
+                                <div class="flex justify-center gap-2 mt-1 text-red-300 text-xs drop-shadow-[0_0_8px_rgba(237,41,57,1)]">
+                                    <span>♡</span><span>♡</span>
+                                </div>
+                            </div>
+                            <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
+                                <div class="example-badge">EXAMPLE PHOTO</div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+        </div>
+
+    </main>
+
+    <footer class="bg-[#070606] text-white py-12 border-t border-white/10 mt-auto">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 mb-8 text-center sm:text-left">
+            <div class="flex flex-col items-center sm:items-start">
+                <a href="#home" onclick="switchPage('home')" class="flex items-center gap-3 mb-4">
+                    <div class="w-8 h-8 rounded-full border border-pizzaRed flex items-center justify-center text-pizzaRed">
+                        <i class="fa-solid fa-pizza-slice text-sm"></i>
+                    </div>
+                    <span class="text-lg font-bold tracking-wider font-serif">EXAMPLE <span class="text-pizzaRed">PIZZA</span></span>
+                </a>
+                <p class="text-neutral-400 text-sm leading-relaxed max-w-xs">Example Pizza Italian Kitchen - authentic wood-fired pizza and homemade Italian specialties.</p>
+            </div>
+            <div>
+                <h4 class="font-serif font-bold text-base mb-4 text-white">Quick Links</h4>
+                <ul class="space-y-2 text-sm text-neutral-400">
+                    <li><button onclick="switchPage('home')" class="hover:text-pizzaRed transition">Home</button></li>
+                    <li><button onclick="switchPage('about')" class="hover:text-pizzaRed transition">About Us</button></li>
+                    <li><button onclick="switchPage('menu')" class="hover:text-pizzaRed transition">Menu</button></li>
+                    <li><button onclick="switchPage('gallery')" class="hover:text-pizzaRed transition">Gallery</button></li>
+                    <li><button onclick="switchPage('order')" class="hover:text-pizzaRed transition">Order Online</button></li>
+                    <li><button onclick="switchPage('contact')" class="hover:text-pizzaRed transition">Contact</button></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="font-serif font-bold text-base mb-4 text-white">Opening Hours</h4>
+                <p class="text-sm text-neutral-400">Mon – Thu: 12:00 – 22:00</p>
+                <p class="text-sm text-neutral-400 mt-1">Fri – Sat: 12:00 – 23:00</p>
+                <p class="text-sm text-neutral-400 mt-1">Sun: 12:00 – 22:00</p>
+            </div>
+            <div>
+                <h4 class="font-serif font-bold text-base mb-4 text-white">Newsletter</h4>
+                <p class="text-neutral-400 text-sm mb-4">Subscribe to get news and updates about special offers.</p>
+                <form onsubmit="handleNewsletter(event)" class="flex gap-2 max-w-xs mx-auto sm:mx-0">
+                    <input type="email" required placeholder="Your email" class="bg-white/10 border border-white/20 rounded px-3 py-2 text-sm text-white w-full focus:outline-none focus:border-pizzaRed">
+                    <button type="submit" class="bg-pizzaRed hover:bg-darkRed px-4 py-2 rounded text-white text-sm transition"><i class="fa-solid fa-paper-plane"></i></button>
+                </form>
+            </div>
+        </div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 border-t border-white/10 text-center text-xs text-neutral-500">
+            &copy; 2026 Example Pizza Italian Kitchen. All rights reserved.
+        </div>
+    </footer>
+
+    <!-- Book A Table Modal -->
+    <div id="booking-modal" onclick="if(event.target === this) closeBookingModal()" class="fixed inset-0 z-[2147483646] bg-black/85 backdrop-blur-sm hidden flex items-start sm:items-center justify-center p-3 sm:p-4 pt-12 pb-24 sm:py-6 overflow-y-auto">
+        <div class="bg-white rounded-2xl max-w-lg w-full p-5 sm:p-8 relative shadow-2xl my-auto">
+            <button onclick="closeBookingModal()" class="absolute top-3.5 right-3.5 sm:top-4 sm:right-4 w-8 h-8 rounded-full bg-neutral-100 hover:bg-neutral-200 text-neutral-600 hover:text-neutral-900 flex items-center justify-center transition" aria-label="Close modal">
+                <i class="fa-solid fa-xmark text-base"></i>
+            </button>
+            <div class="text-center mb-4 sm:mb-6">
+                <span class="text-pizzaRed uppercase font-bold text-[11px] sm:text-xs tracking-widest">RESERVATION</span>
+                <h3 class="text-xl sm:text-2xl font-serif font-bold text-neutral-900 mt-0.5">Book A Table</h3>
+            </div>
+            <form onsubmit="handleBookingSubmit(event)" class="space-y-3 sm:space-y-4">
+                <div>
+                    <label class="block text-[11px] sm:text-xs font-semibold uppercase tracking-wider text-neutral-700 mb-1">Full Name *</label>
+                    <input type="text" required placeholder="John Doe" class="w-full bg-neutral-50 border border-neutral-300 rounded-lg px-3.5 py-2 sm:py-2.5 text-sm focus:outline-none focus:border-pizzaRed">
+                </div>
+                <div class="grid grid-cols-2 gap-3 sm:gap-4">
+                    <div>
+                        <label class="block text-[11px] sm:text-xs font-semibold uppercase tracking-wider text-neutral-700 mb-1">Email *</label>
+                        <input type="email" required placeholder="you@email.com" class="w-full bg-neutral-50 border border-neutral-300 rounded-lg px-3 py-2 sm:py-2.5 text-sm focus:outline-none focus:border-pizzaRed">
+                    </div>
+                    <div>
+                        <label class="block text-[11px] sm:text-xs font-semibold uppercase tracking-wider text-neutral-700 mb-1">Phone *</label>
+                        <input type="tel" required placeholder="+356 1234 5678" class="w-full bg-neutral-50 border border-neutral-300 rounded-lg px-3 py-2 sm:py-2.5 text-sm focus:outline-none focus:border-pizzaRed">
+                    </div>
+                </div>
+                <div class="grid grid-cols-2 sm:grid-cols-3 gap-3 sm:gap-4">
+                    <div class="col-span-2 sm:col-span-1">
+                        <label class="block text-[11px] sm:text-xs font-semibold uppercase tracking-wider text-neutral-700 mb-1">Date *</label>
+                        <input type="date" required class="w-full bg-neutral-50 border border-neutral-300 rounded-lg px-3 py-2 sm:py-2.5 text-sm focus:outline-none focus:border-pizzaRed">
+                    </div>
+                    <div>
+                        <label class="block text-[11px] sm:text-xs font-semibold uppercase tracking-wider text-neutral-700 mb-1">Time *</label>
+                        <select class="w-full bg-neutral-50 border border-neutral-300 rounded-lg px-2.5 py-2 sm:py-2.5 text-sm focus:outline-none focus:border-pizzaRed">
+                            <option>12:00 PM</option>
+                            <option>1:00 PM</option>
+                            <option>2:00 PM</option>
+                            <option>6:00 PM</option>
+                            <option>7:00 PM</option>
+                            <option>8:00 PM</option>
+                            <option>9:00 PM</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-[11px] sm:text-xs font-semibold uppercase tracking-wider text-neutral-700 mb-1">Guests *</label>
+                        <select class="w-full bg-neutral-50 border border-neutral-300 rounded-lg px-2.5 py-2 sm:py-2.5 text-sm focus:outline-none focus:border-pizzaRed">
+                            <option>1 Person</option>
+                            <option selected>2 People</option>
+                            <option>3 People</option>
+                            <option>4 People</option>
+                            <option>5+ People</option>
+                        </select>
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-[11px] sm:text-xs font-semibold uppercase tracking-wider text-neutral-700 mb-1">Special Requests</label>
+                    <textarea rows="2" class="w-full bg-neutral-50 border border-neutral-300 rounded-lg px-3.5 py-2 text-sm focus:outline-none focus:border-pizzaRed resize-none" placeholder="Allergies, high chair needed, etc."></textarea>
+                </div>
+                <div class="pt-1">
+                    <button type="submit" class="w-full bg-pizzaRed hover:bg-darkRed text-white py-3.5 rounded-lg font-bold text-xs uppercase tracking-wider transition shadow-md cursor-pointer">
+                        CONFIRM RESERVATION
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Demo Enquiry Success Modal -->
+    <div id="demo-success-modal" onclick="if(event.target === this) closeDemoSuccessModal()" class="fixed inset-0 z-[2147483647] bg-black/85 backdrop-blur-sm hidden flex items-center justify-center p-4">
+        <div class="bg-[#121010] border border-pizzaRed/50 rounded-2xl max-w-md w-full p-6 sm:p-8 text-center space-y-4 shadow-2xl">
+            <div class="w-16 h-16 rounded-full bg-pizzaRed/15 border border-pizzaRed text-pizzaRed flex items-center justify-center mx-auto text-2xl shadow-inner">
+                <i class="fa-solid fa-check"></i>
+            </div>
+            <h3 class="font-serif font-bold text-2xl text-white">Thank you for your enquiry!</h3>
+            <p class="text-sm text-neutral-300 leading-relaxed">
+                Your demo request has been submitted successfully.
+            </p>
+            <p class="text-sm font-bold text-pizzaRed pt-1">
+                Ready to create a website for your business? Get in touch with Tailoredly!
+            </p>
+            <div class="pt-2">
+                <button onclick="closeDemoSuccessModal()" class="w-full bg-pizzaRed hover:bg-darkRed text-white font-bold text-xs uppercase tracking-wider py-3.5 rounded-lg transition shadow-md">
+                    CLOSE WINDOW
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Interactive Gallery Lightbox Modal -->
+    <div id="gallery-lightbox-modal" onclick="if(event.target === this) closeGalleryLightbox()" class="fixed inset-0 z-[2147483647] bg-black/92 backdrop-blur-md hidden flex items-center justify-center p-3 sm:p-6 select-none">
+        <div class="bg-[#121010] border border-white/15 rounded-2xl w-full max-w-4xl p-4 sm:p-6 relative shadow-2xl flex flex-col justify-between max-h-[90vh] overflow-hidden" onclick="event.stopPropagation()">
+            <div class="flex items-center justify-between pb-3 border-b border-white/10">
+                <div>
+                    <span id="lightbox-cat-badge" class="text-[10px] font-extrabold uppercase tracking-widest text-pizzaRed block">GALLERY</span>
+                    <h3 id="lightbox-title" class="font-serif font-bold text-base sm:text-xl text-white">Photo Title</h3>
+                </div>
+                <div class="flex items-center gap-3">
+                    <span id="lightbox-counter" class="text-xs font-bold text-neutral-400">1 / 12</span>
+                    <button onclick="closeGalleryLightbox()" class="w-9 h-9 rounded-full bg-white/10 hover:bg-pizzaRed text-white flex items-center justify-center transition" aria-label="Close Gallery">
+                        <i class="fa-solid fa-xmark text-base"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div id="lightbox-swipe-area" class="relative my-3 sm:my-4 flex-grow min-h-[240px] sm:min-h-[420px] flex items-center justify-center bg-black/60 rounded-xl overflow-hidden border border-white/10" style="touch-action: pan-y;">
+                <img id="lightbox-main-img" src="" alt="Gallery Preview" class="w-full h-full max-h-[52vh] sm:max-h-[60vh] object-contain transition-opacity duration-200 pointer-events-none" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1572695157366-5e585ab2b69f?auto=format&fit=crop&q=80&w=600';">
+                <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
+                    <div class="example-badge scale-90 sm:scale-100">EXAMPLE PHOTO</div>
+                </div>
+
+                <button onclick="prevGalleryPhoto()" class="absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-black/75 hover:bg-pizzaRed text-white border border-white/20 flex items-center justify-center transition shadow-lg z-30" aria-label="Previous image">
+                    <i class="fa-solid fa-chevron-left text-sm"></i>
+                </button>
+                <button onclick="nextGalleryPhoto()" class="absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-black/75 hover:bg-pizzaRed text-white border border-white/20 flex items-center justify-center transition shadow-lg z-30" aria-label="Next image">
+                    <i class="fa-solid fa-chevron-right text-sm"></i>
+                </button>
+            </div>
+
+            <div id="lightbox-thumbs" class="flex items-center gap-2.5 overflow-x-auto no-scrollbar pt-2 pb-1 border-t border-white/10" style="-webkit-overflow-scrolling: touch;">
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const TOP_DOWN_PIZZA_1 = 'https://images.unsplash.com/photo-1593560708920-61dd98c46a4e?auto=format&fit=crop&q=85&w=500';
+        const TOP_DOWN_PIZZA_2 = 'https://images.unsplash.com/photo-1628840042765-356cda07504e?auto=format&fit=crop&q=85&w=500';
+
+        const menuData = {
+            pizza: [
+                { name: 'MARGHERITA', price: '€9.50', desc: 'Tomato sauce, mozzarella, fresh basil', img: TOP_DOWN_PIZZA_1, tag: 'CLASSIC' },
+                { name: 'PEPPERONI', price: '€11.00', desc: 'Tomato sauce, mozzarella, pepperoni', img: TOP_DOWN_PIZZA_2, tag: 'CLASSIC' },
+                { name: 'PROSCIUTTO', price: '€12.00', desc: 'Tomato sauce, mozzarella, prosciutto crudo, rucola', img: TOP_DOWN_PIZZA_1, tag: 'CLASSIC' },
+                { name: 'QUATTRO FORMAGGI', price: '€11.50', desc: 'Tomato sauce, mozzarella, gorgonzola, parmesan, pecorino', img: TOP_DOWN_PIZZA_2, tag: 'CLASSIC' },
+                { name: 'VEGETARIANA', price: '€11.00', desc: 'Tomato sauce, mozzarella, grilled vegetables, red onion, olives', img: TOP_DOWN_PIZZA_1, tag: 'CLASSIC' },
+                { name: 'DIAVOLA', price: '€12.50', desc: 'Tomato sauce, mozzarella, spicy salami, chili, red onion', img: TOP_DOWN_PIZZA_2, tag: 'SPECIAL', spicy: true },
+                { name: 'CAPRICCIOSA', price: '€12.50', desc: 'Tomato sauce, mozzarella, ham, mushrooms, artichokes, olives', img: TOP_DOWN_PIZZA_1, tag: 'SPECIAL' },
+                { name: 'EXAMPLE SIGNATURE', price: '€14.00', desc: 'Tomato sauce, mozzarella, burrata, cherry tomatoes, parma ham, rucola', img: TOP_DOWN_PIZZA_1, tag: 'SPECIAL', chef: true },
+                { name: 'FRUTTI DI MARE', price: '€14.00', desc: 'Tomato sauce, mozzarella, mixed seafood, garlic, parsley', img: TOP_DOWN_PIZZA_2, tag: 'SPECIAL' },
+                { name: 'TARTUFO', price: '€15.00', desc: 'Mozzarella, mushrooms, truffle cream, parmesan, rucola', img: TOP_DOWN_PIZZA_1, tag: 'SPECIAL' }
+            ],
+            pasta: [
+                { name: 'SPAGHETTI BOLOGNESE', price: '€11.50', desc: 'Traditional slow-cooked beef ragu with parmesan', img: 'https://images.unsplash.com/photo-1551183053-bf91a1d81141?auto=format&fit=crop&q=80&w=400' },
+                { name: 'PENNE ARRABIATA', price: '€10.00', desc: 'Spicy tomato sauce, garlic, fresh parsley, chili flakes', img: 'https://images.unsplash.com/photo-1551183053-bf91a1d81141?auto=format&fit=crop&q=80&w=400', spicy: true },
+                { name: 'FETTUCCINE ALFREDO', price: '€12.00', desc: 'Rich creamy parmesan sauce and butter', img: 'https://images.unsplash.com/photo-1645112411341-6c4fd023714a?auto=format&fit=crop&q=80&w=400' },
+                { name: 'RAVIOLI SPINACI', price: '€13.50', desc: 'Ricotta and spinach filled ravioli in sage butter sauce', img: 'https://images.unsplash.com/photo-1589301760014-d929f3979dbc?auto=format&fit=crop&q=80&w=400' }
+            ],
+            starters: [
+                { name: 'BRUSCHETTA CLASSICA', price: '€7.50', desc: 'Toasted artisan bread, fresh tomatoes, garlic, basil, olive oil', img: 'https://images.unsplash.com/photo-1572695157366-5e585ab2b69f?auto=format&fit=crop&q=80&w=400' },
+                { name: 'BURRATA CAPRESE', price: '€9.50', desc: 'Fresh burrata cheese, cherry tomatoes, pesto, balsamic glaze', img: 'https://images.unsplash.com/photo-1541529086526-db283c563270?auto=format&fit=crop&q=80&w=400' },
+                { name: 'GARLIC BREAD MOZZARELLA', price: '€6.50', desc: 'Baked bread with garlic butter and melted mozzarella', img: 'https://images.unsplash.com/photo-1619895092538-128341789043?auto=format&fit=crop&q=80&w=400' },
+                { name: 'ARANCINI SICILIANI', price: '€8.50', desc: 'Crispy fried risotto balls stuffed with mozzarella and peas', img: 'https://images.unsplash.com/photo-1541529086526-db283c563270?auto=format&fit=crop&q=80&w=400' }
+            ],
+            salads: [
+                { name: 'INSALATA CAESAR', price: '€10.50', desc: 'Romaine lettuce, grilled chicken, croutons, parmesan, Caesar dressing', img: 'https://images.unsplash.com/photo-1550304943-4f24f54ddde9?auto=format&fit=crop&q=80&w=400' },
+                { name: 'INSALATA MEDITERRANEA', price: '€9.50', desc: 'Mixed greens, feta cheese, olives, cucumber, tomatoes, vinaigrette', img: 'https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&q=80&w=400' }
+            ],
+            desserts: [
+                { name: 'CLASSIC TIRAMISU', price: '€7.00', desc: 'Italian ladyfingers, espresso, mascarpone cream, cocoa', img: 'https://images.unsplash.com/photo-1571877227200-a0d98ea607e9?auto=format&fit=crop&q=80&w=400' },
+                { name: 'PANNA COTTA', price: '€6.50', desc: 'Silky vanilla bean cream with wild berry coulis', img: 'https://images.unsplash.com/photo-1488477181946-6428a0291777?auto=format&fit=crop&q=80&w=400' },
+                { name: 'CANNOLI SICILIANI', price: '€7.00', desc: 'Crispy pastry shells filled with sweet ricotta and chocolate chips', img: 'https://images.unsplash.com/photo-1551024709-8f23befc6f87?auto=format&fit=crop&q=80&w=400' }
+            ],
+            drinks: [
+                { name: 'SAN PELLEGRINO ARANCIATA', price: '€3.50', desc: 'Sparkling Italian orange beverage (330ml)', img: 'https://images.unsplash.com/photo-1622483767028-3f66f32aef97?auto=format&fit=crop&q=80&w=400' },
+                { name: 'CHIANTI DOCG WINE', price: '€24.00', desc: 'Bottle of classic Tuscan red wine', img: 'https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?auto=format&fit=crop&q=80&w=400' },
+                { name: 'ESPRESSO', price: '€2.50', desc: 'Authentic Italian dark roast espresso', img: 'https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&q=80&w=400' }
+            ]
+        };
+
+        const galleryData = [
+            { img: 'https://images.unsplash.com/photo-1574071318508-1cdbab80d002?auto=format&fit=crop&q=80&w=600', title: 'Authentic Neapolitan Pizza', cat: 'PIZZA' },
+            { img: 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&q=80&w=600', title: 'Restaurant Dining Room', cat: 'INTERIOR' },
+            { img: 'https://images.unsplash.com/photo-1590947132387-155cc02f3212?auto=format&fit=crop&q=80&w=600', title: 'Wood-fired Oven Pizza', cat: 'PIZZA' },
+            { img: 'https://images.unsplash.com/photo-1556910103-1c02745aae4d?auto=format&fit=crop&q=80&w=600', title: 'Handcrafted Dough', cat: 'PIZZA' },
+            { img: 'https://images.unsplash.com/photo-1551183053-bf91a1d81141?auto=format&fit=crop&q=80&w=600', title: 'Fresh Homemade Spaghetti', cat: 'PASTA' },
+            { img: 'https://images.unsplash.com/photo-1541529086526-db283c563270?auto=format&fit=crop&q=80&w=600', title: 'Burrata Caprese', cat: 'STARTERS' },
+            { img: 'https://images.unsplash.com/photo-1572695157366-5e585ab2b69f?auto=format&fit=crop&q=80&w=600', title: 'Traditional Bruschetta', cat: 'STARTERS' },
+            { img: 'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&q=80&w=600', title: 'Warm Evening Ambiance', cat: 'INTERIOR' },
+            { img: 'https://images.unsplash.com/photo-1577219491135-ce391730fb2c?auto=format&fit=crop&q=80&w=600', title: 'Artisan Dough Preparation', cat: 'PIZZA' },
+            { img: 'https://images.unsplash.com/photo-1571877227200-a0d98ea607e9?auto=format&fit=crop&q=80&w=600', title: 'Classic Tiramisu', cat: 'DESSERTS' },
+            { img: 'https://images.unsplash.com/photo-1534308983496-4fabb1a015ee?auto=format&fit=crop&q=80&w=600', title: 'Prosciutto & Rucola Pizza', cat: 'PIZZA' },
+            { img: 'https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&q=80&w=600', title: 'Traditional Italian Pizza', cat: 'PIZZA' }
+        ];
+
+        function switchPage(pageId) {
+            document.querySelectorAll('.page-section').forEach(el => el.classList.add('hidden'));
+            const target = document.getElementById('page-' + pageId);
+            if (target) target.classList.remove('hidden');
+
+            document.querySelectorAll('.nav-link').forEach(el => {
+                el.classList.remove('active-nav', 'text-white');
+                el.classList.add('text-neutral-300');
+            });
+            const activeNav = document.getElementById('nav-' + pageId);
+            if (activeNav) {
+                activeNav.classList.remove('text-neutral-300');
+                activeNav.classList.add('active-nav', 'text-white');
+            }
+
+            document.querySelectorAll('.mobile-nav-item').forEach(btn => {
+                if (btn.getAttribute('data-mobile-nav') === pageId) {
+                    btn.classList.add('text-pizzaRed');
+                    btn.classList.remove('text-white');
+                } else {
+                    btn.classList.remove('text-pizzaRed');
+                    btn.classList.add('text-white');
+                }
+            });
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            const icon = document.getElementById('mobile-menu-icon');
+            menu.classList.toggle('hidden');
+            icon.className = menu.classList.contains('hidden') ? 'fa-solid fa-bars text-lg' : 'fa-solid fa-xmark text-lg text-pizzaRed';
+        }
+
+        function closeMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            const icon = document.getElementById('mobile-menu-icon');
+            menu.classList.add('hidden');
+            icon.className = 'fa-solid fa-bars text-lg';
+        }
+
+        function renderMenuRow(item) {
+            return `
+                <div class="flex items-center gap-4 py-3.5 border-b border-stone-300/90 group">
+                    <div class="relative shrink-0 w-20 h-20 rounded-full overflow-hidden pizza-board-thumb flex items-center justify-center">
+                        <img src="${item.img}" alt="${item.name}" class="w-full h-full object-cover object-center rounded-full pizza-zoom transition duration-300" onerror="this.src='https://images.unsplash.com/photo-1593560708920-61dd98c46a4e?auto=format&fit=crop&q=85&w=500'">
+                        <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
+                            <div class="example-badge scale-[0.45]">EXAMPLE PHOTO</div>
+                        </div>
+                    </div>
+                    <div class="flex-grow min-w-0">
+                        <div class="flex justify-between items-baseline gap-2 mb-0.5">
+                            <h4 class="font-sans font-extrabold text-sm sm:text-[15px] tracking-wide text-neutral-900 flex items-center gap-2">
+                                <span>${item.name}</span>
+                                ${item.spicy ? '<i class="fa-solid fa-pepper-hot text-pizzaRed text-xs" title="Spicy"></i>' : ''}
+                                ${item.chef ? '<i class="fa-solid fa-crown text-pizzaRed text-xs" title="Chef Special"></i>' : ''}
+                            </h4>
+                            <span class="font-sans font-extrabold text-pizzaRed text-sm sm:text-[15px] shrink-0">${item.price}</span>
+                        </div>
+                        <p class="text-neutral-600 text-xs sm:text-[13px] leading-relaxed">${item.desc}</p>
+                    </div>
+                </div>
+            `;
+        }
+
+        function filterMenu(category) {
+            document.querySelectorAll('.menu-tab').forEach(tab => {
+                tab.classList.remove('border-pizzaRed', 'text-pizzaRed');
+                tab.classList.add('border-transparent', 'text-stone-700');
+            });
+            const selectedTab = document.getElementById('tab-' + category);
+            if (selectedTab) {
+                selectedTab.classList.remove('border-transparent', 'text-stone-700');
+                selectedTab.classList.add('border-pizzaRed', 'text-pizzaRed');
+            }
+
+            const container = document.getElementById('menu-content-area');
+            const items = menuData[category] || [];
+
+            if (category === 'pizza') {
+                const classics = items.filter(i => i.tag === 'CLASSIC');
+                const specials = items.filter(i => i.tag === 'SPECIAL');
+                container.innerHTML = `
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-14">
+                        <div>
+                            <h3 class="font-display font-bold text-2xl sm:text-3xl text-neutral-900 uppercase tracking-wide">PIZZA CLASSICS</h3>
+                            <div class="w-10 h-[2.5px] bg-pizzaRed mt-1.5 mb-3"></div>
+                            <div>
+                                ${classics.map(renderMenuRow).join('')}
+                            </div>
+                        </div>
+                        <div>
+                            <h3 class="font-display font-bold text-2xl sm:text-3xl text-neutral-900 uppercase tracking-wide">SPECIAL PIZZAS</h3>
+                            <div class="w-10 h-[2.5px] bg-pizzaRed mt-1.5 mb-3"></div>
+                            <div>
+                                ${specials.map(renderMenuRow).join('')}
+                            </div>
+                        </div>
+                    </div>
+                `;
+            } else {
+                const titleMap = {
+                    pasta: 'HOMEMADE PASTA',
+                    starters: 'ITALIAN STARTERS',
+                    salads: 'FRESH SALADS',
+                    desserts: 'ARTISAN DESSERTS',
+                    drinks: 'DRINKS & WINES'
+                };
+                container.innerHTML = `
+                    <div>
+                        <h3 class="font-display font-bold text-2xl sm:text-3xl text-neutral-900 uppercase tracking-wide">${titleMap[category] || category.toUpperCase()}</h3>
+                        <div class="w-10 h-[2.5px] bg-pizzaRed mt-1.5 mb-5"></div>
+                        <div class="grid grid-cols-1 lg:grid-cols-2 gap-x-12 gap-y-1">
+                        ${items.map(renderMenuRow).join('')}
+                    </div>
+                </div>
+            `;
+        }
+        }
+
+        let currentGalleryList = [...galleryData];
+        let currentLightboxIndex = 0;
+
+        function filterGallery(cat) {
+            document.querySelectorAll('.gal-tab-btn').forEach(btn => {
+                if (btn.getAttribute('data-gal-tab') === cat) {
+                    btn.className = 'gal-tab-btn shrink-0 px-7 py-2.5 rounded text-xs font-bold uppercase tracking-wider bg-pizzaRed text-white shadow-sm transition';
+                } else {
+                    btn.className = 'gal-tab-btn shrink-0 px-7 py-2.5 rounded text-xs font-bold uppercase tracking-wider bg-transparent border border-stone-300 text-stone-800 hover:border-pizzaRed transition';
+                }
+            });
+
+            const grid = document.getElementById('gallery-grid');
+            currentGalleryList = cat === 'ALL' ? [...galleryData] : galleryData.filter(item => item.cat === cat);
+
+            grid.innerHTML = currentGalleryList.map((item, idx) => `
+                <div onclick="openGalleryLightbox(${idx})" class="group cursor-pointer relative rounded-md overflow-hidden shadow-md aspect-[16/10] bg-neutral-900 flex items-center justify-center">
+                    <img src="${item.img}" alt="${item.title}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500" onerror="this.src='https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&q=80&w=600'">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition flex items-end justify-between p-4">
+                        <span class="text-white font-serif font-bold text-sm">${item.title}</span>
+                        <span class="w-8 h-8 rounded-full bg-pizzaRed text-white flex items-center justify-center text-xs shadow-md"><i class="fa-solid fa-expand"></i></span>
+                    </div>
+                    <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
+                        <div class="example-badge scale-75">EXAMPLE PHOTO</div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function openGalleryLightbox(index) {
+            if (!currentGalleryList.length) return;
+            currentLightboxIndex = index;
+            updateGalleryLightbox();
+            document.getElementById('gallery-lightbox-modal').classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+            setBannerVisibility(false);
+        }
+
+        function closeGalleryLightbox() {
+            document.getElementById('gallery-lightbox-modal').classList.add('hidden');
+            document.body.style.overflow = '';
+            setBannerVisibility(true);
+        }
+
+        function updateGalleryLightbox() {
+            if (!currentGalleryList.length) return;
+            const item = currentGalleryList[currentLightboxIndex];
+            const mainImg = document.getElementById('lightbox-main-img');
+            mainImg.style.opacity = '0.3';
+            setTimeout(() => {
+                mainImg.src = item.img;
+                mainImg.alt = item.title;
+                mainImg.style.opacity = '1';
+            }, 90);
+
+            document.getElementById('lightbox-title').textContent = item.title;
+            document.getElementById('lightbox-cat-badge').textContent = item.cat;
+            document.getElementById('lightbox-counter').textContent = `${currentLightboxIndex + 1} / ${currentGalleryList.length}`;
+
+            const thumbsContainer = document.getElementById('lightbox-thumbs');
+            thumbsContainer.innerHTML = currentGalleryList.map((thumb, idx) => `
+                <button onclick="selectGalleryThumb(${idx})" class="relative w-16 h-11 sm:w-20 sm:h-12 shrink-0 rounded overflow-hidden border-2 transition ${idx === currentLightboxIndex ? 'border-pizzaRed opacity-100 scale-105' : 'border-transparent opacity-50 hover:opacity-85'}">
+                    <img src="${thumb.img}" alt="${thumb.title}" class="w-full h-full object-cover" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1572695157366-5e585ab2b69f?auto=format&fit=crop&q=80&w=600';">
+                </button>
+            `).join('');
+
+            const activeThumb = thumbsContainer.children[currentLightboxIndex];
+            if (activeThumb) {
+                activeThumb.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+            }
+        }
+
+        function selectGalleryThumb(index) {
+            currentLightboxIndex = index;
+            updateGalleryLightbox();
+        }
+
+        function nextGalleryPhoto() {
+            if (!currentGalleryList.length) return;
+            currentLightboxIndex = (currentLightboxIndex + 1) % currentGalleryList.length;
+            updateGalleryLightbox();
+        }
+
+        function prevGalleryPhoto() {
+            if (!currentGalleryList.length) return;
+            currentLightboxIndex = (currentLightboxIndex - 1 + currentGalleryList.length) % currentGalleryList.length;
+            updateGalleryLightbox();
+        }
+
+        (function initGallerySwipe() {
+            let touchStartX = 0;
+            let touchEndX = 0;
+            const swipeArea = document.getElementById('lightbox-swipe-area');
+            if (!swipeArea) return;
+
+            swipeArea.addEventListener('touchstart', (e) => {
+                touchStartX = e.changedTouches[0].screenX;
+            }, { passive: true });
+
+            swipeArea.addEventListener('touchend', (e) => {
+                touchEndX = e.changedTouches[0].screenX;
+                const diff = touchStartX - touchEndX;
+                if (Math.abs(diff) > 40) {
+                    if (diff > 0) {
+                        nextGalleryPhoto();
+                    } else {
+                        prevGalleryPhoto();
+                    }
+                }
+            }, { passive: true });
+        })();
+
+        document.addEventListener('keydown', (e) => {
+            const lightbox = document.getElementById('gallery-lightbox-modal');
+            if (lightbox && !lightbox.classList.contains('hidden')) {
+                if (e.key === 'Escape') closeGalleryLightbox();
+                if (e.key === 'ArrowRight') nextGalleryPhoto();
+                if (e.key === 'ArrowLeft') prevGalleryPhoto();
+            }
+        });
+
+        function setBannerVisibility(visible) {
+            const banner = document.querySelector('.tailoredly-banner-wrap');
+            if (banner) {
+                banner.style.display = visible ? '' : 'none';
+            }
+        }
+
+        function openBookingModal() {
+            document.getElementById('booking-modal').classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+            setBannerVisibility(false);
+        }
+
+        function closeBookingModal() {
+            document.getElementById('booking-modal').classList.add('hidden');
+            document.body.style.overflow = '';
+            setBannerVisibility(true);
+        }
+
+        function openDemoSuccessModal() {
+            document.getElementById('demo-success-modal').classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+            setBannerVisibility(false);
+        }
+
+        function closeDemoSuccessModal() {
+            document.getElementById('demo-success-modal').classList.add('hidden');
+            document.body.style.overflow = '';
+            setBannerVisibility(true);
+        }
+
+        function handleBookingSubmit(e) {
+            e.preventDefault();
+            e.target.reset();
+            closeBookingModal();
+            openDemoSuccessModal();
+        }
+
+        function handleNewsletter(e) {
+            e.preventDefault();
+            e.target.reset();
+            openDemoSuccessModal();
+        }
+
+        window.onload = function() {
+            filterMenu('pizza');
+            filterGallery('ALL');
+        };
+    </script>
+</body>
+</html>

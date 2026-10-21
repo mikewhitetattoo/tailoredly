@@ -1,0 +1,2009 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tailoredly | Modern Websites Tailored To Your Business</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #000000;
+            color: #f4f4f5;
+        }
+
+        .font-heading {
+            font-family: 'Outfit', sans-serif;
+        }
+
+        .ambient-bg {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+            min-height: 100vh;
+        }
+
+        .glow-sphere-primary {
+            background: radial-gradient(circle, rgba(255, 46, 99, 0.28) 0%, rgba(225, 29, 72, 0.12) 50%, transparent 75%);
+            filter: blur(90px);
+        }
+
+        .glow-sphere-secondary {
+            background: radial-gradient(circle, rgba(244, 63, 94, 0.22) 0%, rgba(159, 18, 57, 0.08) 55%, transparent 75%);
+            filter: blur(100px);
+        }
+
+        .grid-pattern {
+            background-size: 40px 40px;
+            background-image: 
+                linear-gradient(to right, rgba(255, 46, 99, 0.05) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(255, 46, 99, 0.05) 1px, transparent 1px);
+        }
+
+        .card-dark {
+            background-color: #050505;
+            background-image: linear-gradient(180deg, #09090b 0%, #000000 100%);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 24px;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .card-dark:hover {
+            border-color: rgba(255, 46, 99, 0.4);
+            box-shadow: 0 15px 40px -10px rgba(255, 46, 99, 0.22);
+            transform: translateY(-2px);
+        }
+
+        .card-portfolio {
+            background-color: #050505;
+            background-image: linear-gradient(180deg, #09090b 0%, #000000 100%);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 24px;
+            overflow: hidden;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .card-portfolio:hover {
+            border-color: rgba(255, 46, 99, 0.4);
+            box-shadow: 0 15px 40px -10px rgba(255, 46, 99, 0.22);
+            transform: translateY(-2px);
+        }
+
+        .bg-pink-gradient {
+            background: linear-gradient(135deg, #ff2e63 0%, #e11d48 50%, #9f1239 100%);
+        }
+
+        .text-pink-accent {
+            color: #ff3b68;
+        }
+
+        .glow-pink {
+            box-shadow: 0 0 25px -3px rgba(255, 46, 99, 0.5);
+        }
+
+        .glow-pink-hover:hover {
+            box-shadow: 0 0 35px -2px rgba(255, 46, 99, 0.7);
+        }
+
+        .page-view {
+            display: none;
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out;
+        }
+
+        .page-view.active {
+            display: block;
+            opacity: 1;
+        }
+
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #000000;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #27272a;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #ff2e63;
+        }
+
+        @keyframes pulse-glow {
+            0%, 100% { box-shadow: 0 0 20px rgba(255, 46, 99, 0.4); }
+            50% { box-shadow: 0 0 35px rgba(255, 46, 99, 0.8); }
+        }
+        .promo-card-glow {
+            animation: pulse-glow 3s infinite ease-in-out;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col selection:bg-pink-500 selection:text-white relative overflow-x-hidden">
+
+    <div class="ambient-bg">
+        <div class="absolute -top-32 left-1/2 -translate-x-1/2 w-[750px] h-[550px] glow-sphere-primary rounded-full opacity-95"></div>
+        <div class="absolute top-[25%] -right-40 w-[600px] h-[600px] glow-sphere-secondary rounded-full opacity-75"></div>
+        <div class="absolute top-[50%] -left-40 w-[600px] h-[600px] glow-sphere-primary rounded-full opacity-65"></div>
+        <div class="absolute top-[75%] right-0 w-[600px] h-[600px] glow-sphere-secondary rounded-full opacity-60"></div>
+        <div class="absolute inset-0 grid-pattern opacity-80"></div>
+    </div>
+
+    <nav class="sticky top-0 z-50 bg-black/90 backdrop-blur-xl border-b border-zinc-900 relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-20 items-center gap-2 xl:gap-5">
+                
+                <!-- Brand Logo -->
+                <button onclick="navigateTo('home')" class="flex items-center gap-3.5 group shrink-0 text-left">
+                    <div class="w-12 h-12 flex items-center justify-center shrink-0">
+                        <img src="logo.png" alt="Tailoredly Logo" class="w-full h-full object-contain group-hover:scale-105 transition-transform" onerror="this.onerror=null; this.replaceWith(document.getElementById('fallback-logo-svg').content.cloneNode(true));">
+                    </div>
+                    <div>
+                        <span class="font-heading text-lg sm:text-xl font-extrabold tracking-tight text-white block leading-none">
+                            TAILORED<span class="text-pink-accent">LY</span>
+                        </span>
+                        <span class="text-[9px] sm:text-[10px] tracking-widest text-zinc-400 font-semibold uppercase block mt-1 whitespace-nowrap" data-en="Websites Tailored To Your Business" data-pl="Strony Dopasowane Do Biznesu">
+                            Websites Tailored To Your Business
+                        </span>
+                    </div>
+                </button>
+
+                <template id="fallback-logo-svg">
+                    <svg class="w-full h-full text-pink-accent" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M 28 25 L 12 50 L 28 75" stroke="#ff2e63" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M 72 25 L 88 50 L 72 75" stroke="#ff2e63" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M 20 20 Q 35 10 50 35 T 80 50" stroke="#ff2e63" stroke-width="4" stroke-linecap="round" fill="none"/>
+                        <line x1="58" y1="18" x2="42" y2="82" stroke="white" stroke-width="6" stroke-linecap="round"/>
+                        <circle cx="55" cy="27" r="1.5" fill="#ff2e63"/>
+                        <line x1="68" y1="82" x2="88" y2="82" stroke="#ff2e63" stroke-width="6" stroke-linecap="round"/>
+                    </svg>
+                </template>
+
+                <!-- Navigation Tabs -->
+                <div class="hidden lg:flex items-center gap-2 xl:gap-4 text-xs lg:text-sm font-semibold shrink-0">
+                    <button onclick="navigateTo('home')" id="nav-home" class="nav-link px-3 py-1.5 rounded-lg text-white bg-zinc-900 border border-zinc-800 transition-all whitespace-nowrap">
+                        <span data-en="Home" data-pl="Strona główna">Home</span>
+                    </button>
+                    <button onclick="navigateTo('portfolio')" id="nav-portfolio" class="nav-link px-3 py-1.5 rounded-lg text-zinc-400 hover:text-white transition-all whitespace-nowrap">
+                        <span data-en="Portfolio" data-pl="Portfolio">Portfolio</span>
+                    </button>
+                    <button onclick="navigateTo('pricing')" id="nav-pricing" class="nav-link px-3 py-1.5 rounded-lg text-zinc-400 hover:text-white transition-all whitespace-nowrap">
+                        <span data-en="Pricing" data-pl="Cennik">Pricing</span>
+                    </button>
+                    <button onclick="navigateTo('contact')" id="nav-contact" class="nav-link px-3 py-1.5 rounded-lg text-zinc-400 hover:text-white transition-all whitespace-nowrap">
+                        <span data-en="Contact" data-pl="Kontakt">Contact</span>
+                    </button>
+                </div>
+
+                <!-- Right Controls -->
+                <div class="flex items-center gap-2.5 sm:gap-3 shrink-0">
+                    
+                    <!-- Desktop Language Switcher -->
+                    <div class="hidden lg:flex bg-zinc-900 p-1 rounded-xl border border-zinc-800 text-xs font-bold items-center shrink-0">
+                        <button id="lang-en" onclick="setLanguage('en')" class="px-2.5 py-1.5 rounded-lg bg-pink-gradient text-white shadow-sm transition-all flex items-center gap-1.5 whitespace-nowrap">
+                            <svg class="w-4 h-3 rounded shadow-sm object-cover" viewBox="0 0 640 480" xmlns="http://www.w3.org/2000/svg">
+                                <path fill="#012169" d="M0 0h640v480H0z"/>
+                                <path fill="#FFF" d="m75 0 244 181L562 0h78v62L400 241l240 178v61h-80L320 301 81 480H0v-60l239-179L0 62V0h75z"/>
+                                <path fill="#C8102E" d="m424 281 216 159v40L369 281h55zm-184 20L6 480h40l154-115-4-64zM640 0v3L391 191l4-56L610 0h30zM0 0l225 166-4 61L0 23V0z"/>
+                                <path fill="#FFF" d="M241 0v480h160V0H241zM0 160v160h640V160H0z"/>
+                                <path fill="#C8102E" d="M0 193v94h640v-94H0zM273 0v480h94V0h-94z"/>
+                            </svg>
+                            <span>EN</span>
+                        </button>
+                        <button id="lang-pl" onclick="setLanguage('pl')" class="px-2.5 py-1.5 rounded-lg text-zinc-400 hover:text-white transition-all flex items-center gap-1 whitespace-nowrap">
+                            🇵🇱 PL
+                        </button>
+                    </div>
+
+                    <!-- Mobile Language Dropdown -->
+                    <div class="lg:hidden relative">
+                        <button id="mobile-lang-toggle-btn" onclick="toggleMobileLangMenu()" class="px-3.5 py-2 rounded-xl bg-zinc-900 border border-zinc-800 text-white text-xs font-bold flex items-center gap-2 shadow-lg hover:border-pink-500/40 transition-all">
+                            <svg class="w-4 h-3 rounded shadow-sm object-cover" id="mobile-current-flag" viewBox="0 0 640 480" xmlns="http://www.w3.org/2000/svg">
+                                <path fill="#012169" d="M0 0h640v480H0z"/>
+                                <path fill="#FFF" d="m75 0 244 181L562 0h78v62L400 241l240 178v61h-80L320 301 81 480H0v-60l239-179L0 62V0h75z"/>
+                                <path fill="#C8102E" d="m424 281 216 159v40L369 281h55zm-184 20L6 480h40l154-115-4-64zM640 0v3L391 191l4-56L610 0h30zM0 0l225 166-4 61L0 23V0z"/>
+                                <path fill="#FFF" d="M241 0v480h160V0H241zM0 160v160h640V160H0z"/>
+                                <path fill="#C8102E" d="M0 193v94h640v-94H0zM273 0v480h94V0h-94z"/>
+                            </svg>
+                            <span id="mobile-current-lang-text">EN</span>
+                            <i data-lucide="chevron-down" class="w-3.5 h-3.5 text-zinc-400"></i>
+                        </button>
+
+                        <div id="mobile-lang-dropdown" class="hidden absolute right-0 top-full mt-2 w-48 bg-zinc-950 border border-zinc-800 rounded-2xl p-2 shadow-2xl z-50 border-t-pink-500/40 space-y-1">
+                            <button id="mobile-lang-opt-en" onclick="setLanguage('en'); toggleMobileLangMenu(false);" class="w-full text-left px-3.5 py-2.5 rounded-xl text-white bg-zinc-900 border border-zinc-800 font-bold text-xs flex items-center justify-between transition-all">
+                                <div class="flex items-center gap-2.5">
+                                    <svg class="w-4 h-3 rounded shadow-sm object-cover shrink-0" viewBox="0 0 640 480" xmlns="http://www.w3.org/2000/svg">
+                                        <path fill="#012169" d="M0 0h640v480H0z"/>
+                                        <path fill="#FFF" d="m75 0 244 181L562 0h78v62L400 241l240 178v61h-80L320 301 81 480H0v-60l239-179L0 62V0h75z"/>
+                                        <path fill="#C8102E" d="m424 281 216 159v40L369 281h55zm-184 20L6 480h40l154-115-4-64zM640 0v3L391 191l4-56L610 0h30zM0 0l225 166-4 61L0 23V0z"/>
+                                        <path fill="#FFF" d="M241 0v480h160V0H241zM0 160v160h640V160H0z"/>
+                                        <path fill="#C8102E" d="M0 193v94h640v-94H0zM273 0v480h94V0h-94z"/>
+                                    </svg>
+                                    <span>English (EN)</span>
+                                </div>
+                                <span id="mobile-lang-check-en" class="text-pink-accent text-xs font-extrabold">✓</span>
+                            </button>
+                            <button id="mobile-lang-opt-pl" onclick="setLanguage('pl'); toggleMobileLangMenu(false);" class="w-full text-left px-3.5 py-2.5 rounded-xl text-zinc-300 hover:text-white hover:bg-zinc-900 border border-transparent font-bold text-xs flex items-center justify-between transition-all">
+                                <div class="flex items-center gap-2.5">
+                                    <svg class="w-4 h-3 rounded shadow-sm object-cover shrink-0" viewBox="0 0 640 480" xmlns="http://www.w3.org/2000/svg">
+                                        <path fill="#fff" d="M0 0h640v480H0z"/>
+                                        <path fill="#dc143c" d="M0 240h640v240H0z"/>
+                                    </svg>
+                                    <span>Polski (PL)</span>
+                                </div>
+                                <span id="mobile-lang-check-pl" class="text-pink-accent text-xs font-extrabold hidden">✓</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Mobile Hamburger Button -->
+                    <button id="mobile-menu-btn" onclick="toggleMobileMenu()" aria-label="Toggle Navigation Menu" class="lg:hidden p-2.5 rounded-xl bg-zinc-900/90 border border-zinc-800 text-zinc-300 hover:text-white hover:border-pink-500/40 focus:outline-none transition-all flex items-center justify-center shrink-0">
+                        <i data-lucide="menu" id="menu-icon-open" class="w-6 h-6"></i>
+                        <i data-lucide="x" id="menu-icon-close" class="w-6 h-6 hidden"></i>
+                    </button>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Mobile Dropdown Navigation -->
+        <div id="mobile-menu" class="hidden lg:hidden absolute right-4 sm:right-6 top-full mt-2 w-72 sm:w-80 bg-zinc-950 border border-zinc-800 rounded-2xl p-4 space-y-3 shadow-2xl z-50 border-t-pink-500/40 transition-all">
+            <button onclick="navigateTo('home'); toggleMobileMenu(false);" id="mobile-nav-home" class="mobile-nav-link w-full text-left px-5 py-4 rounded-xl text-white bg-zinc-900 border border-zinc-800 transition-all flex items-center justify-between text-base sm:text-lg font-bold group">
+                <span data-en="Home" data-pl="Strona główna">Home</span>
+                <i data-lucide="chevron-right" class="w-6 h-6 text-pink-accent group-hover:translate-x-1 transition-transform"></i>
+            </button>
+            <button onclick="navigateTo('portfolio'); toggleMobileMenu(false);" id="mobile-nav-portfolio" class="mobile-nav-link w-full text-left px-5 py-4 rounded-xl text-zinc-300 hover:text-white hover:bg-zinc-900 transition-all flex items-center justify-between text-base sm:text-lg font-bold group">
+                <span data-en="Portfolio" data-pl="Portfolio">Portfolio</span>
+                <i data-lucide="chevron-right" class="w-6 h-6 text-zinc-500 group-hover:translate-x-1 transition-transform"></i>
+            </button>
+            <button onclick="navigateTo('pricing'); toggleMobileMenu(false);" id="mobile-nav-pricing" class="mobile-nav-link w-full text-left px-5 py-4 rounded-xl text-zinc-300 hover:text-white hover:bg-zinc-900 transition-all flex items-center justify-between text-base sm:text-lg font-bold group">
+                <span data-en="Pricing" data-pl="Cennik">Pricing</span>
+                <i data-lucide="chevron-right" class="w-6 h-6 text-zinc-500 group-hover:translate-x-1 transition-transform"></i>
+            </button>
+            <button onclick="navigateTo('contact'); toggleMobileMenu(false);" id="mobile-nav-contact" class="mobile-nav-link w-full text-left px-5 py-4 rounded-xl text-zinc-300 hover:text-white hover:bg-zinc-900 transition-all flex items-center justify-between text-base sm:text-lg font-bold group">
+                <span data-en="Contact" data-pl="Kontakt">Contact</span>
+                <i data-lucide="chevron-right" class="w-6 h-6 text-zinc-500 group-hover:translate-x-1 transition-transform"></i>
+            </button>
+        </div>
+    </nav>
+
+    <main class="relative z-10 flex-grow">
+
+        <!-- HOME VIEW -->
+        <div id="view-home" class="page-view active">
+            
+            <!-- Hero Header with Laptop Visual -->
+            <section class="relative pt-12 pb-16 md:pt-20 md:pb-28 bg-transparent overflow-hidden">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+                    
+                    <div class="grid lg:grid-cols-12 gap-10 lg:gap-12 items-center">
+                        <!-- Left Column: Text -->
+                        <div class="lg:col-span-6 text-left">
+                            <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-zinc-900/90 border border-zinc-800 text-xs font-semibold text-zinc-300 mb-6 shadow-inner">
+                                <span class="flex h-2 w-2 rounded-full bg-[#ff2e63] animate-pulse"></span>
+                                <span data-en="Fixed prices • No Hidden Fees" data-pl="Przejrzyste ceny • Bez ukrytych kosztów">
+                                    Fixed prices • No Hidden Fees
+                                </span>
+                            </div>
+
+                            <h1 class="font-heading text-3xl sm:text-5xl lg:text-[54px] font-extrabold text-white tracking-tight leading-[1.1] mb-5">
+                                <span data-en="Modern, affordable" data-pl="Nowoczesne strony internetowe">Modern, affordable</span> <br class="hidden sm:inline" />
+                                <span class="bg-gradient-to-r from-white via-rose-200 to-pink-500 bg-clip-text text-transparent" data-en="websites for your business." data-pl="w przystępnych cenach.">
+                                    websites for your business.
+                                </span>
+                            </h1>
+
+                            <p class="text-xs sm:text-base text-zinc-400 mb-7 max-w-xl font-normal leading-relaxed" data-en="I create modern, professional websites for small businesses at affordable prices. Clear pricing, direct contact and a website tailored to your needs, without unnecessary hassle." data-pl="Tworzę estetyczne i profesjonalne strony internetowe dla małych firm, oferując konkurencyjne ceny i bezpośrednią współpracę. Bez zbędnych komplikacji, z projektem dopasowanym do potrzeb Twojej firmy.">
+                                I create modern, professional websites for small businesses at affordable prices. Clear pricing, direct contact and a website tailored to your needs, without unnecessary hassle.
+                            </p>
+
+                            <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4 mb-8">
+                                <button onclick="navigateTo('portfolio')" class="px-7 py-3.5 md:px-8 md:py-4 rounded-xl text-sm font-bold text-white bg-pink-gradient hover:opacity-95 transition-all glow-pink glow-pink-hover text-center flex items-center justify-center gap-2">
+                                    <i data-lucide="folder-kanban" class="w-4 h-4"></i>
+                                    <span data-en="View my work" data-pl="Zobacz portfolio">View my work</span>
+                                </button>
+                                <button onclick="navigateTo('pricing')" class="px-7 py-3.5 md:px-8 md:py-4 rounded-xl text-sm font-bold text-zinc-200 bg-zinc-900/90 border border-zinc-800 hover:bg-zinc-800 hover:text-white transition-all text-center flex items-center justify-center gap-2">
+                                    <i data-lucide="tag" class="w-4 h-4 text-pink-accent"></i>
+                                    <span data-en="View pricing" data-pl="Sprawdź cennik">View pricing</span>
+                                </button>
+                            </div>
+
+                            <!-- Trust Badges -->
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4 pt-6 border-t border-zinc-900/80 text-xs text-zinc-400">
+                                <div class="flex items-start gap-2.5">
+                                    <i data-lucide="check-circle-2" class="w-4 h-4 text-pink-accent shrink-0 mt-0.5"></i>
+                                    <div>
+                                        <strong class="text-white block mb-0.5" data-en="Designed for all devices" data-pl="Działa na każdym urządzeniu">Designed for all devices</strong>
+                                        <span data-en="Your website will look good and work smoothly on desktop, tablet and mobile." data-pl="Strona będzie dobrze wyglądać i działać na komputerach, tabletach i telefonach.">Your website will look good and work smoothly on desktop, tablet and mobile.</span>
+                                    </div>
+                                </div>
+                                <div class="flex items-start gap-2.5">
+                                    <i data-lucide="check-circle-2" class="w-4 h-4 text-pink-accent shrink-0 mt-0.5"></i>
+                                    <div>
+                                        <strong class="text-white block mb-0.5" data-en="SEO setup" data-pl="Optymalizacja SEO">SEO setup</strong>
+                                        <span data-en="Your website will be prepared with SEO in mind to help search engines understand its content." data-pl="Przygotuję stronę pod kątem SEO, aby wyszukiwarki mogły lepiej odczytywać jej zawartość.">Your website will be prepared with SEO in mind to help search engines understand its content.</span>
+                                    </div>
+                                </div>
+                                <div class="flex items-start gap-2.5">
+                                    <i data-lucide="check-circle-2" class="w-4 h-4 text-pink-accent shrink-0 mt-0.5"></i>
+                                    <div>
+                                        <strong class="text-white block mb-0.5" data-en="Personal service" data-pl="Bezpośrednia współpraca">Personal service</strong>
+                                        <span data-en="You'll work directly with me from the first message to the finished website." data-pl="Od pierwszej wiadomości do publikacji strony kontaktujesz się bezpośrednio ze mną.">You'll work directly with me from the first message to the finished website.</span>
+                                    </div>
+                                </div>
+                                <div class="flex items-start gap-2.5">
+                                    <i data-lucide="check-circle-2" class="w-4 h-4 text-pink-accent shrink-0 mt-0.5"></i>
+                                    <div>
+                                        <strong class="text-white block mb-0.5" data-en="Affordable pricing" data-pl="Konkurencyjne ceny">Affordable pricing</strong>
+                                        <span data-en="Professional websites at competitive prices, with costs agreed upfront." data-pl="Profesjonalna strona w rozsądnej cenie, ustalonej przed rozpoczęciem prac.">Professional websites at competitive prices, with costs agreed upfront.</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Right Column: Laptop Visual tailoredly.png -->
+                        <div class="lg:col-span-6 relative mt-4 lg:mt-0 flex items-center justify-center">
+                            <div class="relative w-full">
+                                <div class="absolute -inset-4 bg-pink-500/10 blur-2xl rounded-3xl pointer-events-none"></div>
+                                <img src="tailoredly.png" alt="Tailoredly Portfolio Showcase" class="w-full h-auto object-contain relative z-10 drop-shadow-2xl" onerror="this.onerror=null; this.src='https://placehold.co/800x500/18181b/ff2e63?text=Tailoredly+Laptop+Preview';">
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+
+            <!-- RECENT WORK -->
+            <section class="py-14 md:py-20 bg-transparent border-t border-zinc-900/80 relative">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    
+                    <div class="flex flex-col md:flex-row md:items-end justify-between mb-8 md:mb-12 gap-4">
+                        <div>
+                            <span class="text-xs font-extrabold text-pink-accent uppercase tracking-widest block mb-2" data-en="RECENT WORK" data-pl="OSTATNIE PRACE">RECENT WORK</span>
+                            <h2 class="font-heading text-2xl sm:text-4xl font-extrabold text-white tracking-tight">
+                                <span data-en="Some of my" data-pl="Kilka moich">Some of my</span>
+                                <span class="bg-gradient-to-r from-white via-rose-200 to-pink-500 bg-clip-text text-transparent" data-en="latest websites." data-pl="ostatnich realizacji.">latest websites.</span>
+                            </h2>
+                        </div>
+                        <button onclick="navigateTo('portfolio')" class="inline-flex items-center gap-2 text-xs font-bold text-pink-accent hover:text-white transition-colors">
+                            <span data-en="View full portfolio" data-pl="Zobacz pełne portfolio">View full portfolio</span>
+                            <span class="text-base leading-none">→</span>
+                        </button>
+                    </div>
+
+                    <!-- Desktop 4-col grid / Mobile compact rows (Laptops fill the box cleanly without overflowing outside the card) -->
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5 sm:gap-6">
+                        
+                        <!-- 1. Restaurant -->
+                        <a href="pizza.html" class="card-dark p-2 sm:p-6 flex flex-row sm:flex-col items-center sm:items-stretch justify-between gap-2.5 sm:gap-0 group block overflow-hidden">
+                            <div class="flex flex-row sm:flex-col items-center sm:items-stretch gap-3 sm:gap-0 flex-1 min-w-0">
+                                <div class="relative w-40 sm:w-full aspect-[16/10] sm:mb-6 flex items-center justify-center bg-transparent shrink-0">
+                                    <img src="laptop1.png" alt="Restaurant Mockup" class="w-full h-full object-contain scale-[1.22] sm:scale-100 group-hover:scale-105 transition-transform duration-300" onerror="this.onerror=null; this.src='https://placehold.co/600x400/18181b/ff2e63?text=Laptop+1';">
+                                </div>
+                                <div class="flex flex-col flex-1 min-w-0 pl-1 sm:pl-0">
+                                    <div class="flex items-center gap-2 mb-1 sm:mb-2">
+                                        <div class="text-pink-accent flex items-center justify-center shrink-0">
+                                            <i data-lucide="utensils" class="w-4 h-4 sm:w-5 sm:h-5"></i>
+                                        </div>
+                                        <h3 class="font-heading text-sm sm:text-lg font-bold text-white group-hover:text-pink-accent transition-colors truncate" data-en="Restaurant" data-pl="Restauracja">Restaurant</h3>
+                                    </div>
+                                    <p class="text-[11px] sm:text-sm text-zinc-400 leading-snug sm:leading-relaxed sm:mb-6 line-clamp-2 sm:line-clamp-none" data-en="Modern website with menu, booking form and gallery." data-pl="Nowoczesna strona z menu, formularzem rezerwacji i galerią.">Modern website with menu, booking form and gallery.</p>
+                                </div>
+                            </div>
+                            <div class="shrink-0 pl-1 sm:pl-0">
+                                <span class="hidden sm:inline-flex items-center gap-1.5 text-xs sm:text-sm font-bold text-pink-accent group-hover:text-white transition-colors">
+                                    <span data-en="View example" data-pl="Zobacz przykład">View example</span>
+                                    <span class="text-base leading-none">→</span>
+                                </span>
+                                <span class="sm:hidden text-pink-accent group-hover:translate-x-1 transition-transform inline-flex items-center justify-center p-1">
+                                    <i data-lucide="arrow-right" class="w-5 h-5"></i>
+                                </span>
+                            </div>
+                        </a>
+
+                        <!-- 2. Hair Salon -->
+                        <a href="hairdresser.html" class="card-dark p-2 sm:p-6 flex flex-row sm:flex-col items-center sm:items-stretch justify-between gap-2.5 sm:gap-0 group block overflow-hidden">
+                            <div class="flex flex-row sm:flex-col items-center sm:items-stretch gap-3 sm:gap-0 flex-1 min-w-0">
+                                <div class="relative w-40 sm:w-full aspect-[16/10] sm:mb-6 flex items-center justify-center bg-transparent shrink-0">
+                                    <img src="laptop2.png" alt="Hair Salon Mockup" class="w-full h-full object-contain scale-[1.22] sm:scale-100 group-hover:scale-105 transition-transform duration-300" onerror="this.onerror=null; this.src='https://placehold.co/600x400/18181b/ff2e63?text=Laptop+2';">
+                                </div>
+                                <div class="flex flex-col flex-1 min-w-0 pl-1 sm:pl-0">
+                                    <div class="flex items-center gap-2 mb-1 sm:mb-2">
+                                        <div class="text-pink-accent flex items-center justify-center shrink-0">
+                                            <i data-lucide="scissors" class="w-4 h-4 sm:w-5 sm:h-5"></i>
+                                        </div>
+                                        <h3 class="font-heading text-sm sm:text-lg font-bold text-white group-hover:text-pink-accent transition-colors truncate" data-en="Hair Salon" data-pl="Salon Fryzjerski">Hair Salon</h3>
+                                    </div>
+                                    <p class="text-[11px] sm:text-sm text-zinc-400 leading-snug sm:leading-relaxed sm:mb-6 line-clamp-2 sm:line-clamp-none" data-en="Elegant design with services, price list and contact form." data-pl="Elegancki design z usługami, cennikiem i formularzem.">Elegant design with services, price list and contact form.</p>
+                                </div>
+                            </div>
+                            <div class="shrink-0 pl-1 sm:pl-0">
+                                <span class="hidden sm:inline-flex items-center gap-1.5 text-xs sm:text-sm font-bold text-pink-accent group-hover:text-white transition-colors">
+                                    <span data-en="View example" data-pl="Zobacz przykład">View example</span>
+                                    <span class="text-base leading-none">→</span>
+                                </span>
+                                <span class="sm:hidden text-pink-accent group-hover:translate-x-1 transition-transform inline-flex items-center justify-center p-1">
+                                    <i data-lucide="arrow-right" class="w-5 h-5"></i>
+                                </span>
+                            </div>
+                        </a>
+
+                        <!-- 3. Personal Trainer -->
+                        <a href="personal.html" class="card-dark p-2 sm:p-6 flex flex-row sm:flex-col items-center sm:items-stretch justify-between gap-2.5 sm:gap-0 group block overflow-hidden">
+                            <div class="flex flex-row sm:flex-col items-center sm:items-stretch gap-3 sm:gap-0 flex-1 min-w-0">
+                                <div class="relative w-40 sm:w-full aspect-[16/10] sm:mb-6 flex items-center justify-center bg-transparent shrink-0">
+                                    <img src="laptop3.png" alt="Personal Trainer Mockup" class="w-full h-full object-contain scale-[1.22] sm:scale-100 group-hover:scale-105 transition-transform duration-300" onerror="this.onerror=null; this.src='https://placehold.co/600x400/18181b/ff2e63?text=Laptop+3';">
+                                </div>
+                                <div class="flex flex-col flex-1 min-w-0 pl-1 sm:pl-0">
+                                    <div class="flex items-center gap-2 mb-1 sm:mb-2">
+                                        <div class="text-pink-accent flex items-center justify-center shrink-0">
+                                            <i data-lucide="dumbbell" class="w-4 h-4 sm:w-5 sm:h-5"></i>
+                                        </div>
+                                        <h3 class="font-heading text-sm sm:text-lg font-bold text-white group-hover:text-pink-accent transition-colors truncate" data-en="Personal Trainer" data-pl="Trener Personalny">Personal Trainer</h3>
+                                    </div>
+                                    <p class="text-[11px] sm:text-sm text-zinc-400 leading-snug sm:leading-relaxed sm:mb-6 line-clamp-2 sm:line-clamp-none" data-en="Clean and motivating design with services and booking." data-pl="Czysty i motywujący projekt z ofertą i rezerwacją.">Clean and motivating design with services and booking.</p>
+                                </div>
+                            </div>
+                            <div class="shrink-0 pl-1 sm:pl-0">
+                                <span class="hidden sm:inline-flex items-center gap-1.5 text-xs sm:text-sm font-bold text-pink-accent group-hover:text-white transition-colors">
+                                    <span data-en="View example" data-pl="Zobacz przykład">View example</span>
+                                    <span class="text-base leading-none">→</span>
+                                </span>
+                                <span class="sm:hidden text-pink-accent group-hover:translate-x-1 transition-transform inline-flex items-center justify-center p-1">
+                                    <i data-lucide="arrow-right" class="w-5 h-5"></i>
+                                </span>
+                            </div>
+                        </a>
+
+                        <!-- 4. Home Services -->
+                        <a href="handyman.html" class="card-dark p-2 sm:p-6 flex flex-row sm:flex-col items-center sm:items-stretch justify-between gap-2.5 sm:gap-0 group block overflow-hidden">
+                            <div class="flex flex-row sm:flex-col items-center sm:items-stretch gap-3 sm:gap-0 flex-1 min-w-0">
+                                <div class="relative w-40 sm:w-full aspect-[16/10] sm:mb-6 flex items-center justify-center bg-transparent shrink-0">
+                                    <img src="laptop4.png" alt="Home Services Mockup" class="w-full h-full object-contain scale-[1.22] sm:scale-100 group-hover:scale-105 transition-transform duration-300" onerror="this.onerror=null; this.src='https://placehold.co/600x400/18181b/ff2e63?text=Laptop+4';">
+                                </div>
+                                <div class="flex flex-col flex-1 min-w-0 pl-1 sm:pl-0">
+                                    <div class="flex items-center gap-2 mb-1 sm:mb-2">
+                                        <div class="text-pink-accent flex items-center justify-center shrink-0">
+                                            <i data-lucide="home" class="w-4 h-4 sm:w-5 sm:h-5"></i>
+                                        </div>
+                                        <h3 class="font-heading text-sm sm:text-lg font-bold text-white group-hover:text-pink-accent transition-colors truncate" data-en="Home Services" data-pl="Usługi Domowe">Home Services</h3>
+                                    </div>
+                                    <p class="text-[11px] sm:text-sm text-zinc-400 leading-snug sm:leading-relaxed sm:mb-6 line-clamp-2 sm:line-clamp-none" data-en="Professional website with service overview and contact." data-pl="Profesjonalna strona z przeglądem usług i kontaktem.">Professional website with service overview and contact.</p>
+                                </div>
+                            </div>
+                            <div class="shrink-0 pl-1 sm:pl-0">
+                                <span class="hidden sm:inline-flex items-center gap-1.5 text-xs sm:text-sm font-bold text-pink-accent group-hover:text-white transition-colors">
+                                    <span data-en="View example" data-pl="Zobacz przykład">View example</span>
+                                    <span class="text-base leading-none">→</span>
+                                </span>
+                                <span class="sm:hidden text-pink-accent group-hover:translate-x-1 transition-transform inline-flex items-center justify-center p-1">
+                                    <i data-lucide="arrow-right" class="w-5 h-5"></i>
+                                </span>
+                            </div>
+                        </a>
+
+                    </div>
+
+                </div>
+            </section>
+
+            <!-- WHY CHOOSE TAILOREDLY -->
+            <section class="py-14 md:py-20 bg-transparent border-t border-zinc-900/80 relative">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    
+                    <div class="grid lg:grid-cols-12 gap-10 lg:gap-12 items-center">
+                        <div class="lg:col-span-5 text-left">
+                            <span class="text-xs font-extrabold text-[#ff2e63] uppercase tracking-widest block mb-2" data-en="WHY CHOOSE TAILOREDLY" data-pl="DLACZEGO TAILOREDLY">WHY CHOOSE TAILOREDLY</span>
+                            <h2 class="font-heading text-2xl sm:text-4xl font-extrabold text-white tracking-tight mb-4 md:mb-6 leading-snug">
+                                <span data-en="Professional websites" data-pl="Profesjonalna strona">Professional websites</span> <br class="hidden sm:inline" />
+                                <span class="bg-gradient-to-r from-white via-rose-200 to-pink-500 bg-clip-text text-transparent" data-en="at affordable prices." data-pl="bez dużych wydatków.">at affordable prices.</span>
+                            </h2>
+                            <p class="text-zinc-400 text-xs sm:text-sm leading-relaxed mb-6 md:mb-8" data-en="You don't need a big budget to give your business a professional online presence. I offer affordable website packages, clear pricing and personal service, with every project tailored to your business." data-pl="Nie musisz wydawać fortuny, żeby dobrze zaprezentować swoją firmę w internecie. Oferuję przystępne ceny, jasne warunki współpracy i projekty dopasowane do potrzeb Twojej działalności.">
+                                You don't need a big budget to give your business a professional online presence. I offer affordable website packages, clear pricing and personal service, with every project tailored to your business.
+                            </p>
+                            <button onclick="navigateTo('contact')" class="px-7 py-3.5 md:px-8 md:py-4 rounded-xl text-sm font-bold text-white bg-pink-gradient hover:opacity-95 transition-all glow-pink glow-pink-hover inline-flex items-center gap-2">
+                                <span data-en="Get your website" data-pl="Zamów swoją stronę">Get your website</span>
+                                <span class="text-lg leading-none">→</span>
+                            </button>
+                        </div>
+
+                        <div class="lg:col-span-7 grid grid-cols-2 sm:grid-cols-3 gap-6 sm:gap-8 text-left">
+                            
+                            <div>
+                                <div class="w-10 h-10 rounded-xl bg-[#ff2e63]/10 border border-[#ff2e63]/30 text-[#ff2e63] flex items-center justify-center mb-3">
+                                    <i data-lucide="smartphone" class="w-5 h-5"></i>
+                                </div>
+                                <h3 class="font-heading font-bold text-sm sm:text-base text-white mb-1" data-en="Responsive design" data-pl="Responsywny design">Responsive design</h3>
+                                <p class="text-[11px] sm:text-xs text-zinc-400 leading-relaxed" data-en="Websites that adapt to desktops, tablets and mobile devices." data-pl="Strony dopasowane do komputerów, tabletów i telefonów.">Websites that adapt to desktops, tablets and mobile devices.</p>
+                            </div>
+
+                            <div>
+                                <div class="w-10 h-10 rounded-xl bg-[#ff2e63]/10 border border-[#ff2e63]/30 text-[#ff2e63] flex items-center justify-center mb-3">
+                                    <i data-lucide="search" class="w-5 h-5"></i>
+                                </div>
+                                <h3 class="font-heading font-bold text-sm sm:text-base text-white mb-1" data-en="SEO" data-pl="SEO">SEO</h3>
+                                <p class="text-[11px] sm:text-xs text-zinc-400 leading-relaxed" data-en="Websites prepared with search engine optimisation in mind." data-pl="Przygotowanie strony z uwzględnieniem optymalizacji dla wyszukiwarek.">Websites prepared with search engine optimisation in mind.</p>
+                            </div>
+
+                            <div>
+                                <div class="w-10 h-10 rounded-xl bg-[#ff2e63]/10 border border-[#ff2e63]/30 text-[#ff2e63] flex items-center justify-center mb-3">
+                                    <i data-lucide="message-square" class="w-5 h-5"></i>
+                                </div>
+                                <h3 class="font-heading font-bold text-sm sm:text-base text-white mb-1" data-en="Direct contact" data-pl="Bezpośredni kontakt">Direct contact</h3>
+                                <p class="text-[11px] sm:text-xs text-zinc-400 leading-relaxed" data-en="Work with me directly, without middlemen." data-pl="Bez pośredników i niepotrzebnego przekazywania informacji.">Work with me directly, without middlemen.</p>
+                            </div>
+
+                            <div>
+                                <div class="w-10 h-10 rounded-xl bg-[#ff2e63]/10 border border-[#ff2e63]/30 text-[#ff2e63] flex items-center justify-center mb-3">
+                                    <i data-lucide="shield-check" class="w-5 h-5"></i>
+                                </div>
+                                <h3 class="font-heading font-bold text-sm sm:text-base text-white mb-1" data-en="Clear pricing" data-pl="Przejrzyste ceny">Clear pricing</h3>
+                                <p class="text-[11px] sm:text-xs text-zinc-400 leading-relaxed" data-en="Know the price before work begins." data-pl="Znasz cenę przed rozpoczęciem prac.">Know the price before work begins.</p>
+                            </div>
+
+                            <div>
+                                <div class="w-10 h-10 rounded-xl bg-[#ff2e63]/10 border border-[#ff2e63]/30 text-[#ff2e63] flex items-center justify-center mb-3">
+                                    <i data-lucide="globe" class="w-5 h-5"></i>
+                                </div>
+                                <h3 class="font-heading font-bold text-sm sm:text-base text-white mb-1" data-en="Domain assistance" data-pl="Pomoc z domeną">Domain assistance</h3>
+                                <p class="text-[11px] sm:text-xs text-zinc-400 leading-relaxed" data-en="Help with choosing and setting up your domain." data-pl="Pomoc przy wyborze i konfiguracji domeny.">Help with choosing and setting up your domain.</p>
+                            </div>
+
+                            <div>
+                                <div class="w-10 h-10 rounded-xl bg-[#ff2e63]/10 border border-[#ff2e63]/30 text-[#ff2e63] flex items-center justify-center mb-3">
+                                    <i data-lucide="cloud" class="w-5 h-5"></i>
+                                </div>
+                                <h3 class="font-heading font-bold text-sm sm:text-base text-white mb-1" data-en="Hosting included" data-pl="Hosting w cenie">Hosting included</h3>
+                                <p class="text-[11px] sm:text-xs text-zinc-400 leading-relaxed" data-en="Hosting included at no additional cost." data-pl="Hosting bez dodatkowej opłaty.">Hosting included at no additional cost.</p>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+
+            <!-- HOW IT WORKS -->
+            <section class="py-14 md:py-20 bg-transparent border-t border-zinc-900/80 relative">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    
+                    <div class="grid lg:grid-cols-12 gap-10 lg:gap-12 items-center">
+                        <div class="lg:col-span-4 text-left">
+                            <span class="text-xs font-extrabold text-pink-accent uppercase tracking-widest block mb-2" data-en="HOW IT WORKS" data-pl="JAK TO DZIAŁA">HOW IT WORKS</span>
+                            <h2 class="font-heading text-2xl sm:text-4xl font-extrabold text-white tracking-tight leading-snug">
+                                <span data-en="Get your website" data-pl="Zdobądź swoją stronę">Get your website</span>
+                                <span class="bg-gradient-to-r from-white via-rose-200 to-pink-500 bg-clip-text text-transparent" data-en="in a few simple steps." data-pl="w kilku prostych krokach.">in a few simple steps.</span>
+                            </h2>
+                        </div>
+
+                        <div class="lg:col-span-8 flex flex-col sm:grid sm:grid-cols-4 gap-0 sm:gap-6 items-start text-left">
+                            
+                            <!-- Step 01 -->
+                            <div class="relative flex sm:flex-col items-start sm:items-start gap-4 sm:gap-0 w-full pb-6 sm:pb-0">
+                                <div class="sm:hidden absolute left-6 top-12 bottom-0 w-[1.5px] bg-pink-500/40 -translate-x-1/2"></div>
+                                <div class="w-12 h-12 rounded-full bg-zinc-950 border border-pink-500/40 text-pink-accent font-heading font-bold text-base flex items-center justify-center shrink-0 sm:mb-4 glow-pink relative z-10">
+                                    <span class="w-full h-full rounded-full bg-pink-500/15 flex items-center justify-center">01</span>
+                                </div>
+                                <div class="pt-1 sm:pt-0">
+                                    <h3 class="font-heading font-bold text-base text-white mb-1" data-en="Tell me about your business" data-pl="Opowiedz mi o swojej firmie">Tell me about your business</h3>
+                                    <p class="text-xs text-zinc-400 leading-relaxed" data-en="Tell me a little about your business, what you need and what you'd like your website to look like." data-pl="Napisz, czym się zajmujesz, jakiej strony potrzebujesz i co chcesz na niej umieścić.">Tell me a little about your business, what you need and what you'd like your website to look like.</p>
+                                </div>
+                                <div class="hidden sm:flex absolute top-6 -right-3 translate-x-1/2 -translate-y-1/2 w-6 h-6 items-center justify-center text-pink-accent/60 pointer-events-none">
+                                    <i data-lucide="chevron-right" class="w-5 h-5"></i>
+                                </div>
+                            </div>
+
+                            <!-- Step 02 -->
+                            <div class="relative flex sm:flex-col items-start sm:items-start gap-4 sm:gap-0 w-full pb-6 sm:pb-0">
+                                <div class="sm:hidden absolute left-6 top-12 bottom-0 w-[1.5px] bg-pink-500/40 -translate-x-1/2"></div>
+                                <div class="w-12 h-12 rounded-full bg-zinc-950 border border-pink-500/40 text-pink-accent font-heading font-bold text-base flex items-center justify-center shrink-0 sm:mb-4 glow-pink relative z-10">
+                                    <span class="w-full h-full rounded-full bg-pink-500/15 flex items-center justify-center">02</span>
+                                </div>
+                                <div class="pt-1 sm:pt-0">
+                                    <h3 class="font-heading font-bold text-base text-white mb-1" data-en="We agree on the details" data-pl="Ustalamy szczegóły">We agree on the details</h3>
+                                    <p class="text-xs text-zinc-400 leading-relaxed" data-en="We'll discuss the design, content, features and price before I get started." data-pl="Omówimy wygląd strony, jej zawartość, potrzebne funkcje i cenę, zanim rozpocznę pracę.">We'll discuss the design, content, features and price before I get started.</p>
+                                </div>
+                                <div class="hidden sm:flex absolute top-6 -right-3 translate-x-1/2 -translate-y-1/2 w-6 h-6 items-center justify-center text-pink-accent/60 pointer-events-none">
+                                    <i data-lucide="chevron-right" class="w-5 h-5"></i>
+                                </div>
+                            </div>
+
+                            <!-- Step 03 -->
+                            <div class="relative flex sm:flex-col items-start sm:items-start gap-4 sm:gap-0 w-full pb-6 sm:pb-0">
+                                <div class="sm:hidden absolute left-6 top-12 bottom-0 w-[1.5px] bg-pink-500/40 -translate-x-1/2"></div>
+                                <div class="w-12 h-12 rounded-full bg-zinc-950 border border-pink-500/40 text-pink-accent font-heading font-bold text-base flex items-center justify-center shrink-0 sm:mb-4 glow-pink relative z-10">
+                                    <span class="w-full h-full rounded-full bg-pink-500/15 flex items-center justify-center">03</span>
+                                </div>
+                                <div class="pt-1 sm:pt-0">
+                                    <h3 class="font-heading font-bold text-base text-white mb-1" data-en="I build your website" data-pl="Tworzę Twoją stronę">I build your website</h3>
+                                    <p class="text-xs text-zinc-400 leading-relaxed" data-en="I'll create your website and keep you updated as the project progresses." data-pl="Przygotuję stronę i będę informować Cię o postępach.">I'll create your website and keep you updated as the project progresses.</p>
+                                </div>
+                                <div class="hidden sm:flex absolute top-6 -right-3 translate-x-1/2 -translate-y-1/2 w-6 h-6 items-center justify-center text-pink-accent/60 pointer-events-none">
+                                    <i data-lucide="chevron-right" class="w-5 h-5"></i>
+                                </div>
+                            </div>
+
+                            <!-- Step 04 -->
+                            <div class="relative flex sm:flex-col items-start sm:items-start gap-4 sm:gap-0 w-full">
+                                <div class="w-12 h-12 rounded-full bg-zinc-950 border border-pink-500/40 text-pink-accent font-heading font-bold text-base flex items-center justify-center shrink-0 sm:mb-4 glow-pink relative z-10">
+                                    <span class="w-full h-full rounded-full bg-pink-500/15 flex items-center justify-center">04</span>
+                                </div>
+                                <div class="pt-1 sm:pt-0">
+                                    <h3 class="font-heading font-bold text-base text-white mb-1" data-en="Your website goes live" data-pl="Publikujemy stronę">Your website goes live</h3>
+                                    <p class="text-xs text-zinc-400 leading-relaxed" data-en="Once you've approved the finished website, it's ready to go live." data-pl="Po Twojej akceptacji przygotuję stronę do publikacji.">Once you've approved the finished website, it's ready to go live.</p>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+
+        </div>
+
+        <!-- PORTFOLIO VIEW -->
+        <div id="view-portfolio" class="page-view py-12 md:py-16">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                
+                <div class="mb-10 md:mb-12 text-left">
+                    <span class="text-xs font-extrabold text-pink-accent uppercase tracking-widest block mb-2" data-en="OUR WORK" data-pl="NASZE PRACE">OUR WORK</span>
+                    <h1 class="font-heading text-3xl sm:text-5xl font-extrabold text-white tracking-tight mb-4">
+                        <span data-en="Website" data-pl="Przykładowe">Website</span>
+                        <span class="bg-gradient-to-r from-white via-rose-200 to-pink-500 bg-clip-text text-transparent" data-en="examples." data-pl="strony.">examples.</span>
+                    </h1>
+                    <p class="text-zinc-400 text-sm sm:text-base max-w-xl mb-6 md:mb-8" data-en="Explore sample websites created for different types of businesses. Each project has its own look and layout to give you an idea of what we could create for your business." data-pl="Zobacz projekty przygotowane dla różnych branż. Każda strona ma własny styl i układ, dzięki czemu możesz sprawdzić, jak mogłaby wyglądać witryna dopasowana do Twojej firmy.">
+                        Explore sample websites created for different types of businesses. Each project has its own look and layout to give you an idea of what we could create for your business.
+                    </p>
+
+                    <div class="flex flex-wrap items-center gap-3">
+                        <button onclick="filterPortfolio('all')" id="filter-all" class="px-5 py-2.5 rounded-full text-xs sm:text-sm font-bold text-white bg-pink-gradient shadow-lg glow-pink transition-all">
+                            <span data-en="All Projects" data-pl="Wszystkie projekty">All Projects</span>
+                        </button>
+                        <button onclick="filterPortfolio('onepage')" id="filter-onepage" class="px-5 py-2.5 rounded-full text-xs sm:text-sm font-bold text-zinc-300 bg-zinc-900 border border-zinc-800 hover:text-white hover:border-zinc-700 transition-all">
+                            <span data-en="One-Page" data-pl="Wizytówki (One-Page)">One-Page</span>
+                        </button>
+                        <button onclick="filterPortfolio('multipage')" id="filter-multipage" class="px-5 py-2.5 rounded-full text-xs sm:text-sm font-bold text-zinc-300 bg-zinc-900 border border-zinc-800 hover:text-white hover:border-zinc-700 transition-all">
+                            <span data-en="Multi-Page" data-pl="Wielostronicowe">Multi-Page</span>
+                        </button>
+                    </div>
+                </div>
+
+                    <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-12" id="portfolio-grid">
+                    
+                    <div class="portfolio-card card-portfolio flex flex-col justify-between group overflow-hidden" data-category="multipage">
+                        <div>
+                            <div class="relative w-full aspect-[16/10] bg-zinc-950 overflow-hidden border-b border-zinc-800/80">
+                                <img src="pizzaweb.png" alt="Restaurant Website Demo" class="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-300" onerror="this.onerror=null; this.src='https://placehold.co/600x400/18181b/ff2e63?text=Pizza+Restaurant';">
+                            </div>
+                            <div class="p-5 sm:p-6 pb-2">
+                                <div class="flex items-center justify-between gap-2 mb-2">
+                                    <h3 class="font-heading text-lg font-bold text-white group-hover:text-pink-accent transition-colors" data-en="Restaurant" data-pl="Restauracja">Restaurant</h3>
+                                    <span class="text-[9px] font-extrabold uppercase bg-purple-500/15 text-purple-300 px-2 py-0.5 rounded border border-purple-500/35 whitespace-nowrap" data-en="Multi-Page" data-pl="Multi-Page">Multi-Page</span>
+                                </div>
+                                <p class="text-xs sm:text-sm text-zinc-400 leading-relaxed mb-6" data-en="Modern restaurant website with a menu, table reservations and photo gallery." data-pl="Nowoczesna strona restauracji z menu, rezerwacją stolików i galerią zdjęć.">Modern restaurant website with a menu, table reservations and photo gallery.</p>
+                            </div>
+                        </div>
+                        <div class="p-5 sm:p-6 pt-0">
+                            <a href="pizza.html" class="inline-flex items-center gap-1.5 text-xs sm:text-sm font-bold text-pink-accent hover:text-white transition-colors">
+                                <span data-en="View demo" data-pl="Zobacz demo">View demo</span>
+                                <span class="text-base leading-none">→</span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="portfolio-card card-portfolio flex flex-col justify-between group overflow-hidden" data-category="onepage">
+                        <div>
+                            <div class="relative w-full aspect-[16/10] bg-zinc-950 overflow-hidden border-b border-zinc-800/80">
+                                <img src="nails.png" alt="Hair Salon Website Demo" class="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-300" onerror="this.onerror=null; this.src='https://placehold.co/600x400/18181b/ff2e63?text=Hair+Salon';">
+                            </div>
+                            <div class="p-5 sm:p-6 pb-2">
+                                <div class="flex items-center justify-between gap-2 mb-2">
+                                    <h3 class="font-heading text-lg font-bold text-white group-hover:text-pink-accent transition-colors" data-en="Hair Salon" data-pl="Salon Fryzjerski">Hair Salon</h3>
+                                    <span class="text-[9px] font-extrabold uppercase bg-pink-500/15 text-pink-400 px-2 py-0.5 rounded border border-pink-500/35 whitespace-nowrap" data-en="One-Page" data-pl="One-Page">One-Page</span>
+                                </div>
+                                <p class="text-xs sm:text-sm text-zinc-400 leading-relaxed mb-6" data-en="Elegant salon website featuring services, pricing and contact options." data-pl="Elegancka strona salonu z ofertą usług, cennikiem i opcjami kontaktu.">Elegant salon website featuring services, pricing and contact options.</p>
+                            </div>
+                        </div>
+                        <div class="p-5 sm:p-6 pt-0">
+                            <a href="hairdresser.html" class="inline-flex items-center gap-1.5 text-xs sm:text-sm font-bold text-pink-accent hover:text-white transition-colors">
+                                <span data-en="View demo" data-pl="Zobacz demo">View demo</span>
+                                <span class="text-base leading-none">→</span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="portfolio-card card-portfolio flex flex-col justify-between group overflow-hidden" data-category="onepage">
+                        <div>
+                            <div class="relative w-full aspect-[16/10] bg-zinc-950 overflow-hidden border-b border-zinc-800/80">
+                                <img src="personal.png" alt="Personal Trainer Website Demo" class="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-300" onerror="this.onerror=null; this.src='https://placehold.co/600x400/18181b/ff2e63?text=Personal+Trainer';">
+                            </div>
+                            <div class="p-5 sm:p-6 pb-2">
+                                <div class="flex items-center justify-between gap-2 mb-2">
+                                    <h3 class="font-heading text-lg font-bold text-white group-hover:text-pink-accent transition-colors" data-en="Personal Trainer" data-pl="Trener Personalny">Personal Trainer</h3>
+                                    <span class="text-[9px] font-extrabold uppercase bg-pink-500/15 text-pink-400 px-2 py-0.5 rounded border border-pink-500/35 whitespace-nowrap" data-en="One-Page" data-pl="One-Page">One-Page</span>
+                                </div>
+                                <p class="text-xs sm:text-sm text-zinc-400 leading-relaxed mb-6" data-en="Modern fitness website showcasing training services, booking options and personal coaching." data-pl="Nowoczesna strona fitness prezentująca usługi treningowe, rezerwacje i coaching personalny.">Modern fitness website showcasing training services, booking options and personal coaching.</p>
+                            </div>
+                        </div>
+                        <div class="p-5 sm:p-6 pt-0">
+                            <a href="personal.html" class="inline-flex items-center gap-1.5 text-xs sm:text-sm font-bold text-pink-accent hover:text-white transition-colors">
+                                <span data-en="View demo" data-pl="Zobacz demo">View demo</span>
+                                <span class="text-base leading-none">→</span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="portfolio-card card-portfolio flex flex-col justify-between group overflow-hidden" data-category="multipage">
+                        <div>
+                            <div class="relative w-full aspect-[16/10] bg-zinc-950 overflow-hidden border-b border-zinc-800/80">
+                                <img src="hairdresser.png" alt="Hairdresser Website Demo" class="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-300" onerror="this.onerror=null; this.src='https://placehold.co/600x400/18181b/ff2e63?text=Hairdresser';">
+                            </div>
+                            <div class="p-5 sm:p-6 pb-2">
+                                <div class="flex items-center justify-between gap-2 mb-2">
+                                    <h3 class="font-heading text-lg font-bold text-white group-hover:text-pink-accent transition-colors" data-en="Hairdresser" data-pl="Fryzjer">Hairdresser</h3>
+                                    <span class="text-[9px] font-extrabold uppercase bg-purple-500/15 text-purple-300 px-2 py-0.5 rounded border border-purple-500/35 whitespace-nowrap" data-en="Multi-Page" data-pl="Multi-Page">Multi-Page</span>
+                                </div>
+                                <p class="text-xs sm:text-sm text-zinc-400 leading-relaxed mb-6" data-en="Professional hairdressing website with service details, pricing and easy contact options." data-pl="Profesjonalna strona fryzjerska ze szczegółami usług, cennikiem i łatwym kontaktem.">Professional hairdressing website with service details, pricing and easy contact options.</p>
+                            </div>
+                        </div>
+                        <div class="p-5 sm:p-6 pt-0">
+                            <a href="hairdresser.html" class="inline-flex items-center gap-1.5 text-xs sm:text-sm font-bold text-pink-accent hover:text-white transition-colors">
+                                <span data-en="View demo" data-pl="Zobacz demo">View demo</span>
+                                <span class="text-base leading-none">→</span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="portfolio-card card-portfolio flex flex-col justify-between group overflow-hidden" data-category="onepage">
+                        <div>
+                            <div class="relative w-full aspect-[16/10] bg-zinc-950 overflow-hidden border-b border-zinc-800/80">
+                                <img src="handymansite.png" alt="Handyman Website Demo" class="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-300" onerror="this.onerror=null; this.src='https://placehold.co/600x400/18181b/ff2e63?text=Handyman';">
+                            </div>
+                            <div class="p-5 sm:p-6 pb-2">
+                                <div class="flex items-center justify-between gap-2 mb-2">
+                                    <h3 class="font-heading text-lg font-bold text-white group-hover:text-pink-accent transition-colors" data-en="Handyman Services" data-pl="Usługi Złotej Rączki">Handyman Services</h3>
+                                    <span class="text-[9px] font-extrabold uppercase bg-pink-500/15 text-pink-400 px-2 py-0.5 rounded border border-pink-500/35 whitespace-nowrap" data-en="One-Page" data-pl="One-Page">One-Page</span>
+                                </div>
+                                <p class="text-xs sm:text-sm text-zinc-400 leading-relaxed mb-6" data-en="Practical service website showcasing available repairs, home improvements and quote requests." data-pl="Praktyczna strona usługowa prezentująca dostępne naprawy, prace domowe i szybkie wyceny.">Practical service website showcasing available repairs, home improvements and quote requests.</p>
+                            </div>
+                        </div>
+                        <div class="p-5 sm:p-6 pt-0">
+                            <a href="handyman.html" class="inline-flex items-center gap-1.5 text-xs sm:text-sm font-bold text-pink-accent hover:text-white transition-colors">
+                                <span data-en="View demo" data-pl="Zobacz demo">View demo</span>
+                                <span class="text-base leading-none">→</span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="portfolio-card card-portfolio flex flex-col justify-between group overflow-hidden" data-category="onepage">
+                        <div>
+                            <div class="relative w-full aspect-[16/10] bg-zinc-950 overflow-hidden border-b border-zinc-800/80">
+                                <img src="lawyer.png" alt="Lawyer Website Demo" class="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-300" onerror="this.onerror=null; this.src='https://placehold.co/600x400/18181b/ff2e63?text=Lawyer';">
+                            </div>
+                            <div class="p-5 sm:p-6 pb-2">
+                                <div class="flex items-center justify-between gap-2 mb-2">
+                                    <h3 class="font-heading text-lg font-bold text-white group-hover:text-pink-accent transition-colors" data-en="Lawyer Services" data-pl="Usługi Prawnicze">Lawyer Services</h3>
+                                    <span class="text-[9px] font-extrabold uppercase bg-pink-500/15 text-pink-400 px-2 py-0.5 rounded border border-pink-500/35 whitespace-nowrap" data-en="One-Page" data-pl="One-Page">One-Page</span>
+                                </div>
+                                <p class="text-xs sm:text-sm text-zinc-400 leading-relaxed mb-6" data-en="Professional legal website presenting areas of expertise, legal services and consultation requests." data-pl="Profesjonalna strona prawnicza prezentująca specjalizacje, usługi prawne i rezerwację konsultacji.">Professional legal website presenting areas of expertise, legal services and consultation requests.</p>
+                            </div>
+                        </div>
+                        <div class="p-5 sm:p-6 pt-0">
+                            <a href="lawyer.html" class="inline-flex items-center gap-1.5 text-xs sm:text-sm font-bold text-pink-accent hover:text-white transition-colors">
+                                <span data-en="View demo" data-pl="Zobacz demo">View demo</span>
+                                <span class="text-base leading-none">→</span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="portfolio-card card-portfolio flex flex-col justify-between group overflow-hidden" data-category="multipage">
+                        <div>
+                            <div class="relative w-full aspect-[16/10] bg-zinc-950 overflow-hidden border-b border-zinc-800/80">
+                                <img src="artist.png" alt="Artist Website Demo" class="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-300" onerror="this.onerror=null; this.src='https://placehold.co/600x400/18181b/a855f7?text=Artist';">
+                            </div>
+                            <div class="p-5 sm:p-6 pb-2">
+                                <div class="flex items-center justify-between gap-2 mb-2">
+                                    <h3 class="font-heading text-lg font-bold text-white group-hover:text-pink-accent transition-colors" data-en="Artist Website" data-pl="Strona Artysty">Artist Website</h3>
+                                    <span class="text-[9px] font-extrabold uppercase bg-purple-500/15 text-purple-300 px-2 py-0.5 rounded border border-purple-500/35 whitespace-nowrap" data-en="Multi-Page" data-pl="Multi-Page">Multi-Page</span>
+                                </div>
+                                <p class="text-xs sm:text-sm text-zinc-400 leading-relaxed mb-6" data-en="Creative portfolio showcasing artwork, selected projects and contact information." data-pl="Kreatywne portfolio prezentujące prace artystyczne, wybrane projekty i dane kontaktowe.">Creative portfolio showcasing artwork, selected projects and contact information.</p>
+                            </div>
+                        </div>
+                        <div class="p-5 sm:p-6 pt-0">
+                            <a href="artist.html" class="inline-flex items-center gap-1.5 text-xs sm:text-sm font-bold text-pink-accent hover:text-white transition-colors">
+                                <span data-en="View demo" data-pl="Zobacz demo">View demo</span>
+                                <span class="text-base leading-none">→</span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="portfolio-card card-portfolio flex flex-col justify-between group overflow-hidden" data-category="multipage">
+                        <div>
+                            <div class="relative w-full aspect-[16/10] bg-zinc-950 overflow-hidden border-b border-zinc-800/80">
+                                <img src="dentistsite.png" alt="Dental Services Demo" class="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-300" onerror="this.onerror=null; this.src='https://placehold.co/600x400/18181b/a855f7?text=Dental';">
+                            </div>
+                            <div class="p-5 sm:p-6 pb-2">
+                                <div class="flex items-center justify-between gap-2 mb-2">
+                                    <h3 class="font-heading text-lg font-bold text-white group-hover:text-pink-accent transition-colors" data-en="Dental Services" data-pl="Usługi Stomatologiczne">Dental Services</h3>
+                                    <span class="text-[9px] font-extrabold uppercase bg-purple-500/15 text-purple-300 px-2 py-0.5 rounded border border-purple-500/35 whitespace-nowrap" data-en="Multi-Page" data-pl="Multi-Page">Multi-Page</span>
+                                </div>
+                                <p class="text-xs sm:text-sm text-zinc-400 leading-relaxed mb-6" data-en="Modern dental clinic website featuring treatment information, service pages and appointment booking." data-pl="Nowoczesna strona kliniki stomatologicznej z informacjami o zabiegach, podstronami usług i rezerwacją wizyt.">Modern dental clinic website featuring treatment information, service pages and appointment booking.</p>
+                            </div>
+                        </div>
+                        <div class="p-5 sm:p-6 pt-0">
+                            <a href="dentist.html" class="inline-flex items-center gap-1.5 text-xs sm:text-sm font-bold text-pink-accent hover:text-white transition-colors">
+                                <span data-en="View demo" data-pl="Zobacz demo">View demo</span>
+                                <span class="text-base leading-none">→</span>
+                            </a>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="card-portfolio mx-auto max-w-4xl px-5 py-4 md:px-6 md:py-4 flex flex-col md:flex-row items-center justify-between gap-4 relative overflow-hidden" style="background: #000000 !important;">
+                    <div class="text-left relative z-10">
+                        <span class="text-[9px] font-black text-pink-accent uppercase tracking-widest block mb-0.5" data-en="READY TO START?" data-pl="GOTOWY DO STARTU?">READY TO START?</span>
+                        <h3 class="font-heading text-base sm:text-lg font-extrabold text-white tracking-tight leading-snug" data-en="Have a project in mind?" data-pl="Masz projekt w głowie?">Have a project in mind?</h3>
+                        <p class="text-zinc-400 text-[11px] sm:text-xs" data-en="I create modern, responsive websites tailored to your business needs." data-pl="Tworzę nowoczesne, responsywne strony dopasowane do Twoich potrzeb biznesowych.">
+                            I create modern, responsive websites tailored to your business needs.
+                        </p>
+                    </div>
+                    <div class="shrink-0 relative z-10 w-full md:w-auto">
+                        <button onclick="navigateTo('contact')" class="w-full md:w-auto px-5 py-2.5 rounded-xl text-xs font-bold text-white bg-pink-gradient hover:opacity-95 transition-all glow-pink glow-pink-hover inline-flex items-center justify-center gap-1.5 shadow-lg">
+                            <i data-lucide="message-square" class="w-3.5 h-3.5"></i>
+                            <span data-en="Let's build your website" data-pl="Stwórzmy Twoją stronę">Let's build your website</span>
+                            <span class="text-sm leading-none">→</span>
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- PRICING VIEW -->
+        <div id="view-pricing" class="page-view py-12 md:py-16">
+            <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+                
+                <div class="text-center max-w-2xl mx-auto mb-10 md:mb-12">
+                    <span class="text-xs font-extrabold text-pink-accent uppercase tracking-widest block mb-2" data-en="Transparent Options" data-pl="Przejrzysty Cennik">Transparent Options</span>
+                    <h2 class="font-heading text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
+                        <span data-en="Affordable" data-pl="Pakiety">Affordable</span>
+                        <span class="bg-gradient-to-r from-white via-rose-200 to-pink-500 bg-clip-text text-transparent" data-en="website packages." data-pl="i ceny.">website packages.</span>
+                    </h2>
+                    <p class="text-zinc-400 text-sm mt-3" data-en="Professional websites at competitive prices, with costs agreed upfront. Choose the package that suits your business and budget. All prices include VAT." data-pl="Profesjonalne strony internetowe w konkurencyjnych cenach. Koszty ustalamy z góry, więc wiesz, za co płacisz. Wybierz pakiet dopasowany do potrzeb i budżetu swojej firmy. Wszystkie ceny zawierają VAT.">
+                        Professional websites at competitive prices, with costs agreed upfront. Choose the package that suits your business and budget. All prices include VAT.
+                    </p>
+                </div>
+
+                <div class="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto mb-12 items-stretch">
+                    
+                    <div class="card-dark p-6 sm:p-8 flex flex-col justify-between relative">
+                        <div>
+                            <div class="inline-block px-3 py-1 rounded-full bg-zinc-900 text-zinc-300 text-xs font-bold mb-4 border border-zinc-800" data-en="Option 1" data-pl="Opcja 1">Option 1</div>
+                            <h3 class="font-heading text-2xl font-extrabold text-white mb-2" data-en="One-page website" data-pl="Strona wizytówka">One-page website</h3>
+                            <p class="text-zinc-400 text-sm mb-6" data-en="A simple, professional website that brings your business information together in one place. Ideal for showcasing your services and making it easy for customers to contact you." data-pl="Prosta i estetyczna strona, na której przedstawisz swoją firmę, ofertę i dane kontaktowe. To dobre rozwiązanie, jeśli chcesz profesjonalnie zaprezentować swoją działalność w internecie i ułatwić klientom kontakt.">A simple, professional website that brings your business information together in one place. Ideal for showcasing your services and making it easy for customers to contact you.</p>
+
+                            <div class="flex items-baseline gap-2 mb-1">
+                                <span class="font-heading text-4xl font-black text-white">€380</span>
+                                <span class="text-xs text-zinc-400" data-en="VAT included" data-pl="zawiera VAT">VAT included</span>
+                            </div>
+                            <p class="text-xs text-pink-accent font-semibold mb-6 pb-6 border-b border-zinc-800" data-en="+ Domain (~15€/yr) & Free server" data-pl="+ Domena (~15€/rok) i Darmowy serwer">
+                                + Domain (~15€/yr) & Free server
+                            </p>
+
+                            <p class="text-xs font-bold uppercase tracking-wider text-zinc-400 mb-3" data-en="WHAT'S INCLUDED:" data-pl="CO ZAWIERA PAKIET:">WHAT'S INCLUDED:</p>
+                            <ul class="space-y-3 text-sm text-zinc-300 mb-8">
+                                <li class="flex items-center gap-3"><i data-lucide="check" class="w-4 h-4 text-pink-accent shrink-0"></i><span data-en="Custom design tailored to your business" data-pl="Indywidualny projekt dopasowany do Twojej firmy">Custom design tailored to your business</span></li>
+                                <li class="flex items-center gap-3"><i data-lucide="check" class="w-4 h-4 text-pink-accent shrink-0"></i><span data-en="One page with sections suited to your needs" data-pl="Jedna strona z sekcjami dobranymi do Twoich potrzeb">One page with sections suited to your needs</span></li>
+                                <li class="flex items-center gap-3"><i data-lucide="check" class="w-4 h-4 text-pink-accent shrink-0"></i><span data-en="Responsive design for desktop, tablet and mobile" data-pl="Dostosowanie do komputerów, tabletów i telefonów">Responsive design for desktop, tablet and mobile</span></li>
+                                <li class="flex items-center gap-3"><i data-lucide="check" class="w-4 h-4 text-pink-accent shrink-0"></i><span data-en="Selected contact options, such as phone, email, WhatsApp or social media" data-pl="Wybrane formy kontaktu, np. telefon, e-mail, WhatsApp lub media społecznościowe">Selected contact options, such as phone, email, WhatsApp or social media</span></li>
+                                <li class="flex items-center gap-3"><i data-lucide="check" class="w-4 h-4 text-pink-accent shrink-0"></i><span data-en="Option to add a contact form" data-pl="Możliwość dodania formularza kontaktowego">Option to add a contact form</span></li>
+                                <li class="flex items-center gap-3"><i data-lucide="check" class="w-4 h-4 text-pink-accent shrink-0"></i><span data-en="SEO setup" data-pl="Przygotowanie strony pod kątem SEO">SEO setup</span></li>
+                                <li class="flex items-center gap-3"><i data-lucide="check" class="w-4 h-4 text-pink-accent shrink-0"></i><span data-en="Social media links" data-pl="Linki do mediów społecznościowych">Social media links</span></li>
+                                <li class="flex items-center gap-3"><i data-lucide="check" class="w-4 h-4 text-pink-accent shrink-0"></i><span data-en="Image gallery, where suitable" data-pl="Galeria zdjęć, jeśli pasuje do charakteru strony">Image gallery, where suitable</span></li>
+                                <li class="flex items-center gap-3"><i data-lucide="check" class="w-4 h-4 text-pink-accent shrink-0"></i><span data-en="Website speed and performance optimisation" data-pl="Optymalizacja szybkości i działania strony">Website speed and performance optimisation</span></li>
+                                <li class="flex items-center gap-3"><i data-lucide="check" class="w-4 h-4 text-pink-accent shrink-0"></i><span data-en="Help with domain registration and setup" data-pl="Pomoc przy rejestracji i konfiguracji domeny">Help with domain registration and setup</span></li>
+                                <li class="flex items-center gap-3"><i data-lucide="check" class="w-4 h-4 text-pink-accent shrink-0"></i><span data-en="Hosting at no additional cost" data-pl="Hosting bez dodatkowych opłat">Hosting at no additional cost</span></li>
+                            </ul>
+                        </div>
+                        <button onclick="navigateTo('contact')" class="w-full py-4 px-4 rounded-xl text-sm font-bold text-white bg-pink-gradient hover:opacity-95 transition-all glow-pink glow-pink-hover block text-center" data-en="Select One-Page (380€)" data-pl="Wybierz Wizytówkę (380€)">Select One-Page (380€)</button>
+                    </div>
+
+                    <div class="card-dark p-6 sm:p-8 flex flex-col justify-between relative border-pink-500/80 promo-card-glow bg-gradient-to-b from-rose-950/20 via-zinc-950 to-zinc-950">
+                        <div class="absolute -top-4 right-6 bg-pink-gradient text-white text-[10px] sm:text-xs font-black uppercase px-3 sm:px-4 py-1.5 rounded-full shadow-xl tracking-wider flex items-center gap-1.5 border border-pink-400/50">
+                            <i data-lucide="flame" class="w-4 h-4 text-yellow-300 animate-bounce"></i>
+                            <span data-en="SPECIAL PROMO UNTIL THE END OF 2026" data-pl="SPECIAL PROMO UNTIL THE END OF 2026">SPECIAL PROMO UNTIL THE END OF 2026</span>
+                        </div>
+
+                        <div>
+                            <div class="flex items-center justify-between mb-4 mt-2">
+                                <div class="inline-block px-3 py-1 rounded-full bg-pink-500/20 text-pink-300 text-xs font-bold border border-pink-500/30" data-en="Option 2 • Most Popular" data-pl="Opcja 2 • Najpopularniejsza">Option 2 • Most Popular</div>
+                            </div>
+                            
+                            <h3 class="font-heading text-2xl font-extrabold text-white mb-2" data-en="Multi-page website" data-pl="Strona wielostronicowa">Multi-page website</h3>
+                            <p class="text-zinc-400 text-sm mb-4" data-en="A more detailed website with a homepage and up to 5 additional pages. Ideal for businesses that want to present their services in more detail, share more information or give different parts of their business their own dedicated pages." data-pl="Bardziej rozbudowana strona z osobną stroną główną i maksymalnie 5 dodatkowymi podstronami. Sprawdzi się w firmach, które chcą dokładniej przedstawić swoją ofertę, zamieścić więcej informacji lub osobno opisać poszczególne usługi.">A more detailed website with a homepage and up to 5 additional pages. Ideal for businesses that want to present their services in more detail, share more information or give different parts of their business their own dedicated pages.</p>
+
+                            <div class="bg-zinc-900/90 border border-pink-500/40 rounded-2xl p-3.5 mb-6 text-center">
+                                <div class="text-[11px] font-bold text-pink-400 uppercase tracking-widest mb-1.5 flex items-center justify-center gap-1.5">
+                                    <i data-lucide="timer" class="w-3.5 h-3.5"></i>
+                                    <span data-en="Special Offer Expires In:" data-pl="Promocja wygasa za:">Special Offer Expires In:</span>
+                                </div>
+                                <div class="grid grid-cols-4 gap-2 text-center" id="card-countdown-timer">
+                                    <div class="bg-black/60 p-1.5 rounded-lg border border-zinc-800">
+                                        <span class="block font-heading text-lg font-black text-white" id="cd-days">00</span>
+                                        <span class="block text-[9px] text-zinc-400 uppercase" data-en="Days" data-pl="Dni">Days</span>
+                                    </div>
+                                    <div class="bg-black/60 p-1.5 rounded-lg border border-zinc-800">
+                                        <span class="block font-heading text-lg font-black text-white" id="cd-hours">00</span>
+                                        <span class="block text-[9px] text-zinc-400 uppercase" data-en="Hrs" data-pl="Godz">Hrs</span>
+                                    </div>
+                                    <div class="bg-black/60 p-1.5 rounded-lg border border-zinc-800">
+                                        <span class="block font-heading text-lg font-black text-white" id="cd-mins">00</span>
+                                        <span class="block text-[9px] text-zinc-400 uppercase" data-en="Min" data-pl="Min">Min</span>
+                                    </div>
+                                    <div class="bg-black/60 p-1.5 rounded-lg border border-zinc-800">
+                                        <span class="block font-heading text-lg font-black text-pink-400" id="cd-secs">00</span>
+                                        <span class="block text-[9px] text-zinc-400 uppercase" data-en="Sec" data-pl="Sek">Sec</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="flex items-baseline gap-3 mb-1">
+                                <span class="font-heading text-5xl font-black text-white" data-en="550€" data-pl="550€">550€</span>
+                                <span class="text-xl text-zinc-500 line-through font-extrabold" data-en="650€" data-pl="650€">650€</span>
+                                <span class="text-xs text-zinc-400" data-en="VAT included" data-pl="zawiera VAT">VAT included</span>
+                            </div>
+                            <p class="text-xs text-pink-accent font-bold mb-6 pb-6 border-b border-zinc-800" data-en="+ Domain (~15€/yr) & Free server" data-pl="+ Domena (~15€/rok) i Darmowy serwer">
+                                + Domain (~15€/yr) & Free server
+                            </p>
+
+                            <p class="text-xs font-bold uppercase tracking-wider text-zinc-400 mb-3" data-en="WHAT'S INCLUDED:" data-pl="CO ZAWIERA PAKIET:">WHAT'S INCLUDED:</p>
+                            <ul class="space-y-3 text-sm text-zinc-300 mb-8">
+                                <li class="flex items-center gap-3"><i data-lucide="check" class="w-4 h-4 text-pink-accent shrink-0"></i><span data-en="Custom design tailored to your business" data-pl="Indywidualny projekt dopasowany do Twojej firmy">Custom design tailored to your business</span></li>
+                                <li class="flex items-center gap-3"><i data-lucide="check" class="w-4 h-4 text-pink-accent shrink-0"></i><span data-en="Homepage and up to 5 additional pages" data-pl="Strona główna i do 5 dodatkowych podstron">Homepage and up to 5 additional pages</span></li>
+                                <li class="flex items-center gap-3"><i data-lucide="check" class="w-4 h-4 text-pink-accent shrink-0"></i><span data-en="Responsive design for desktop, tablet and mobile" data-pl="Dostosowanie do komputerów, tabletów i telefonów">Responsive design for desktop, tablet and mobile</span></li>
+                                <li class="flex items-center gap-3"><i data-lucide="check" class="w-4 h-4 text-pink-accent shrink-0"></i><span data-en="Page layouts and sections tailored to your content" data-pl="Układ stron i sekcje dopasowane do prezentowanych treści">Page layouts and sections tailored to your content</span></li>
+                                <li class="flex items-center gap-3"><i data-lucide="check" class="w-4 h-4 text-pink-accent shrink-0"></i><span data-en="Selected contact options, such as phone, email, WhatsApp or social media" data-pl="Wybrane formy kontaktu, np. telefon, e-mail, WhatsApp lub media społecznościowe">Selected contact options, such as phone, email, WhatsApp or social media</span></li>
+                                <li class="flex items-center gap-3"><i data-lucide="check" class="w-4 h-4 text-pink-accent shrink-0"></i><span data-en="Option to add a contact form" data-pl="Możliwość dodania formularza kontaktowego">Option to add a contact form</span></li>
+                                <li class="flex items-center gap-3"><i data-lucide="check" class="w-4 h-4 text-pink-accent shrink-0"></i><span data-en="SEO setup" data-pl="Przygotowanie strony pod kątem SEO">SEO setup</span></li>
+                                <li class="flex items-center gap-3"><i data-lucide="check" class="w-4 h-4 text-pink-accent shrink-0"></i><span data-en="Social media links" data-pl="Linki do mediów społecznościowych">Social media links</span></li>
+                                <li class="flex items-center gap-3"><i data-lucide="check" class="w-4 h-4 text-pink-accent shrink-0"></i><span data-en="Image gallery, where suitable" data-pl="Galeria zdjęć, jeśli pasuje do charakteru strony">Image gallery, where suitable</span></li>
+                                <li class="flex items-center gap-3"><i data-lucide="check" class="w-4 h-4 text-pink-accent shrink-0"></i><span data-en="Website speed and performance optimisation" data-pl="Optymalizacja szybkości i działania strony">Website speed and performance optimisation</span></li>
+                                <li class="flex items-center gap-3"><i data-lucide="check" class="w-4 h-4 text-pink-accent shrink-0"></i><span data-en="Help with domain registration and setup" data-pl="Pomoc przy rejestracji i konfiguracji domeny">Help with domain registration and setup</span></li>
+                                <li class="flex items-center gap-3"><i data-lucide="check" class="w-4 h-4 text-pink-accent shrink-0"></i><span data-en="Hosting at no additional cost" data-pl="Hosting bez dodatkowych opłat">Hosting at no additional cost</span></li>
+                            </ul>
+                        </div>
+                        <button onclick="navigateTo('contact')" class="w-full py-4 px-4 rounded-xl text-sm font-bold text-white bg-pink-gradient hover:opacity-95 transition-all glow-pink glow-pink-hover block text-center" data-en="Select Multi-Page (550€)" data-pl="Wybierz Stronę Wielostronicową (550€)">Select Multi-Page (550€)</button>
+                    </div>
+
+                </div>
+
+                <div class="card-dark p-6 sm:p-8 md:p-10 max-w-4xl mx-auto space-y-6">
+                    <div>
+                        <div class="flex items-center gap-3 mb-2">
+                            <div class="text-pink-accent">
+                                <i data-lucide="settings" class="w-7 h-7"></i>
+                            </div>
+                            <h3 class="font-heading text-xl sm:text-2xl font-extrabold text-white" data-en="Domain and hosting" data-pl="Domena i hosting">Domain and hosting</h3>
+                        </div>
+                        <p class="text-zinc-400 text-xs sm:text-sm" data-en="Hosting is included in the price of your website, so there's no extra hosting fee. You'll only need to pay for your domain, which is usually renewed once a year. If your project requires any additional paid services, I'll let you know before we get started." data-pl="Hosting jest wliczony w cenę strony, więc nie ponosisz za niego dodatkowych opłat. Osobno opłacasz domenę, którą zazwyczaj odnawia się raz w roku. Jeśli projekt będzie wymagał dodatkowo płatnych usług, poinformuję Cię o tym przed rozpoczęciem prac.">Hosting is included in the price of your website, so there's no extra hosting fee. You'll only need to pay for your domain, which is usually renewed once a year. If your project requires any additional paid services, I'll let you know before we get started.</p>
+                    </div>
+
+                    <div class="grid md:grid-cols-3 gap-4">
+                        <div class="bg-black/60 border border-zinc-800/80 rounded-2xl p-5 flex flex-col justify-between">
+                            <div>
+                                <div class="flex items-center justify-between mb-3">
+                                    <div class="text-pink-accent">
+                                        <i data-lucide="cloud" class="w-6 h-6"></i>
+                                    </div>
+                                    <span class="text-xs font-bold text-emerald-400 bg-emerald-950/40 border border-emerald-800/50 px-2.5 py-1 rounded-full">€0 / free</span>
+                                </div>
+                                <h4 class="font-heading font-bold text-white text-sm mb-1" data-en="Free hosting setup" data-pl="Hosting w cenie">Free hosting setup</h4>
+                                <p class="text-[11px] text-zinc-400 leading-relaxed" data-en="Hosting is included at no additional cost." data-pl="Hosting bez dodatkowej opłaty.">Hosting is included at no additional cost.</p>
+                            </div>
+                        </div>
+
+                        <div class="bg-black/60 border border-zinc-800/80 rounded-2xl p-5 flex flex-col justify-between">
+                            <div>
+                                <div class="flex items-center justify-between mb-3">
+                                    <div class="text-pink-accent">
+                                        <i data-lucide="globe" class="w-6 h-6"></i>
+                                    </div>
+                                    <span class="text-xs font-bold text-pink-accent bg-pink-950/30 border border-pink-500/40 px-2.5 py-1 rounded-full" data-en="From €15/year" data-pl="Od ok. 15€/rok">From €15/year</span>
+                                </div>
+                                <h4 class="font-heading font-bold text-white text-sm mb-1" data-en="Domain name" data-pl="Domena">Domain name</h4>
+                                <p class="text-[11px] text-zinc-400 leading-relaxed" data-en="The domain is paid for separately." data-pl="Domena jest opłacana osobno.">The domain is paid for separately.</p>
+                            </div>
+                        </div>
+
+                        <div class="bg-black/60 border border-zinc-800/80 rounded-2xl p-5 flex flex-col justify-between">
+                            <div>
+                                <div class="flex items-center justify-between mb-3">
+                                    <div class="text-pink-accent">
+                                        <i data-lucide="credit-card" class="w-6 h-6"></i>
+                                    </div>
+                                    <span class="text-xs font-bold text-zinc-400 bg-zinc-900 border border-zinc-800 px-3 py-1 rounded-full">—</span>
+                                </div>
+                                <h4 class="font-heading font-bold text-white text-sm mb-1" data-en="No monthly fees" data-pl="Brak opłat miesięcznych">No monthly fees</h4>
+                                <p class="text-[11px] text-zinc-400 leading-relaxed" data-en="There are no required monthly payments." data-pl="Nie ma żadnych stałych opłat miesięcznych.">There are no required monthly payments.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-black/60 border border-zinc-800/80 rounded-2xl p-5 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4">
+                        <div class="w-full sm:w-auto">
+                            <div class="flex items-center justify-between sm:hidden mb-3">
+                                <div class="text-pink-accent">
+                                    <i data-lucide="wrench" class="w-6 h-6"></i>
+                                </div>
+                                <span class="text-xs font-bold text-pink-accent bg-pink-950/30 border border-pink-500/40 px-2.5 py-1 rounded-full" data-en="From €20" data-pl="Od 20€">From €20</span>
+                            </div>
+                            <div class="flex items-center gap-4">
+                                <div class="hidden sm:block text-pink-accent shrink-0">
+                                    <i data-lucide="wrench" class="w-6 h-6"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-heading font-bold text-white text-sm mb-1 sm:mb-0.5" data-en="Need to update your website?" data-pl="Potrzebujesz zmian na stronie?">Need to update your website?</h4>
+                                    <p class="text-[11px] text-zinc-400 leading-relaxed" data-en="If you want to update your services, change some text or make other adjustments after launch, just get in touch. I'll make the changes for an agreed fee before the work begins." data-pl="Chcesz zaktualizować ofertę, zmienić tekst lub poprawić coś na stronie? Napisz do mnie, a ustalimy zakres zmian i cenę przed rozpoczęciem pracy.">If you want to update your services, change some text or make other adjustments after launch, just get in touch. I'll make the changes for an agreed fee before the work begins.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="hidden sm:block shrink-0">
+                            <span class="text-xs font-bold text-pink-accent bg-pink-950/30 border border-pink-500/40 px-3 py-1.5 rounded-full inline-block" data-en="From €20" data-pl="Od 20€">From €20</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- CONTACT VIEW -->
+        <div id="view-contact" class="page-view pt-8 pb-12 lg:py-16">
+            <div class="max-w-[1140px] mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid lg:grid-cols-12 gap-8 lg:gap-12 items-stretch">
+                    
+                    <!-- Left Column -->
+                    <div class="lg:col-span-5 text-left flex flex-col justify-between pt-0 lg:pt-[78px]">
+                        <div>
+                            <span class="text-xs font-extrabold text-pink-accent uppercase tracking-widest block mb-2" data-en="DIRECT CONTACT" data-pl="BEZPOŚREDNI KONTAKT">DIRECT CONTACT</span>
+                            <h2 class="font-heading text-3xl sm:text-4xl md:text-5xl font-extrabold text-white tracking-tight mb-4 leading-[1.1]">
+                                <span data-en="Let's bring your" data-pl="Wprowadźmy Twoją">Let's bring your</span> <br class="hidden sm:inline" />
+                                <span class="bg-gradient-to-r from-white via-rose-200 to-pink-500 bg-clip-text text-transparent" data-en="business online." data-pl="firmę do sieci.">business online.</span>
+                            </h2>
+                            <p class="text-zinc-400 text-xs sm:text-base leading-relaxed" data-en="Have a project in mind or need more information? Send a quick message, and I'll get back to you as soon as possible, usually within a few hours." data-pl="Masz w głowie projekt lub potrzebujesz więcej informacji? Wyślij krótką wiadomość, a odezwę się tak szybko, jak to możliwe, zazwyczaj w ciągu kilku godzin.">
+                                Have a project in mind or need more information? Send a quick message, and I'll get back to you as soon as possible, usually within a few hours.
+                            </p>
+                        </div>
+
+                        <div class="space-y-4 lg:pb-6 mt-6 lg:mt-0">
+                            <!-- WhatsApp Card -->
+                            <a href="https://wa.me/48123456789" target="_blank" class="card-dark p-4 sm:p-5 flex items-center justify-between gap-3 sm:gap-4 group block" style="background: linear-gradient(135deg, rgba(6, 78, 59, 0.4) 0%, rgba(9, 9, 11, 0.95) 100%); border-color: rgba(16, 185, 129, 0.3);">
+                                <div class="flex items-center gap-3 sm:gap-4 min-w-0">
+                                    <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center shrink-0 border border-emerald-500/35 group-hover:scale-105 transition-transform">
+                                        <svg class="w-5 h-5 sm:w-6 sm:h-6 fill-current" viewBox="0 0 24 24">
+                                            <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/>
+                                        </svg>
+                                    </div>
+                                    <div class="min-w-0">
+                                        <div class="flex flex-wrap items-center gap-1.5 sm:gap-2 mb-0.5">
+                                            <span class="text-[8px] sm:text-[9px] font-extrabold uppercase bg-emerald-500/20 text-emerald-400 px-2 py-0.5 rounded border border-emerald-500/30" data-en="WHATSAPP DIRECT" data-pl="BEZPOŚREDNI WHATSAPP">WHATSAPP DIRECT</span>
+                                            <span class="text-[10px] sm:text-[11px] text-zinc-400" data-en="Quick response" data-pl="Szybka odpowiedź">Quick response</span>
+                                        </div>
+                                        <p class="font-bold text-white text-xs sm:text-sm group-hover:text-emerald-400 transition-colors truncate">+48 123 456 789 / +356 9900 1122</p>
+                                        <p class="text-[10px] sm:text-[11px] text-zinc-400 mt-0.5" data-en="Chat about your project" data-pl="Porozmawiaj o swoim projekcie">Chat about your project</p>
+                                    </div>
+                                </div>
+                                <div class="w-8 h-8 rounded-lg bg-black/40 border border-emerald-500/30 flex items-center justify-center text-emerald-400 shrink-0 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform">
+                                    <i data-lucide="arrow-up-right" class="w-4 h-4"></i>
+                                </div>
+                            </a>
+
+                            <div class="card-dark p-4 sm:p-5 flex items-center justify-between gap-3 sm:gap-4 group" style="background: linear-gradient(135deg, rgba(136, 19, 55, 0.4) 0%, rgba(9, 9, 11, 0.95) 100%); border-color: rgba(244, 63, 94, 0.3);">
+                                <div class="flex items-center gap-3 sm:gap-4 min-w-0">
+                                    <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-pink-gradient text-white flex items-center justify-center shrink-0 glow-pink">
+                                        <i data-lucide="mail" class="w-5 h-5 sm:w-6 sm:h-6"></i>
+                                    </div>
+                                    <div class="min-w-0">
+                                        <div class="flex items-center gap-2 mb-0.5">
+                                            <span class="text-[8px] sm:text-[9px] font-extrabold uppercase bg-pink-500/20 text-pink-400 px-2 py-0.5 rounded border border-pink-500/30" data-en="SEND AN EMAIL" data-pl="WYŚLIJ E-MAIL">SEND AN EMAIL</span>
+                                        </div>
+                                        <p class="font-bold text-white text-xs sm:text-sm truncate">contact@tailoredly.com</p>
+                                        <p class="text-[10px] sm:text-[11px] text-zinc-400 mt-0.5" data-en="Send your project details anytime" data-pl="Prześlij szczegóły projektu w dowolnym momencie">Send your project details anytime</p>
+                                    </div>
+                                </div>
+                                <div class="w-8 h-8 rounded-lg bg-black/40 border border-pink-500/30 flex items-center justify-center text-pink-accent shrink-0">
+                                    <i data-lucide="arrow-up-right" class="w-4 h-4"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="lg:col-span-7 flex justify-end">
+                        <div class="card-dark p-6 sm:p-8 w-full max-w-[560px]">
+                            <h3 class="font-heading text-xl sm:text-2xl font-extrabold text-white mb-1" data-en="Tell me about your project" data-pl="Opowiedz mi o swoim pomyśle">Tell me about your project</h3>
+                            <p class="text-zinc-400 text-xs sm:text-sm mb-6" data-en="Have an idea for a website? Send me a message and tell me a little about your business and what you're looking for. I'll get back to you as soon as I can, usually within a few hours." data-pl="Planujesz stworzyć stronę internetową? Napisz kilka słów o swojej firmie i o tym, czego potrzebujesz. Odezwę się tak szybko, jak będę mogła, zazwyczaj w ciągu kilku godzin.">Have an idea for a website? Send me a message and tell me a little about your business and what you're looking for. I'll get back to you as soon as I can, usually within a few hours.</p>
+
+                            <form onsubmit="event.preventDefault(); showSuccess();" class="space-y-4">
+                                <div>
+                                    <label class="block text-[11px] font-extrabold uppercase text-zinc-400 mb-1.5" data-en="Name" data-pl="Imię">Name</label>
+                                    <input type="text" required placeholder="John Doe" class="w-full px-4 py-3.5 rounded-xl bg-zinc-900/90 border border-zinc-800 text-white text-sm focus:outline-none focus:border-pink-accent">
+                                </div>
+
+                                <div>
+                                    <label class="block text-[11px] font-extrabold uppercase text-zinc-400 mb-1.5" data-en="Email address" data-pl="Adres e-mail">Email address</label>
+                                    <input type="email" required placeholder="john@company.com" class="w-full px-4 py-3.5 rounded-xl bg-zinc-900/90 border border-zinc-800 text-white text-sm focus:outline-none focus:border-pink-accent">
+                                </div>
+
+                                <div class="relative" id="custom-package-dropdown-wrap">
+                                    <label class="block text-[11px] font-extrabold uppercase text-zinc-400 mb-1.5" data-en="Website package" data-pl="Pakiet strony">Website package</label>
+                                    <input type="hidden" name="package" id="selected-package-input" value="onepage">
+                                    <button type="button" id="package-dropdown-btn" onclick="togglePackageDropdown()" class="w-full px-4 py-3.5 rounded-xl bg-zinc-900/90 border border-zinc-800 hover:border-pink-500/50 text-white text-sm focus:outline-none focus:border-pink-accent flex items-center justify-between transition-all text-left">
+                                        <span id="package-dropdown-selected" class="font-medium text-white" data-en="One-page website (380€)" data-pl="Strona wizytówka (380€)">One-page website (380€)</span>
+                                        <i data-lucide="chevron-down" id="package-dropdown-icon" class="w-4 h-4 text-pink-accent transition-transform duration-200 shrink-0"></i>
+                                    </button>
+
+                                    <div id="package-dropdown-menu" class="hidden absolute left-0 right-0 top-full mt-2 bg-zinc-950/95 backdrop-blur-xl border border-zinc-800 border-t-pink-500/50 rounded-2xl p-2 shadow-2xl z-40 space-y-1">
+                                        <button type="button" onclick="selectPackageOption('onepage', 'One-page website (380€)', 'Strona wizytówka (380€)')" data-pkg="onepage" class="package-opt-btn w-full text-left px-3.5 py-3 rounded-xl text-white bg-zinc-900 border border-pink-500/40 font-semibold text-xs sm:text-sm flex items-center justify-between transition-all group">
+                                            <div class="flex items-center gap-2.5">
+                                                <span class="w-2 h-2 rounded-full bg-pink-accent"></span>
+                                                <span data-en="One-page website (380€)" data-pl="Strona wizytówka (380€)">One-page website (380€)</span>
+                                            </div>
+                                            <span class="pkg-check text-pink-accent text-xs font-extrabold">✓</span>
+                                        </button>
+
+                                        <button type="button" onclick="selectPackageOption('multipage', 'Multi-page website (550€)', 'Strona wielostronicowa (550€)')" data-pkg="multipage" class="package-opt-btn w-full text-left px-3.5 py-3 rounded-xl text-zinc-300 hover:text-white hover:bg-zinc-900/80 border border-transparent font-semibold text-xs sm:text-sm flex items-center justify-between transition-all group">
+                                            <div class="flex items-center gap-2.5">
+                                                <span class="w-2 h-2 rounded-full bg-purple-400"></span>
+                                                <span data-en="Multi-page website (550€)" data-pl="Strona wielostronicowa (550€)">Multi-page website (550€)</span>
+                                            </div>
+                                            <span class="pkg-check text-pink-accent text-xs font-extrabold hidden">✓</span>
+                                        </button>
+
+                                        <button type="button" onclick="selectPackageOption('custom', 'Custom request', 'Indywidualne zapytanie')" data-pkg="custom" class="package-opt-btn w-full text-left px-3.5 py-3 rounded-xl text-zinc-300 hover:text-white hover:bg-zinc-900/80 border border-transparent font-semibold text-xs sm:text-sm flex items-center justify-between transition-all group">
+                                            <div class="flex items-center gap-2.5">
+                                                <span class="w-2 h-2 rounded-full bg-zinc-500"></span>
+                                                <span data-en="Custom request" data-pl="Indywidualne zapytanie">Custom request</span>
+                                            </div>
+                                            <span class="pkg-check text-pink-accent text-xs font-extrabold hidden">✓</span>
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <label class="block text-[11px] font-extrabold uppercase text-zinc-400 mb-1.5" data-en="Tell me about your project" data-pl="Napisz kilka słów o swoim projekcie">Tell me about your project</label>
+                                    <textarea rows="4" required placeholder="e.g. type of business, features you need, design preferences..." class="w-full px-4 py-3.5 rounded-xl bg-zinc-900/90 border border-zinc-800 text-white text-sm focus:outline-none focus:border-pink-accent"></textarea>
+                                </div>
+
+                                <button type="submit" class="w-full py-4 rounded-xl bg-pink-gradient text-white font-bold text-sm transition-all shadow-lg glow-pink hover:opacity-95 flex items-center justify-center gap-2">
+                                    <span data-en="Send message" data-pl="Wyślij wiadomość">Send message</span>
+                                    <span>→</span>
+                                </button>
+                            </form>
+
+                            <div class="flex items-center justify-center gap-2 mt-4 text-[11px] text-zinc-500">
+                                <i data-lucide="lock" class="w-3.5 h-3.5 text-pink-accent"></i>
+                                <span data-en="No obligation. No hidden fees. Just a straightforward quote." data-pl="Bez zobowiązań. Brak ukrytych opłat. Przejrzysta wycena.">No obligation. No hidden fees. Just a straightforward quote.</span>
+                            </div>
+
+                            <div id="form-success-msg" class="hidden mt-4 p-4 rounded-xl bg-emerald-950/80 border border-emerald-800 text-emerald-300 text-xs font-semibold text-center">
+                                <span data-en="Thanks for getting in touch! Your message has been sent. I'll get back to you as soon as I can." data-pl="Dziękuję za wiadomość! Otrzymałam ją i odezwę się tak szybko, jak będę mogła.">
+                                    Thanks for getting in touch! Your message has been sent. I'll get back to you as soon as I can.
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Bottom Contact Features -->
+                <div class="grid grid-cols-3 gap-3 sm:gap-6 pt-8 mt-12 border-t border-zinc-900 text-left">
+                    <div class="flex items-start gap-2 sm:gap-3">
+                        <div class="text-pink-accent shrink-0 mt-0.5">
+                            <i data-lucide="clock" class="w-4 h-4 sm:w-5 sm:h-5"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-heading font-bold text-white text-[11px] sm:text-xs mb-0.5 sm:mb-1" data-en="Quick response" data-pl="Szybka odpowiedź">Quick response</h4>
+                            <p class="text-[10px] sm:text-[11px] text-zinc-400 leading-tight" data-en="I usually reply within a few hours." data-pl="Zazwyczaj odpowiadam w ciągu kilku godzin.">I usually reply within a few hours.</p>
+                        </div>
+                    </div>
+
+                    <div class="flex items-start gap-2 sm:gap-3">
+                        <div class="text-pink-accent shrink-0 mt-0.5">
+                            <i data-lucide="shield-check" class="w-4 h-4 sm:w-5 sm:h-5"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-heading font-bold text-white text-[11px] sm:text-xs mb-0.5 sm:mb-1" data-en="No obligation" data-pl="Brak zobowiązań">No obligation</h4>
+                            <p class="text-[10px] sm:text-[11px] text-zinc-400 leading-tight" data-en="Get a free quote with no commitment." data-pl="Otrzymaj darmową wycenę bez zobowiązań.">Get a free quote with no commitment.</p>
+                        </div>
+                    </div>
+
+                    <div class="flex items-start gap-2 sm:gap-3">
+                        <div class="text-pink-accent shrink-0 mt-0.5">
+                            <i data-lucide="message-square" class="w-4 h-4 sm:w-5 sm:h-5"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-heading font-bold text-white text-[11px] sm:text-xs mb-0.5 sm:mb-1" data-en="Multiple options" data-pl="Wiele opcji">Multiple options</h4>
+                            <p class="text-[10px] sm:text-[11px] text-zinc-400 leading-tight" data-en="Contact me via WhatsApp or email." data-pl="Kontakt przez WhatsApp lub e-mail.">Contact me via WhatsApp or email.</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- PRIVACY POLICY VIEW -->
+        <div id="view-privacy" class="page-view py-12 md:py-16">
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="mb-6">
+                    <button onclick="navigateTo('home')" class="inline-flex items-center gap-2 text-xs font-bold text-zinc-400 hover:text-pink-accent transition-colors">
+                        <i data-lucide="arrow-left" class="w-4 h-4"></i>
+                        <span data-en="Back to Home" data-pl="Powrót do strony głównej">Back to Home</span>
+                    </button>
+                </div>
+
+                <div class="card-dark p-6 sm:p-10 md:p-12 text-left space-y-8">
+                    <div class="border-b border-zinc-800/80 pb-6">
+                        <span class="text-xs font-extrabold text-pink-accent uppercase tracking-widest block mb-2">LEGAL</span>
+                        <h1 class="font-heading text-3xl sm:text-4xl md:text-5xl font-extrabold text-white tracking-tight mb-2">Privacy Policy</h1>
+                        <p class="text-xs sm:text-sm text-zinc-400">Last updated: 14 October 2026</p>
+                    </div>
+
+                    <div class="space-y-8 text-xs sm:text-sm text-zinc-300 leading-relaxed">
+                        <section class="space-y-3">
+                            <h2 class="font-heading text-lg sm:text-xl font-bold text-white">1. Introduction</h2>
+                            <p>Tailoredly respects your privacy and is committed to protecting your personal data in accordance with the General Data Protection Regulation (EU) 2016/679 (GDPR) and applicable Maltese data protection legislation.</p>
+                            <p>This Privacy Policy explains how personal data may be collected, used, stored and shared when you visit the Tailoredly website, contact us or enquire about our website design services.</p>
+                        </section>
+
+                        <section class="space-y-3">
+                            <h2 class="font-heading text-lg sm:text-xl font-bold text-white">2. Data Controller</h2>
+                            <p>The data controller responsible for the processing of your personal data is:</p>
+                            <ul class="list-disc pl-5 space-y-1.5 text-zinc-300">
+                                <li>Business name: [Insert your registered business name or full legal name]</li>
+                                <li>Trading name: Tailoredly</li>
+                                <li>Location: Malta</li>
+                                <li>Email: [Insert your business contact email]</li>
+                                <li>Website: https://tailoredly.com</li>
+                            </ul>
+                            <p>For any questions about this Privacy Policy or the processing of your personal data, please contact us using the email address above.</p>
+                        </section>
+
+                        <section class="space-y-3">
+                            <h2 class="font-heading text-lg sm:text-xl font-bold text-white">3. Personal Data We Collect</h2>
+                            <p>The personal data we may process depends on how you use the website and interact with us.</p>
+                            <h3 class="font-heading text-sm sm:text-base font-bold text-pink-accent pt-1">Information you provide</h3>
+                            <p>If you contact us or enquire about our services, we may process:</p>
+                            <ul class="list-disc pl-5 space-y-1.5 text-zinc-300">
+                                <li>Your name</li>
+                                <li>Your email address</li>
+                                <li>Your telephone number, if provided</li>
+                                <li>Information about your business or website project</li>
+                                <li>Any other information you voluntarily include in your message or communication</li>
+                            </ul>
+                            <p>Please do not include sensitive personal information in your enquiries unless it is strictly necessary.</p>
+                            <h3 class="font-heading text-sm sm:text-base font-bold text-pink-accent pt-1">Information collected automatically</h3>
+                            <p>When you visit the website, certain technical information may be processed by the website, hosting providers or third-party services. Depending on their configuration, this may include:</p>
+                            <ul class="list-disc pl-5 space-y-1.5 text-zinc-300">
+                                <li>IP address</li>
+                                <li>Browser type and version</li>
+                                <li>Device and operating system information</li>
+                                <li>Pages visited and interactions with the website</li>
+                                <li>Date and time of access</li>
+                                <li>Referring website or source</li>
+                                <li>Technical logs used for website operation, performance and security</li>
+                            </ul>
+                            <p>Google Analytics 4 may also collect information about website usage if analytics tracking is enabled and the required consent has been obtained.</p>
+                        </section>
+
+                        <section class="space-y-3">
+                            <h2 class="font-heading text-lg sm:text-xl font-bold text-white">4. How We Use Your Personal Data</h2>
+                            <p>We may process personal data for the following purposes:</p>
+                            <ul class="list-disc pl-5 space-y-1.5 text-zinc-300">
+                                <li>To respond to enquiries and messages</li>
+                                <li>To discuss your website requirements and provide quotations</li>
+                                <li>To prepare for or enter into a contract for website design services</li>
+                                <li>To communicate with you about an ongoing project</li>
+                                <li>To maintain, secure and improve the website</li>
+                                <li>To understand website traffic and usage through Google Analytics 4, where permitted</li>
+                                <li>To comply with applicable legal and accounting obligations</li>
+                                <li>To establish, exercise or defend legal claims where necessary</li>
+                            </ul>
+                            <p>We will not use your personal data for purposes incompatible with those described in this Privacy Policy without providing any additional information required by law.</p>
+                        </section>
+
+                        <section class="space-y-3">
+                            <h2 class="font-heading text-lg sm:text-xl font-bold text-white">5. Legal Bases for Processing</h2>
+                            <p>We process personal data only where an applicable legal basis under the GDPR exists.</p>
+                            <p>Depending on the circumstances, these legal bases may include:</p>
+                            <ul class="list-disc pl-5 space-y-1.5 text-zinc-300">
+                                <li>Pre-contractual steps and contract performance: to respond to your request, prepare a quotation or provide services you have requested.</li>
+                                <li>Legitimate interests: to protect the website, prevent misuse, maintain technical security, manage business communications or establish and defend legal claims, where these interests do not override your rights and freedoms.</li>
+                                <li>Legal obligations: to comply with applicable tax, accounting and other legal requirements.</li>
+                                <li>Consent: to use non-essential analytics cookies or similar technologies where consent is required, and for any other processing that specifically relies on your consent.</li>
+                            </ul>
+                            <p>Where processing is based on consent, you may withdraw your consent at any time. Withdrawal does not affect the lawfulness of processing carried out before withdrawal.</p>
+                        </section>
+
+                        <section class="space-y-3">
+                            <h2 class="font-heading text-lg sm:text-xl font-bold text-white">6. Contact Forms and Communications</h2>
+                            <p>If you contact Tailoredly through a website contact form, your information may be processed by a third-party form delivery provider, such as StaticForms, if that service is configured and used on the website.</p>
+                            <p>The information submitted may include your name, email address and message. It will be used to respond to your enquiry and, where relevant, discuss or provide our services.</p>
+                            <p>The form delivery provider may process or store submitted information according to its own service terms and privacy practices.</p>
+                            <p>You may also contact us directly by email or through WhatsApp. If you choose WhatsApp, your communications will also be subject to WhatsApp's applicable terms and privacy policy.</p>
+                            <p>Please note: The contact form must be connected to a working submission service before this section accurately describes the live website. A form that only displays a confirmation message without transmitting the submitted information does not send an enquiry to Tailoredly.</p>
+                        </section>
+
+                        <section class="space-y-3">
+                            <h2 class="font-heading text-lg sm:text-xl font-bold text-white">7. Cookies and Similar Technologies</h2>
+                            <p>The website may use cookies or similar technologies depending on the services enabled and their configuration.</p>
+                            <h3 class="font-heading text-sm sm:text-base font-bold text-pink-accent pt-1">Essential technologies</h3>
+                            <p>Some technologies may be necessary for the website to function, maintain security or deliver a service explicitly requested by the visitor.</p>
+                            <h3 class="font-heading text-sm sm:text-base font-bold text-pink-accent pt-1">Analytics cookies</h3>
+                            <p>If Google Analytics 4 is enabled, it may use cookies or similar technologies to collect information about website visits and interactions. This information helps us understand how visitors use the website and improve its content and performance.</p>
+                            <p>Analytics technologies will be enabled only in accordance with applicable consent requirements. Where consent is required, they must not be activated before the visitor has given valid consent.</p>
+                            <p>You should be able to accept or reject non-essential analytics technologies and change your preferences later.</p>
+                            <h3 class="font-heading text-sm sm:text-base font-bold text-pink-accent pt-1">Managing cookie preferences</h3>
+                            <p>You can manage cookies through your browser settings. Blocking cookies may affect certain website features.</p>
+                            <p>Browser settings alone may not prevent all forms of analytics data collection. For this reason, the website must use an appropriate consent mechanism where required by law.</p>
+                            <p>The exact cookies, their purposes and their retention periods depend on the services actually enabled on the website.</p>
+                        </section>
+
+                        <section class="space-y-3">
+                            <h2 class="font-heading text-lg sm:text-xl font-bold text-white">8. Third-Party Services</h2>
+                            <p>The website may rely on third-party services to provide hosting, security, styling, icons, analytics and communication functionality.</p>
+                            <p>These services may process technical information, including IP addresses, browser information or requests for website resources, when your browser connects to their servers.</p>
+                            <h3 class="font-heading text-sm sm:text-base font-bold text-pink-accent pt-1">GitHub Pages</h3>
+                            <p>The website may be hosted using GitHub Pages. GitHub may process technical information and server logs associated with requests to access the website. Its processing is subject to GitHub's applicable terms and privacy documentation.</p>
+                            <h3 class="font-heading text-sm sm:text-base font-bold text-pink-accent pt-1">Cloudflare</h3>
+                            <p>Cloudflare may provide domain, DNS, security, performance or content delivery services, depending on the configuration used for the website. Cloudflare may process technical information and IP addresses when providing these services.</p>
+                            <h3 class="font-heading text-sm sm:text-base font-bold text-pink-accent pt-1">Google Fonts</h3>
+                            <p>The website loads fonts from Google Fonts. When fonts are requested from Google's servers, information such as your IP address and browser request details may be transmitted to Google.</p>
+                            <h3 class="font-heading text-sm sm:text-base font-bold text-pink-accent pt-1">Tailwind CSS CDN</h3>
+                            <p>The website uses the Tailwind CSS CDN. When the relevant resource is loaded from the CDN, the provider may receive technical information associated with the request.</p>
+                            <h3 class="font-heading text-sm sm:text-base font-bold text-pink-accent pt-1">Lucide CDN</h3>
+                            <p>The website uses Lucide icons through an external CDN. Loading the relevant resource may result in technical information being transmitted to the CDN provider.</p>
+                            <h3 class="font-heading text-sm sm:text-base font-bold text-pink-accent pt-1">Google Analytics 4</h3>
+                            <p>If enabled, Google Analytics 4 helps us understand how visitors interact with the website. Google may process usage and device information in accordance with its applicable terms and privacy documentation.</p>
+                            <h3 class="font-heading text-sm sm:text-base font-bold text-pink-accent pt-1">Contact form provider</h3>
+                            <p>If a third-party form delivery service is connected, it may process the information submitted through the contact form in order to deliver the message to us.</p>
+                            <p>These providers may act as independent controllers or processors depending on the service and the processing involved. Their applicable privacy policies and terms should be reviewed for further information.</p>
+                        </section>
+
+                        <section class="space-y-3">
+                            <h2 class="font-heading text-lg sm:text-xl font-bold text-white">9. Sharing of Personal Data</h2>
+                            <p>We do not sell your personal data.</p>
+                            <p>We may share personal data with service providers where necessary to operate the website, deliver our services, process enquiries, maintain security or comply with legal obligations.</p>
+                            <p>Personal data may also be disclosed to public authorities or other parties where required by law or necessary to establish, exercise or defend legal claims.</p>
+                            <p>Where required, appropriate contractual and organisational safeguards will be used when engaging service providers that process personal data on our behalf.</p>
+                        </section>
+
+                        <section class="space-y-3">
+                            <h2 class="font-heading text-lg sm:text-xl font-bold text-white">10. International Data Transfers</h2>
+                            <p>Some service providers used by the website may process personal data outside Malta or the European Economic Area (EEA).</p>
+                            <p>Where personal data is transferred to a country outside the EEA, we will ensure that the transfer complies with applicable data protection law. Depending on the circumstances, this may involve an adequacy decision, appropriate safeguards such as Standard Contractual Clauses, or another lawful transfer mechanism.</p>
+                            <p>The locations in which data is processed depend on the services enabled and the providers' configurations.</p>
+                        </section>
+
+                        <section class="space-y-3">
+                            <h2 class="font-heading text-lg sm:text-xl font-bold text-white">11. Data Retention</h2>
+                            <p>We retain personal data only for as long as necessary for the purposes for which it was collected, taking into account applicable legal requirements and legitimate business needs.</p>
+                            <p>For example:</p>
+                            <ul class="list-disc pl-5 space-y-1.5 text-zinc-300">
+                                <li>Enquiries may be retained for as long as necessary to respond, manage potential work and maintain relevant business records.</li>
+                                <li>Client and transaction records may be retained for the periods required by applicable tax, accounting and other laws.</li>
+                                <li>Technical logs may be retained for the period necessary for security, troubleshooting and service operation, according to the relevant provider's policies.</li>
+                                <li>Analytics data is retained according to the settings configured in Google Analytics 4.</li>
+                            </ul>
+                            <p>The actual retention periods depend on the type of data, the purpose of processing and applicable legal obligations.</p>
+                        </section>
+
+                        <section class="space-y-3">
+                            <h2 class="font-heading text-lg sm:text-xl font-bold text-white">12. Your Data Protection Rights</h2>
+                            <p>Under the GDPR, you may have the right to:</p>
+                            <ul class="list-disc pl-5 space-y-1.5 text-zinc-300">
+                                <li>Access: request confirmation of whether we process your personal data and obtain a copy.</li>
+                                <li>Rectification: request correction of inaccurate or incomplete data.</li>
+                                <li>Erasure: request deletion of your personal data in certain circumstances.</li>
+                                <li>Restriction: request restriction of processing in certain circumstances.</li>
+                                <li>Data portability: receive certain personal data in a structured, commonly used and machine-readable format where the legal conditions apply.</li>
+                                <li>Object: object to processing based on legitimate interests, on grounds relating to your particular situation.</li>
+                                <li>Withdraw consent: withdraw consent at any time where processing is based on consent.</li>
+                                <li>Lodge a complaint: submit a complaint to a competent data protection supervisory authority.</li>
+                            </ul>
+                            <p>To exercise your rights, contact us at [Insert your business contact email]. We may need to verify your identity before responding.</p>
+                            <p>We will respond within the time limits prescribed by applicable data protection law. These rights are subject to certain legal conditions and exceptions.</p>
+                        </section>
+
+                        <section class="space-y-3">
+                            <h2 class="font-heading text-lg sm:text-xl font-bold text-white">13. Right to Lodge a Complaint</h2>
+                            <p>If you believe that your personal data has been processed unlawfully, you have the right to lodge a complaint with the competent supervisory authority.</p>
+                            <p>In Malta, the relevant authority is the Information and Data Protection Commissioner (IDPC).</p>
+                            <p>Website: <a href="https://idpc.org.mt" target="_blank" rel="noopener noreferrer" class="text-pink-accent hover:underline">https://idpc.org.mt</a></p>
+                            <p>You may also have the right to contact another competent supervisory authority, particularly where you live or work in another EU Member State or where the alleged infringement occurred.</p>
+                        </section>
+
+                        <section class="space-y-3">
+                            <h2 class="font-heading text-lg sm:text-xl font-bold text-white">14. Data Security</h2>
+                            <p>We take reasonable technical and organisational measures to protect personal data against unauthorised access, loss, misuse, alteration or disclosure.</p>
+                            <p>However, no website, online service or method of electronic transmission can be guaranteed to be completely secure.</p>
+                            <p>Access to personal data will be limited to what is reasonably necessary for the relevant business and operational purposes.</p>
+                        </section>
+
+                        <section class="space-y-3">
+                            <h2 class="font-heading text-lg sm:text-xl font-bold text-white">15. Links to Other Websites</h2>
+                            <p>The website may contain links to third-party websites or services, including social media and messaging platforms.</p>
+                            <p>We are not responsible for the privacy practices, content or security of third-party websites. We recommend reviewing their privacy policies before providing personal information or using their services.</p>
+                        </section>
+
+                        <section class="space-y-3">
+                            <h2 class="font-heading text-lg sm:text-xl font-bold text-white">16. Children's Privacy</h2>
+                            <p>Our website and services are intended for businesses and individuals seeking website design services. We do not knowingly seek to collect personal data from children.</p>
+                            <p>If you believe that a child has provided us with personal data unnecessarily, please contact us so that we can assess the request and take appropriate action where required by law.</p>
+                        </section>
+
+                        <section class="space-y-3">
+                            <h2 class="font-heading text-lg sm:text-xl font-bold text-white">17. Changes to This Privacy Policy</h2>
+                            <p>We may update this Privacy Policy from time to time to reflect changes in our services, website technologies or legal obligations.</p>
+                            <p>The latest version will be published on this page, together with the date on which it was last updated.</p>
+                        </section>
+
+                        <section class="space-y-3">
+                            <h2 class="font-heading text-lg sm:text-xl font-bold text-white">18. Contact Us</h2>
+                            <p>If you have any questions about this Privacy Policy or wish to exercise your data protection rights, please contact:</p>
+                            <div class="bg-zinc-900/70 border border-zinc-800 rounded-xl p-4 space-y-1">
+                                <p class="font-bold text-white">Tailoredly</p>
+                                <p>Email: [Insert your business contact email]</p>
+                                <p>Location: Malta</p>
+                                <p>Website: https://tailoredly.com</p>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TERMS AND CONDITIONS VIEW -->
+        <div id="view-terms" class="page-view py-12 md:py-16">
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="mb-6">
+                    <button onclick="navigateTo('home')" class="inline-flex items-center gap-2 text-xs font-bold text-zinc-400 hover:text-pink-accent transition-colors">
+                        <i data-lucide="arrow-left" class="w-4 h-4"></i>
+                        <span data-en="Back to Home" data-pl="Powrót do strony głównej">Back to Home</span>
+                    </button>
+                </div>
+
+                <div class="card-dark p-6 sm:p-10 md:p-12 text-left space-y-6">
+                    <div class="border-b border-zinc-800/80 pb-6">
+                        <span class="text-xs font-extrabold text-pink-accent uppercase tracking-widest block mb-2">LEGAL</span>
+                        <h1 class="font-heading text-3xl sm:text-4xl md:text-5xl font-extrabold text-white tracking-tight mb-2" data-en="Terms and Conditions" data-pl="Regulamin (Terms and Conditions)">Terms and Conditions</h1>
+                        <p class="text-xs sm:text-sm text-zinc-400" data-en="Document awaiting final content approval" data-pl="Dokument oczekuje na uzupełnienie i zatwierdzenie treści">Document awaiting final content approval</p>
+                    </div>
+
+                    <div class="bg-zinc-900/80 border border-pink-500/40 rounded-2xl p-6 sm:p-8 space-y-4">
+                        <div class="flex items-center gap-3 text-pink-accent">
+                            <i data-lucide="file-warning" class="w-6 h-6 shrink-0"></i>
+                            <h2 class="font-heading text-base sm:text-lg font-bold text-white" data-en="[Placeholder: Terms and Conditions Content Required]" data-pl="[Miejsce na treść: Wymagane uzupełnienie Regulaminu]">[Placeholder: Terms and Conditions Content Required]</h2>
+                        </div>
+                        <p class="text-xs sm:text-sm text-zinc-300 leading-relaxed" data-en="No fictional terms or company details have been generated. Please provide or approve the official Terms and Conditions text to be placed in this section before publishing the live website." data-pl="Żadne fikcyjne zapisy ani dane firmy nie zostały wygenerowane. Proszę o dostarczenie lub zatwierdzenie oficjalnej treści regulaminu (Terms and Conditions), która ma zostać umieszczona w tym miejscu przed publikacją strony.">
+                            No fictional terms or company details have been generated. Please provide or approve the official Terms and Conditions text to be placed in this section before publishing the live website.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <footer class="bg-black py-8 border-t border-zinc-900 text-xs text-zinc-500 text-center relative z-10">
+        <div class="max-w-5xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <p data-en="© 2026 Tailoredly. All rights reserved." data-pl="© 2026 Tailoredly. All rights reserved.">
+                © 2026 Tailoredly. All rights reserved.
+            </p>
+            <div class="flex flex-wrap items-center justify-center gap-4 sm:gap-6 text-xs font-semibold text-zinc-400">
+                <a href="privacy-policy.html" onclick="event.preventDefault(); navigateTo('privacy');" class="hover:text-pink-accent transition-colors" data-en="Privacy Policy" data-pl="Polityka prywatności">Privacy Policy</a>
+                <a href="terms-and-conditions.html" onclick="event.preventDefault(); navigateTo('terms');" class="hover:text-pink-accent transition-colors" data-en="Terms and Conditions" data-pl="Regulamin">Terms and Conditions</a>
+                <button type="button" onclick="openCookieSettings()" class="hover:text-pink-accent transition-colors" data-en="Cookie settings" data-pl="Ustawienia cookies">Cookie settings</button>
+            </div>
+        </div>
+    </footer>
+
+    <!-- COOKIE BANNER -->
+    <div id="cookie-banner" class="hidden fixed bottom-4 left-4 right-4 md:left-auto md:right-6 md:bottom-6 md:max-w-lg z-50 bg-zinc-950/95 backdrop-blur-xl border border-zinc-800 border-t-pink-500/50 rounded-2xl p-5 sm:p-6 shadow-2xl">
+        <div class="flex items-start gap-3.5 mb-4">
+            <div class="w-9 h-9 rounded-xl bg-pink-500/15 border border-pink-500/30 text-pink-accent flex items-center justify-center shrink-0 mt-0.5">
+                <i data-lucide="cookie" class="w-5 h-5"></i>
+            </div>
+            <div class="text-left">
+                <h3 class="font-heading text-sm sm:text-base font-bold text-white mb-1" data-en="Your privacy matters" data-pl="Twoja prywatność ma znaczenie">Your privacy matters</h3>
+                <p class="text-[11px] sm:text-xs text-zinc-400 leading-relaxed">
+                    <span data-en="We use essential cookies to make this website work. With your permission, Google Analytics 4 helps us understand how visitors use our website and improve their experience. You can change your preferences at any time. Read our" data-pl="Używamy niezbędnych plików cookies, aby strona działała prawidłowo. Za Twoją zgodą Google Analytics 4 pomaga nam zrozumieć, jak odwiedzający korzystają z naszej strony, i ulepszać jej działanie. Możesz zmienić swoje preferencje w dowolnym momencie. Przeczytaj naszą">We use essential cookies to make this website work. With your permission, Google Analytics 4 helps us understand how visitors use our website and improve their experience. You can change your preferences at any time. Read our</span>
+                    <a href="privacy-policy.html" onclick="event.preventDefault(); navigateTo('privacy');" class="text-pink-accent hover:underline font-semibold ml-1" data-en="Privacy Policy" data-pl="Politykę prywatności">Privacy Policy</a>.
+                </p>
+            </div>
+        </div>
+        <div class="flex flex-col sm:flex-row-reverse items-stretch sm:items-center justify-end sm:justify-start gap-2.5">
+            <button type="button" onclick="openCookieSettings()" class="px-4 py-2.5 rounded-xl text-xs font-bold text-zinc-300 bg-zinc-900 border border-zinc-800 hover:text-white hover:border-zinc-700 transition-all" data-en="Cookie settings" data-pl="Ustawienia cookies">
+                Cookie settings
+            </button>
+            <button type="button" onclick="rejectAllCookies()" class="px-4 py-2.5 rounded-xl text-xs font-bold text-zinc-200 bg-zinc-900 border border-zinc-800 hover:bg-zinc-800 hover:text-white transition-all" data-en="Reject all" data-pl="Odrzuć wszystkie">
+                Reject all
+            </button>
+            <button type="button" onclick="acceptAllCookies()" class="px-5 py-2.5 rounded-xl text-xs font-bold text-white bg-pink-gradient hover:opacity-95 transition-all glow-pink glow-pink-hover" data-en="Accept all" data-pl="Zaakceptuj wszystkie">
+                Accept all
+            </button>
+        </div>
+    </div>
+
+    <!-- COOKIE SETTINGS MODAL -->
+    <div id="cookie-modal" class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="bg-zinc-950 border border-zinc-800 rounded-2xl max-w-lg w-full p-6 sm:p-8 shadow-2xl text-left relative">
+            <div class="flex items-center justify-between pb-4 mb-5 border-b border-zinc-800">
+                <div class="flex items-center gap-2.5">
+                    <i data-lucide="sliders" class="w-5 h-5 text-pink-accent"></i>
+                    <h3 class="font-heading text-lg sm:text-xl font-extrabold text-white" data-en="Cookie settings" data-pl="Ustawienia cookies">Cookie settings</h3>
+                </div>
+                <button type="button" onclick="closeCookieSettings()" aria-label="Close Cookie Settings" class="p-1.5 rounded-lg bg-zinc-900 text-zinc-400 hover:text-white border border-zinc-800">
+                    <i data-lucide="x" class="w-4 h-4"></i>
+                </button>
+            </div>
+
+            <p class="text-xs text-zinc-400 leading-relaxed mb-6" data-en="Manage your cookie preferences below. Essential cookies are always active because they are necessary for the website to function. Analytics cookies are optional and will only be used if you give your consent." data-pl="Zarządzaj swoimi preferencjami dotyczącymi cookies. Niezbędne pliki cookies są zawsze aktywne, ponieważ umożliwiają prawidłowe działanie strony. Opcjonalne pliki analityczne będą wykorzystywane wyłącznie po wyrażeniu zgody.">
+                Manage your cookie preferences below. Essential cookies are always active because they are necessary for the website to function. Analytics cookies are optional and will only be used if you give your consent.
+            </p>
+
+            <div class="space-y-4 mb-6">
+                <!-- Essential Cookies -->
+                <div class="p-4 rounded-xl bg-zinc-900/70 border border-zinc-800/90 flex items-start justify-between gap-4">
+                    <div>
+                        <h4 class="font-heading font-bold text-white text-xs sm:text-sm mb-1" data-en="Essential cookies" data-pl="Niezbędne pliki cookies">Essential cookies</h4>
+                        <p class="text-[11px] text-zinc-400 leading-relaxed" data-en="Required for basic website functionality, security and saving your privacy preferences." data-pl="Konieczne do prawidłowego działania strony, zapewnienia bezpieczeństwa i zapisywania ustawień prywatności.">Required for basic website functionality, security and saving your privacy preferences.</p>
+                    </div>
+                    <span class="text-[10px] font-extrabold uppercase bg-zinc-800 text-zinc-300 px-2.5 py-1 rounded-full shrink-0" data-en="Always active" data-pl="Zawsze aktywne">Always active</span>
+                </div>
+
+                <!-- Analytics Cookies -->
+                <div class="p-4 rounded-xl bg-zinc-900/70 border border-zinc-800/90 flex items-start justify-between gap-4">
+                    <div>
+                        <div class="flex flex-wrap items-center gap-2 mb-1">
+                            <h4 class="font-heading font-bold text-white text-xs sm:text-sm" data-en="Analytics cookies (Google Analytics 4)" data-pl="Analityczne pliki cookies (Google Analytics 4)">Analytics cookies (Google Analytics 4)</h4>
+                            <span class="text-[9px] font-extrabold uppercase bg-pink-500/15 text-pink-400 border border-pink-500/30 px-2 py-0.5 rounded-full" data-en="Optional" data-pl="Opcjonalne">Optional</span>
+                        </div>
+                        <p class="text-[11px] text-zinc-400 leading-relaxed" data-en="Help us understand how visitors use our website, such as which pages are visited. These cookies are only enabled with your consent." data-pl="Pomagają nam zrozumieć, jak odwiedzający korzystają ze strony, np. które podstrony odwiedzają. Są aktywowane wyłącznie po wyrażeniu zgody.">Help us understand how visitors use our website, such as which pages are visited. These cookies are only enabled with your consent.</p>
+                    </div>
+                    <label class="relative inline-flex items-center cursor-pointer shrink-0 mt-1">
+                        <input type="checkbox" id="analytics-consent-toggle" class="sr-only peer">
+                        <div class="w-11 h-6 bg-zinc-800 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-zinc-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[#ff2e63]"></div>
+                    </label>
+                </div>
+            </div>
+
+            <div class="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 pt-4 border-t border-zinc-800">
+                <div class="flex items-center gap-2">
+                    <button type="button" onclick="rejectAllCookies()" class="w-full sm:w-auto px-4 py-2.5 rounded-xl text-xs font-bold text-zinc-300 bg-zinc-900 border border-zinc-800 hover:text-white transition-all" data-en="Reject all" data-pl="Odrzuć wszystkie">
+                        Reject all
+                    </button>
+                    <button type="button" onclick="acceptAllCookies()" class="w-full sm:w-auto px-4 py-2.5 rounded-xl text-xs font-bold text-zinc-300 bg-zinc-900 border border-zinc-800 hover:text-white transition-all" data-en="Accept all" data-pl="Zaakceptuj wszystkie">
+                        Accept all
+                    </button>
+                </div>
+                <button type="button" onclick="saveCookiePreferences()" class="px-5 py-2.5 rounded-xl text-xs font-bold text-white bg-pink-gradient hover:opacity-95 transition-all glow-pink" data-en="Save preferences" data-pl="Zapisz ustawienia">
+                    Save preferences
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Initialize Lucide icons
+        lucide.createIcons();
+
+        let currentLang = 'en';
+
+        const GA_MEASUREMENT_ID = 'G-XXXXXXXXXX'; // Replace with your real GA4 Measurement ID when ready
+        const CONSENT_STORAGE_KEY = 'tailoredly_cookie_consent_v1';
+        let gaScriptLoaded = false;
+
+        function clearGACookies() {
+            const cookies = document.cookie.split(';');
+            const hostname = window.location.hostname;
+            const domainParts = hostname.split('.');
+            const rootDomain = domainParts.length > 1 ? '.' + domainParts.slice(-2).join('.') : hostname;
+
+            cookies.forEach(cookie => {
+                const eqPos = cookie.indexOf('=');
+                const name = (eqPos > -1 ? cookie.substr(0, eqPos) : cookie).trim();
+                if (name.startsWith('_ga') || name.startsWith('_gid') || name.startsWith('_gat')) {
+                    document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/;`;
+                    if (hostname) {
+                        document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/; domain=${hostname};`;
+                        document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/; domain=${rootDomain};`;
+                    }
+                }
+            });
+        }
+
+        function enableGA4() {
+            window[`ga-disable-${GA_MEASUREMENT_ID}`] = false;
+
+            if (!gaScriptLoaded && !document.getElementById('ga4-script')) {
+                window.dataLayer = window.dataLayer || [];
+                window.gtag = function(){ dataLayer.push(arguments); };
+                window.gtag('js', new Date());
+                window.gtag('config', GA_MEASUREMENT_ID, { anonymize_ip: true });
+
+                const script = document.createElement('script');
+                script.id = 'ga4-script';
+                script.async = true;
+                script.src = `https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`;
+                document.head.appendChild(script);
+                gaScriptLoaded = true;
+            } else if (typeof window.gtag === 'function') {
+                window.gtag('config', GA_MEASUREMENT_ID, { anonymize_ip: true });
+            }
+        }
+
+        function disableGA4() {
+            window[`ga-disable-${GA_MEASUREMENT_ID}`] = true;
+            clearGACookies();
+        }
+
+        function getSavedConsent() {
+            try {
+                const raw = localStorage.getItem(CONSENT_STORAGE_KEY);
+                return raw ? JSON.parse(raw) : null;
+            } catch (e) {
+                return null;
+            }
+        }
+
+        function saveConsentState(analyticsAllowed) {
+            const payload = {
+                analytics: Boolean(analyticsAllowed),
+                timestamp: new Date().toISOString()
+            };
+            try {
+                localStorage.setItem(CONSENT_STORAGE_KEY, JSON.stringify(payload));
+            } catch (e) {}
+
+            if (payload.analytics) {
+                enableGA4();
+            } else {
+                disableGA4();
+            }
+        }
+
+        function initCookieConsent() {
+            const saved = getSavedConsent();
+            const banner = document.getElementById('cookie-banner');
+
+            if (!saved) {
+                disableGA4();
+                if (banner) banner.classList.remove('hidden');
+            } else {
+                if (banner) banner.classList.add('hidden');
+                if (saved.analytics === true) {
+                    enableGA4();
+                } else {
+                    disableGA4();
+                }
+            }
+        }
+
+        window.acceptAllCookies = function() {
+            saveConsentState(true);
+            const banner = document.getElementById('cookie-banner');
+            const modal = document.getElementById('cookie-modal');
+            if (banner) banner.classList.add('hidden');
+            if (modal) modal.classList.add('hidden');
+        };
+
+        window.rejectAllCookies = function() {
+            saveConsentState(false);
+            const banner = document.getElementById('cookie-banner');
+            const modal = document.getElementById('cookie-modal');
+            if (banner) banner.classList.add('hidden');
+            if (modal) modal.classList.add('hidden');
+        };
+
+        window.openCookieSettings = function() {
+            const saved = getSavedConsent();
+            const toggle = document.getElementById('analytics-consent-toggle');
+            if (toggle) {
+                toggle.checked = saved ? Boolean(saved.analytics) : false;
+            }
+            const modal = document.getElementById('cookie-modal');
+            if (modal) modal.classList.remove('hidden');
+        };
+
+        window.closeCookieSettings = function() {
+            const modal = document.getElementById('cookie-modal');
+            if (modal) modal.classList.add('hidden');
+        };
+
+        window.saveCookiePreferences = function() {
+            const toggle = document.getElementById('analytics-consent-toggle');
+            const allowAnalytics = toggle ? toggle.checked : false;
+            saveConsentState(allowAnalytics);
+
+            const banner = document.getElementById('cookie-banner');
+            const modal = document.getElementById('cookie-modal');
+            if (banner) banner.classList.add('hidden');
+            if (modal) modal.classList.add('hidden');
+        };
+
+        initCookieConsent();
+
+        function initCountdown() {
+            function updateTimer() {
+                const now = new Date();
+                const currentYear = now.getFullYear();
+                const endOfYear = new Date(currentYear, 11, 31, 23, 59, 59);
+                const diff = endOfYear - now;
+
+                if (diff <= 0) return;
+
+                const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+                const pad = (num) => String(num).padStart(2, '0');
+
+                const elDays = document.getElementById('cd-days');
+                const elHours = document.getElementById('cd-hours');
+                const elMins = document.getElementById('cd-mins');
+                const elSecs = document.getElementById('cd-secs');
+
+                if (elDays && elHours && elMins && elSecs) {
+                    elDays.innerText = pad(days);
+                    elHours.innerText = pad(hours);
+                    elMins.innerText = pad(minutes);
+                    elSecs.innerText = pad(seconds);
+                }
+            }
+
+            updateTimer();
+            setInterval(updateTimer, 1000);
+        }
+
+        initCountdown();
+
+        window.toggleMobileMenu = function(forceState) {
+            const menu = document.getElementById('mobile-menu');
+            const openIcon = document.getElementById('menu-icon-open');
+            const closeIcon = document.getElementById('menu-icon-close');
+
+            const isCurrentlyHidden = menu.classList.contains('hidden');
+            const shouldShow = forceState !== undefined ? forceState : isCurrentlyHidden;
+
+            if (shouldShow) {
+                menu.classList.remove('hidden');
+                openIcon.classList.add('hidden');
+                closeIcon.classList.remove('hidden');
+            } else {
+                menu.classList.add('hidden');
+                openIcon.classList.remove('hidden');
+                closeIcon.classList.add('hidden');
+            }
+        };
+
+        window.toggleMobileLangMenu = function(forceState) {
+            const dropdown = document.getElementById('mobile-lang-dropdown');
+            const isCurrentlyHidden = dropdown.classList.contains('hidden');
+            const shouldShow = forceState !== undefined ? forceState : isCurrentlyHidden;
+
+            if (shouldShow) {
+                dropdown.classList.remove('hidden');
+            } else {
+                dropdown.classList.add('hidden');
+            }
+        };
+
+        window.addEventListener('click', function(e) {
+            const btn = document.getElementById('mobile-lang-toggle-btn');
+            const dropdown = document.getElementById('mobile-lang-dropdown');
+            if (btn && dropdown && !btn.contains(e.target) && !dropdown.contains(e.target)) {
+                dropdown.classList.add('hidden');
+            }
+
+            const pkgWrap = document.getElementById('custom-package-dropdown-wrap');
+            const pkgMenu = document.getElementById('package-dropdown-menu');
+            const pkgIcon = document.getElementById('package-dropdown-icon');
+            if (pkgWrap && pkgMenu && !pkgWrap.contains(e.target)) {
+                pkgMenu.classList.add('hidden');
+                if (pkgIcon) pkgIcon.classList.remove('rotate-180');
+            }
+        });
+
+        window.togglePackageDropdown = function(forceState) {
+            const menu = document.getElementById('package-dropdown-menu');
+            const icon = document.getElementById('package-dropdown-icon');
+            if (!menu) return;
+            const isHidden = menu.classList.contains('hidden');
+            const shouldShow = forceState !== undefined ? forceState : isHidden;
+
+            if (shouldShow) {
+                menu.classList.remove('hidden');
+                if (icon) icon.classList.add('rotate-180');
+            } else {
+                menu.classList.add('hidden');
+                if (icon) icon.classList.remove('rotate-180');
+            }
+        };
+
+        window.selectPackageOption = function(val, textEn, textPl) {
+            const input = document.getElementById('selected-package-input');
+            const selectedSpan = document.getElementById('package-dropdown-selected');
+            if (input) input.value = val;
+            if (selectedSpan) {
+                selectedSpan.setAttribute('data-en', textEn);
+                selectedSpan.setAttribute('data-pl', textPl);
+                selectedSpan.textContent = currentLang === 'pl' ? textPl : textEn;
+            }
+
+            const buttons = document.querySelectorAll('.package-opt-btn');
+            buttons.forEach(btn => {
+                const isMatch = btn.getAttribute('data-pkg') === val;
+                const check = btn.querySelector('.pkg-check');
+                if (isMatch) {
+                    btn.className = 'package-opt-btn w-full text-left px-3.5 py-3 rounded-xl text-white bg-zinc-900 border border-pink-500/40 font-semibold text-xs sm:text-sm flex items-center justify-between transition-all group';
+                    if (check) check.classList.remove('hidden');
+                } else {
+                    btn.className = 'package-opt-btn w-full text-left px-3.5 py-3 rounded-xl text-zinc-300 hover:text-white hover:bg-zinc-900/80 border border-transparent font-semibold text-xs sm:text-sm flex items-center justify-between transition-all group';
+                    if (check) check.classList.add('hidden');
+                }
+            });
+
+            togglePackageDropdown(false);
+        };
+
+        window.filterPortfolio = function(category) {
+            const cards = document.querySelectorAll('.portfolio-card');
+            
+            const btnAll = document.getElementById('filter-all');
+            const btnOne = document.getElementById('filter-onepage');
+            const btnMulti = document.getElementById('filter-multipage');
+
+            [btnAll, btnOne, btnMulti].forEach(btn => {
+                btn.className = 'px-5 py-2.5 rounded-full text-xs sm:text-sm font-bold text-zinc-300 bg-zinc-900 border border-zinc-800 hover:text-white hover:border-zinc-700 transition-all';
+            });
+
+            if (category === 'all') {
+                btnAll.className = 'px-5 py-2.5 rounded-full text-xs sm:text-sm font-bold text-white bg-pink-gradient shadow-lg glow-pink transition-all';
+            } else if (category === 'onepage') {
+                btnOne.className = 'px-5 py-2.5 rounded-full text-xs sm:text-sm font-bold text-white bg-pink-gradient shadow-lg glow-pink transition-all';
+            } else if (category === 'multipage') {
+                btnMulti.className = 'px-5 py-2.5 rounded-full text-xs sm:text-sm font-bold text-white bg-pink-gradient shadow-lg glow-pink transition-all';
+            }
+
+            cards.forEach(card => {
+                const cat = card.getAttribute('data-category');
+                if (category === 'all' || cat === category) {
+                    card.style.display = 'flex';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        };
+
+        window.navigateTo = function(viewId) {
+            const views = document.querySelectorAll('.page-view');
+            views.forEach(v => v.classList.remove('active'));
+
+            const target = document.getElementById(`view-${viewId}`);
+            if (target) {
+                target.classList.add('active');
+            }
+
+            const navs = document.querySelectorAll('.nav-link');
+            navs.forEach(nav => {
+                nav.className = 'nav-link px-3 py-1.5 rounded-lg text-zinc-400 hover:text-white transition-all whitespace-nowrap';
+            });
+
+            const activeNav = document.getElementById(`nav-${viewId}`);
+            if (activeNav) {
+                activeNav.className = 'nav-link px-3 py-1.5 rounded-lg text-white bg-zinc-900 border border-zinc-800 transition-all whitespace-nowrap';
+            }
+
+            const mobileNavs = document.querySelectorAll('.mobile-nav-link');
+            mobileNavs.forEach(mNav => {
+                mNav.className = 'mobile-nav-link w-full text-left px-4 py-3.5 rounded-xl text-zinc-300 hover:text-white hover:bg-zinc-900/60 transition-all flex items-center justify-between text-sm sm:text-base font-bold group';
+            });
+
+            const activeMobileNav = document.getElementById(`mobile-nav-${viewId}`);
+            if (activeMobileNav) {
+                activeMobileNav.className = 'mobile-nav-link w-full text-left px-4 py-3.5 rounded-xl text-white bg-zinc-900 border border-zinc-800/80 transition-all flex items-center justify-between text-sm sm:text-base font-bold group';
+            }
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        };
+
+        window.setLanguage = function(lang) {
+            currentLang = lang;
+
+            const btnEn = document.getElementById('lang-en');
+            const btnPl = document.getElementById('lang-pl');
+            const mobileText = document.getElementById('mobile-current-lang-text');
+            const mobileFlag = document.getElementById('mobile-current-flag');
+
+            const mobileOptEn = document.getElementById('mobile-lang-opt-en');
+            const mobileOptPl = document.getElementById('mobile-lang-opt-pl');
+            const mobileCheckEn = document.getElementById('mobile-lang-check-en');
+            const mobileCheckPl = document.getElementById('mobile-lang-check-pl');
+
+            const ukSvg = `<path fill="#012169" d="M0 0h640v480H0z"/><path fill="#FFF" d="m75 0 244 181L562 0h78v62L400 241l240 178v61h-80L320 301 81 480H0v-60l239-179L0 62V0h75z"/><path fill="#C8102E" d="m424 281 216 159v40L369 281h55zm-184 20L6 480h40l154-115-4-64zM640 0v3L391 191l4-56L610 0h30zM0 0l225 166-4 61L0 23V0z"/><path fill="#FFF" d="M241 0v480h160V0H241zM0 160v160h640V160H0z"/><path fill="#C8102E" d="M0 193v94h640v-94H0zM273 0v480h94V0h-94z"/>`;
+            const plSvg = `<path fill="#fff" d="M0 0h640v480H0z"/><path fill="#dc143c" d="M0 240h640v240H0z"/>`;
+
+            const activeMobileOptClass = 'w-full text-left px-3.5 py-2.5 rounded-xl text-white bg-zinc-900 border border-zinc-800 font-bold text-xs flex items-center justify-between transition-all';
+            const inactiveMobileOptClass = 'w-full text-left px-3.5 py-2.5 rounded-xl text-zinc-300 hover:text-white hover:bg-zinc-900 border border-transparent font-bold text-xs flex items-center justify-between transition-all';
+
+            if (lang === 'en') {
+                if(btnEn && btnPl) {
+                    btnEn.className = 'px-2.5 py-1.5 rounded-lg bg-pink-gradient text-white shadow-sm transition-all flex items-center gap-1.5 whitespace-nowrap';
+                    btnPl.className = 'px-2.5 py-1.5 rounded-lg text-zinc-400 hover:text-white transition-all flex items-center gap-1 whitespace-nowrap';
+                }
+                if(mobileText) mobileText.textContent = 'EN';
+                if(mobileFlag) mobileFlag.innerHTML = ukSvg;
+                if(mobileOptEn && mobileOptPl) {
+                    mobileOptEn.className = activeMobileOptClass;
+                    mobileOptPl.className = inactiveMobileOptClass;
+                }
+                if(mobileCheckEn && mobileCheckPl) {
+                    mobileCheckEn.classList.remove('hidden');
+                    mobileCheckPl.classList.add('hidden');
+                }
+                document.documentElement.lang = 'en';
+            } else {
+                if(btnEn && btnPl) {
+                    btnPl.className = 'px-2.5 py-1.5 rounded-lg bg-pink-gradient text-white shadow-sm transition-all flex items-center gap-1 whitespace-nowrap';
+                    btnEn.className = 'px-2.5 py-1.5 rounded-lg text-zinc-400 hover:text-white transition-all flex items-center gap-1 whitespace-nowrap';
+                }
+                if(mobileText) mobileText.textContent = 'PL';
+                if(mobileFlag) mobileFlag.innerHTML = plSvg;
+                if(mobileOptEn && mobileOptPl) {
+                    mobileOptPl.className = activeMobileOptClass;
+                    mobileOptEn.className = inactiveMobileOptClass;
+                }
+                if(mobileCheckEn && mobileCheckPl) {
+                    mobileCheckPl.classList.remove('hidden');
+                    mobileCheckEn.classList.add('hidden');
+                }
+                document.documentElement.lang = 'pl';
+            }
+
+            const elements = document.querySelectorAll('[data-en][data-pl]');
+            elements.forEach(el => {
+                const text = el.getAttribute(`data-${lang}`);
+                if (text) {
+                    if (el.children.length > 0) {
+                        el.childNodes.forEach(node => {
+                            if (node.nodeType === Node.TEXT_NODE) {
+                                node.textContent = text;
+                            }
+                        });
+                    } else {
+                        el.textContent = text.trim();
+                    }
+                }
+            });
+        };
+
+        window.showSuccess = function() {
+            document.getElementById('form-success-msg').classList.remove('hidden');
+        };
+    </script>
+</body>
+</html>

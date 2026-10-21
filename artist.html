@@ -1,0 +1,1029 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Artist Demo Website</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Space Grotesk, Syne & Inter (for Banner) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@300;400;500;600&family=Syne:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Space Grotesk', 'sans-serif'],
+                        display: ['Syne', 'sans-serif'],
+                    },
+                    colors: {
+                        galleryDark: '#080808',
+                        galleryRed: '#d90429',
+                        galleryGray: '#161616',
+                        galleryTextDim: '#808080'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #080808;
+            color: #ffffff;
+            font-family: 'Space Grotesk', sans-serif;
+            overflow-x: hidden;
+        }
+
+        @keyframes marquee {
+            0% { transform: translateX(0%); }
+            100% { transform: translateX(-50%); }
+        }
+
+        .animate-marquee {
+            display: flex;
+            width: max-content;
+            animation: marquee 25s linear infinite;
+        }
+
+        .animate-marquee:hover {
+            animation-play-state: paused;
+        }
+
+        /* Page view transition styles */
+        .page-view {
+            display: none;
+            opacity: 0;
+            transition: opacity 0.4s ease-in-out, transform 0.4s ease-in-out;
+            transform: translateY(8px);
+            min-height: calc(100vh - 140px);
+        }
+
+        .page-view.active {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Hero Image Crossfade Container */
+        .hero-img-container {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        .hero-img {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: opacity 1.5s ease-in-out;
+        }
+
+        /* Custom scrollbar for horizontal gallery on desktop */
+        .horizontal-scroll::-webkit-scrollbar {
+            height: 4px;
+        }
+        .horizontal-scroll::-webkit-scrollbar-track {
+            background: #111;
+        }
+        .horizontal-scroll::-webkit-scrollbar-thumb {
+            background: #d90429;
+        }
+
+        /* Gallery Button styling */
+        .btn-gallery {
+            border: 1px solid rgba(255,255,255,0.2);
+            transition: all 0.3s ease;
+        }
+        .btn-gallery:hover {
+            border-color: #d90429;
+            color: #d90429;
+            background: rgba(217, 4, 41, 0.05);
+        }
+
+        .nav-link {
+            letter-spacing: 0.15em;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        .nav-link:hover, .nav-link.active-link {
+            color: #d90429;
+            padding-left: 0.5rem;
+        }
+
+        .sidebar-overlay {
+            background: rgba(8, 8, 8, 0.96);
+            backdrop-filter: blur(12px);
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+    </style>
+</head>
+<body class="bg-black text-white antialiased selection:bg-galleryRed selection:text-white">
+
+    <!-- Sticky Demo Marquee Banner -->
+    <div class="sticky top-0 z-50 bg-amber-500 text-stone-950 font-bold py-1.5 overflow-hidden whitespace-nowrap border-b border-amber-600 shadow-sm">
+        <div class="animate-marquee flex items-center space-x-12 uppercase tracking-widest text-[11px] sm:text-xs">
+            <span class="flex items-center"><span class="w-1.5 h-1.5 bg-stone-950 rounded-full inline-block mx-3"></span> PRZYKŁADOWA STRONA</span>
+            <span class="flex items-center"><span class="w-1.5 h-1.5 bg-stone-950 rounded-full inline-block mx-3"></span> DEMO WEBSITE</span>
+            <span class="flex items-center"><span class="w-1.5 h-1.5 bg-stone-950 rounded-full inline-block mx-3"></span> PRZYKŁADOWA STRONA</span>
+            <span class="flex items-center"><span class="w-1.5 h-1.5 bg-stone-950 rounded-full inline-block mx-3"></span> DEMO WEBSITE</span>
+            <span class="flex items-center"><span class="w-1.5 h-1.5 bg-stone-950 rounded-full inline-block mx-3"></span> PRZYKŁADOWA STRONA</span>
+            <span class="flex items-center"><span class="w-1.5 h-1.5 bg-stone-950 rounded-full inline-block mx-3"></span> DEMO WEBSITE</span>
+            <span class="flex items-center"><span class="w-1.5 h-1.5 bg-stone-950 rounded-full inline-block mx-3"></span> PRZYKŁADOWA STRONA</span>
+            <span class="flex items-center"><span class="w-1.5 h-1.5 bg-stone-950 rounded-full inline-block mx-3"></span> DEMO WEBSITE</span>
+        </div>
+    </div>
+
+    <!-- Brand / Name Badge & Hamburger (Responsive top bar that doesn't block content on mobile) -->
+    <div class="fixed top-10 left-4 sm:left-6 z-40 flex items-center gap-2.5 sm:gap-3">
+        <button id="menu-toggle" onclick="toggleMenu()" aria-label="Toggle Menu" class="text-white hover:text-galleryRed transition-colors focus:outline-none px-3 py-2 flex items-center gap-2.5 group bg-black/75 backdrop-blur-md rounded border border-zinc-800 shadow-lg">
+            <i id="menu-icon" class="fa-solid fa-bars text-base sm:text-lg"></i>
+            <span class="text-[11px] uppercase font-sans tracking-widest hidden sm:inline">Menu</span>
+        </button>
+
+        <a href="#home" onclick="navigateToPage('home')" class="inline-block bg-white text-black px-3 py-2 font-display font-bold text-[11px] sm:text-xs tracking-widest uppercase hover:bg-galleryRed hover:text-white transition-colors duration-300 shadow-md">
+            artiststudio.art
+        </a>
+
+        <span id="current-page-tag" class="hidden md:inline-block font-mono text-xs text-galleryRed tracking-widest uppercase bg-zinc-900/90 px-2.5 py-1.5 border border-zinc-800">
+            / HOME
+        </span>
+    </div>
+
+    <!-- Fullscreen Sidebar Navigation Overlay -->
+    <div id="sidebar" onclick="handleSidebarClick(event)" class="sidebar-overlay fixed inset-0 z-50 flex flex-col justify-between p-6 sm:p-8 md:p-16 pb-28 md:pb-32 -translate-x-full opacity-0 pointer-events-none cursor-pointer overflow-y-auto">
+        <div class="mt-20 sm:mt-24 pointer-events-auto">
+            <p class="text-xs font-mono text-galleryRed uppercase tracking-widest mb-4 sm:mb-6">Navigation / Sections</p>
+            <nav class="flex flex-col space-y-4 sm:space-y-6 text-2xl sm:text-3xl md:text-5xl font-display font-bold uppercase tracking-wider">
+                <a href="#home" onclick="navigateToPage('home')" class="nav-link w-fit" id="link-home">01. Home</a>
+                <a href="#about" onclick="navigateToPage('about')" class="nav-link w-fit" id="link-about">02. About Me</a>
+                <a href="#projects" onclick="navigateToPage('projects')" class="nav-link w-fit" id="link-projects">03. Projects</a>
+                <a href="#studio" onclick="navigateToPage('studio')" class="nav-link w-fit" id="link-studio">04. Studio</a>
+                <a href="#contact" onclick="navigateToPage('contact')" class="nav-link w-fit" id="link-contact">05. Contact</a>
+            </nav>
+        </div>
+
+        <div class="flex flex-col md:flex-row justify-between items-start md:items-end gap-4 sm:gap-6 text-xs text-galleryTextDim font-mono border-t border-zinc-800/80 pt-6 mt-8 pointer-events-auto">
+            <div>
+                <p class="text-white font-bold">STUDIO LOCATION</p>
+                <p>Your Address, Anywhere</p>
+            </div>
+            <div>
+                <p class="text-white font-bold">REPRESENTATION</p>
+                <p>Your Address, Anywhere</p>
+            </div>
+            <div class="flex gap-6">
+                <a href="#" class="hover:text-galleryRed transition-colors">Instagram</a>
+                <a href="#" class="hover:text-galleryRed transition-colors">Artsy</a>
+                <a href="#" class="hover:text-galleryRed transition-colors">Vimeo</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- PAGE 1: HOME / HERO SECTION -->
+    <div id="page-home" class="page-view active relative w-full min-h-[calc(100vh-135px)] overflow-hidden">
+        <div class="hero-img-container">
+            <img id="hero-img-1" 
+                 src="artsites/background1.png" 
+                 onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1579783902614-a3fb3927b675?q=80&w=1600&auto=format&fit=crop';" 
+                 alt="Easel Artwork 1" 
+                 class="hero-img opacity-100">
+            
+            <img id="hero-img-2" 
+                 src="artsites/background2.png" 
+                 onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1579783900882-c0d3dad7b119?q=80&w=1600&auto=format&fit=crop';" 
+                 alt="Easel Artwork 2" 
+                 class="hero-img opacity-0">
+
+            <img id="hero-img-3" 
+                 src="artsites/background3.png" 
+                 onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1541701494587-cb58502866ab?q=80&w=1600&auto=format&fit=crop';" 
+                 alt="Easel Artwork 3" 
+                 class="hero-img opacity-0">
+        </div>
+
+        <!-- Vignette & Dark Gradient -->
+        <div class="absolute inset-0 bg-gradient-to-t from-black via-black/55 to-black/75 pointer-events-none"></div>
+
+        <!-- Hero Content -->
+        <div class="relative z-20 mt-auto pt-24 px-5 sm:px-8 md:px-16 pb-6 max-w-2xl">
+            <h1 class="font-display text-3xl sm:text-4xl md:text-6xl font-extrabold tracking-tight uppercase leading-none mb-3 sm:mb-4">
+                Your artistic vision starts here
+            </h1>
+            <p class="text-galleryRed font-mono text-xs tracking-widest uppercase block mb-3">
+                Space for your creative tagline.
+            </p>
+            <p class="text-zinc-300 text-sm md:text-base font-light mb-6 leading-relaxed">
+                This is where you introduce yourself as an artist, share your passion for painting, and tell visitors what inspires your work. Showcase your artistic style, your favourite techniques, and the stories behind your creations.
+            </p>
+            <div class="flex flex-col sm:flex-row gap-3 sm:gap-4">
+                <button onclick="navigateToPage('projects')" class="btn-gallery w-full sm:w-auto px-6 py-3.5 text-xs font-mono uppercase tracking-widest bg-galleryRed border-galleryRed text-white hover:bg-white hover:text-black hover:border-white text-center">
+                    Explore artworks &rarr;
+                </button>
+                <button onclick="navigateToPage('about')" class="btn-gallery w-full sm:w-auto px-6 py-3.5 text-xs font-mono uppercase tracking-widest text-white backdrop-blur-sm bg-black/40 text-center">
+                    About the artist
+                </button>
+            </div>
+        </div>
+
+        <!-- Footer for Home Page -->
+        <footer class="relative z-20 w-full px-5 sm:px-8 md:px-16 pb-4 pt-4 flex justify-between items-center text-[11px] sm:text-xs font-mono text-zinc-500 border-t border-zinc-800/40">
+            <p>&copy; 2026 Example Artist Website. All rights reserved.</p>
+        </footer>
+    </div>
+
+    <!-- PAGE 2: ABOUT ME -->
+    <div id="page-about" class="page-view pt-24 sm:pt-28 pb-10 px-5 sm:px-8 md:px-16 max-w-7xl mx-auto w-full">
+        <div class="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-12 items-start my-auto">
+            
+            <div class="md:col-span-5 space-y-5 sm:space-y-6">
+                <span class="text-galleryRed font-mono text-xs tracking-widest uppercase">01 / Biography</span>
+                <h1 class="font-display text-4xl sm:text-5xl md:text-7xl font-bold uppercase tracking-tight leading-none">About Me</h1>
+                <div class="w-16 h-[2px] bg-galleryRed"></div>
+                
+                <div class="aspect-[3/4] border border-zinc-800 overflow-hidden relative group bg-zinc-900">
+                    <img src="artsites/artist.png" 
+                         alt="Artist Portrait" 
+                         class="w-full h-full object-cover grayscale contrast-125 group-hover:scale-105 transition-transform duration-700"
+                         onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=800&auto=format&fit=crop'">
+                    
+                    <div class="absolute inset-0 flex items-center justify-center pointer-events-none p-4">
+                        <div class="bg-zinc-950/85 border-2 border-dashed border-amber-400 px-5 py-2.5 rounded-full transform -rotate-12 shadow-2xl backdrop-blur-sm">
+                            <span class="font-display font-extrabold text-amber-400 text-base sm:text-lg md:text-xl tracking-widest uppercase drop-shadow">EXAMPLE PHOTO</span>
+                        </div>
+                    </div>
+
+                    <div class="absolute bottom-4 left-4 bg-black/80 px-3 py-1 font-mono text-xs text-zinc-300 border border-zinc-800">
+                        Your name
+                    </div>
+                </div>
+            </div>
+
+            <div class="md:col-span-7 space-y-6 sm:space-y-8 text-zinc-300 font-light text-base md:text-lg leading-relaxed md:pt-16">
+                <p class="text-white text-xl sm:text-2xl font-display font-medium leading-snug">
+                    This is where you introduce yourself as an artist and share your creative journey. Tell visitors what inspires your work, how you developed your artistic style, and what makes your work unique.
+                </p>
+                
+                <p>
+                    Use this space to describe your background, favourite techniques, artistic influences, and the ideas or emotions you explore through your art.
+                </p>
+
+                <div class="border-t border-zinc-800 pt-6 sm:pt-8 grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-8 font-mono text-xs">
+                    <div>
+                        <h4 class="text-galleryRed font-bold uppercase mb-3">Selected Exhibitions</h4>
+                        <ul class="space-y-2 text-zinc-400">
+                            <li><strong class="text-white">Year:</strong> Exhibition name, city</li>
+                            <li><strong class="text-white">Year:</strong> Gallery or art fair, location</li>
+                            <li><strong class="text-white">Year:</strong> Solo or group exhibition</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="text-galleryRed font-bold uppercase mb-3">Awards & Collections</h4>
+                        <ul class="space-y-2 text-zinc-400">
+                            <li>Your awards and recognitions</li>
+                            <li>Galleries or institutions featuring your work</li>
+                            <li>Private and public collections</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="pt-2 sm:pt-6">
+                    <button onclick="navigateToPage('projects')" class="btn-gallery w-full sm:w-auto px-8 py-4 text-xs font-mono uppercase tracking-widest text-white">
+                        Explore portfolio &rarr;
+                    </button>
+                </div>
+            </div>
+
+        </div>
+
+        <footer class="mt-12 pt-8 border-t border-zinc-900 flex flex-col sm:flex-row gap-3 justify-between items-start sm:items-center text-xs font-mono text-zinc-600">
+            <p>&copy; 2026 Example Artist Website. All rights reserved.</p>
+            <a href="#contact" onclick="navigateToPage('contact')" class="hover:text-white transition-colors">Get in touch &rarr;</a>
+        </footer>
+    </div>
+
+    <!-- PAGE 3: PROJECTS -->
+    <div id="page-projects" class="page-view pt-24 sm:pt-28 pb-10 px-5 sm:px-8 md:px-16 w-full">
+        <div class="mb-6 sm:mb-8 flex flex-col md:flex-row md:items-end justify-between gap-4">
+            <div>
+                <span class="text-galleryRed font-mono text-xs tracking-widest uppercase">02 / Portfolio</span>
+                <h1 class="font-display text-4xl md:text-6xl font-bold uppercase tracking-tight">Projects</h1>
+            </div>
+            <div class="flex items-center gap-6 font-mono text-xs text-zinc-500">
+                <span class="hidden md:inline">Click any project for dedicated gallery &rarr;</span>
+                <span class="text-galleryRed">EDITION 2023 - 2026</span>
+            </div>
+        </div>
+
+        <!-- Responsive Layout: Vertical column on mobile, Horizontal scroll gallery on Desktop -->
+        <div class="flex flex-col md:flex-row gap-8 md:horizontal-scroll md:overflow-x-auto py-4 sm:py-8 md:snap-x" id="projects-container">
+            <!-- Projects injected via JavaScript -->
+        </div>
+
+        <footer class="mt-auto pt-8 border-t border-zinc-900 flex flex-col sm:flex-row gap-3 justify-between items-start sm:items-center text-xs font-mono text-zinc-600">
+            <p>&copy; 2026 Example Artist Website. All rights reserved.</p>
+            <button onclick="navigateToPage('studio')" class="hover:text-white transition-colors uppercase">Visit Studio &rarr;</button>
+        </footer>
+    </div>
+
+    <!-- PAGE 4: STUDIO -->
+    <div id="page-studio" class="page-view pt-24 sm:pt-28 pb-10 px-5 sm:px-8 md:px-16 max-w-7xl mx-auto w-full">
+        <div class="mb-8 sm:mb-12">
+            <span class="text-galleryRed font-mono text-xs tracking-widest uppercase">03 / Workspace</span>
+            <h1 class="font-display text-4xl sm:text-5xl md:text-7xl font-bold uppercase tracking-tight mt-2">Studio</h1>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-12 items-center my-auto">
+            <div class="md:col-span-7 relative aspect-[16/10] border border-zinc-800 overflow-hidden group bg-zinc-900">
+                <img src="https://images.unsplash.com/photo-1513364776144-60967b0f800f?q=80&w=1200&auto=format&fit=crop" 
+                     alt="Atelier Studio Space" 
+                     class="w-full h-full object-cover grayscale contrast-125 group-hover:scale-105 transition-transform duration-700">
+                
+                <div class="absolute inset-0 flex items-center justify-center pointer-events-none p-4">
+                    <div class="bg-zinc-950/85 border-2 border-dashed border-amber-400 px-5 py-2.5 rounded-full transform -rotate-12 shadow-2xl backdrop-blur-sm">
+                        <span class="font-display font-extrabold text-amber-400 text-base sm:text-lg md:text-xl tracking-widest uppercase drop-shadow">EXAMPLE PHOTO</span>
+                    </div>
+                </div>
+
+                <div class="absolute bottom-4 left-4 bg-black/80 px-3 py-1 font-mono text-xs text-zinc-300 border border-zinc-800">
+                    Your address
+                </div>
+            </div>
+
+            <div class="md:col-span-5 space-y-5 sm:space-y-6 text-zinc-300 font-light">
+                <h2 class="font-display text-2xl sm:text-3xl uppercase tracking-wide text-white font-bold">Creative space</h2>
+                <p class="leading-relaxed">
+                    Space for a description of your studio, workspace or creative environment. Describe where you create your work, what inspires you and how your surroundings influence your artistic process.
+                </p>
+                <p class="text-sm text-zinc-400 leading-relaxed">
+                    Space for additional information about studio visits, exhibitions or opportunities to see your work in person.
+                </p>
+
+                <div class="pt-2 sm:pt-4">
+                    <button onclick="navigateToPage('contact')" class="btn-gallery w-full py-4 text-xs font-mono uppercase tracking-widest text-white">
+                        Book a visit &rarr;
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <footer class="mt-12 pt-8 border-t border-zinc-900 flex flex-col sm:flex-row gap-3 justify-between items-start sm:items-center text-xs font-mono text-zinc-600">
+            <p>&copy; 2026 Example Artist Website. All rights reserved.</p>
+            <button onclick="navigateToPage('contact')" class="hover:text-white transition-colors uppercase">Contact &rarr;</button>
+        </footer>
+    </div>
+
+    <!-- PAGE 5: CONTACT -->
+    <div id="page-contact" class="page-view pt-24 sm:pt-28 pb-10 px-5 sm:px-8 md:px-16 max-w-6xl mx-auto w-full">
+        <div class="mb-8 sm:mb-12">
+            <span class="text-galleryRed font-mono text-xs tracking-widest uppercase">04 / Direct Contact</span>
+            <h1 class="font-display text-4xl sm:text-5xl md:text-7xl font-bold uppercase tracking-tight mt-2">Contact</h1>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-12 my-auto">
+            
+            <!-- Contact Details -->
+            <div class="md:col-span-5 space-y-6 sm:space-y-8 font-mono text-sm">
+                <div>
+                    <p class="text-zinc-500 text-xs uppercase mb-2">Artistic Inquiries</p>
+                    <a href="mailto:contact@yourdomain.com" class="text-white hover:text-galleryRed text-base sm:text-lg font-bold transition-colors break-all">contact@yourdomain.com</a>
+                </div>
+                <div>
+                    <p class="text-zinc-500 text-xs uppercase mb-2">Press & Media</p>
+                    <a href="mailto:press@yourdomain.com" class="text-white hover:text-galleryRed transition-colors break-all">press@yourdomain.com</a>
+                </div>
+                <div>
+                    <p class="text-zinc-500 text-xs uppercase mb-2">Phone / Studio</p>
+                    <p class="text-zinc-300">Your phone number</p>
+                </div>
+                <div class="pt-6 border-t border-zinc-800">
+                    <p class="text-zinc-500 text-xs uppercase mb-2">Gallery Representation</p>
+                    <p class="text-white font-bold">Space for gallery name</p>
+                    <p class="text-zinc-400 text-xs">City / country</p>
+                </div>
+            </div>
+
+            <!-- Contact Form -->
+            <div class="md:col-span-7">
+                <form id="contact-form" onsubmit="handleFormSubmit(event)" class="space-y-5 sm:space-y-6">
+                    <div>
+                        <label class="block font-mono text-xs uppercase text-zinc-400 mb-2">Full Name / Gallery</label>
+                        <input type="text" required class="w-full bg-zinc-950 border border-zinc-800 px-4 py-3 text-white text-sm focus:outline-none focus:border-galleryRed transition-colors">
+                    </div>
+
+                    <div>
+                        <label class="block font-mono text-xs uppercase text-zinc-400 mb-2">Email Address</label>
+                        <input type="email" required class="w-full bg-zinc-950 border border-zinc-800 px-4 py-3 text-white text-sm focus:outline-none focus:border-galleryRed transition-colors">
+                    </div>
+
+                    <div>
+                        <label class="block font-mono text-xs uppercase text-zinc-400 mb-2">Message</label>
+                        <textarea rows="5" required placeholder="Tell me about your inquiry, collaboration idea or interest in my artwork." class="w-full bg-zinc-950 border border-zinc-800 px-4 py-3 text-white text-sm focus:outline-none focus:border-galleryRed transition-colors resize-none placeholder:text-zinc-600"></textarea>
+                    </div>
+
+                    <button type="submit" class="w-full btn-gallery py-4 text-xs font-mono uppercase tracking-widest text-white bg-zinc-900 hover:bg-galleryRed hover:border-galleryRed">
+                        Send message
+                    </button>
+                </form>
+                
+                <div id="form-status" class="hidden mt-4 p-4 border border-galleryRed/50 bg-galleryRed/10 text-xs font-mono text-center text-white">
+                    Thank you for your message. We will respond shortly.
+                </div>
+            </div>
+
+        </div>
+
+        <footer class="mt-12 pt-8 border-t border-zinc-900 flex flex-col sm:flex-row gap-3 justify-between items-start sm:items-center text-xs font-mono text-zinc-600">
+            <p>&copy; 2026 Example Artist Website. All rights reserved.</p>
+            <button onclick="navigateToPage('home')" class="hover:text-white transition-colors uppercase">&uarr; Back to home page</button>
+        </footer>
+    </div>
+
+    <!-- DEDICATED PROJECT GALLERY MODAL -->
+    <div id="project-modal" class="fixed inset-0 z-50 bg-black/95 backdrop-blur-xl hidden flex-col justify-between p-5 sm:p-8 md:p-12 pb-28 sm:pb-32 overflow-y-auto">
+        <!-- Modal Top Bar -->
+        <div class="flex justify-between items-start sm:items-center border-b border-zinc-800 pb-5 mb-6 sm:mb-8 gap-4">
+            <div>
+                <span id="modal-year" class="text-galleryRed font-mono text-xs uppercase block">2026</span>
+                <h2 id="modal-title" class="font-display text-xl sm:text-2xl md:text-4xl font-bold uppercase tracking-wider text-white">PROJECT TITLE</h2>
+                <p id="modal-subtitle" class="text-xs font-mono text-zinc-400 mt-1">Medium & Specification</p>
+            </div>
+            <button onclick="closeProjectGallery()" class="text-zinc-400 hover:text-galleryRed transition-colors p-2 sm:p-3 text-2xl focus:outline-none">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+        </div>
+
+        <!-- Gallery Images Grid -->
+        <div class="max-w-6xl mx-auto w-full my-auto space-y-8">
+            <div id="modal-gallery-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Gallery images generated via JS -->
+            </div>
+            
+            <!-- Description -->
+            <div class="border-t border-zinc-900 pt-6 sm:pt-8 max-w-3xl font-light text-zinc-300 text-sm md:text-base leading-relaxed">
+                <p id="modal-description">Detailed description of the artwork series.</p>
+            </div>
+        </div>
+
+        <!-- Modal Footer Bar -->
+        <div class="mt-8 pt-6 border-t border-zinc-900 flex justify-between items-center text-xs font-mono text-zinc-500">
+            <span class="hidden sm:inline">PRESS ESC TO CLOSE</span>
+            <button onclick="closeProjectGallery()" class="text-galleryRed hover:text-white uppercase transition-colors">&larr; Return to Projects</button>
+        </div>
+    </div>
+
+    <script>
+        const projectsData = [
+            {
+                id: 'project-1',
+                year: '2026',
+                title: 'Space for project title',
+                medium: 'A collection of original paintings exploring colour, texture and emotion.',
+                cover: 'artsites/project1.png',
+                fallbackCover: 'https://images.unsplash.com/photo-1579783900882-c0d3dad7b119?q=80&w=800&auto=format&fit=crop',
+                description: 'Space for your personal note. Share the inspiration behind your artwork, describe the creative process, or tell visitors more about the ideas and emotions that shaped this collection.',
+                images: [
+                    'artsites/photo1.png',
+                    'artsites/photo2.png',
+                    'artsites/photo3.png'
+                ],
+                fallbackImages: [
+                    'https://images.unsplash.com/photo-1579783900882-c0d3dad7b119?q=80&w=800&auto=format&fit=crop',
+                    'https://images.unsplash.com/photo-1579783902614-a3fb3927b675?q=80&w=800&auto=format&fit=crop',
+                    'https://images.unsplash.com/photo-1541701494587-cb58502866ab?q=80&w=800&auto=format&fit=crop'
+                ]
+            },
+            {
+                id: 'project-2',
+                year: '2025',
+                title: 'Space for project title',
+                medium: 'An exploration of abstract forms, bold colours and expressive compositions.',
+                cover: 'artsites/project2.png',
+                fallbackCover: 'https://images.unsplash.com/photo-1541701494587-cb58502866ab?q=80&w=800&auto=format&fit=crop',
+                description: 'Space for your personal note. Share the inspiration behind your artwork, describe the creative process, or tell visitors more about the ideas and emotions that shaped this collection.',
+                images: [
+                    'artsites/photo1.png',
+                    'artsites/photo2.png',
+                    'artsites/photo3.png'
+                ],
+                fallbackImages: [
+                    'https://images.unsplash.com/photo-1541701494587-cb58502866ab?q=80&w=800&auto=format&fit=crop',
+                    'https://images.unsplash.com/photo-1579783902614-a3fb3927b675?q=80&w=800&auto=format&fit=crop',
+                    'https://images.unsplash.com/photo-1579783900882-c0d3dad7b119?q=80&w=800&auto=format&fit=crop'
+                ]
+            },
+            {
+                id: 'project-3',
+                year: '2024',
+                title: 'Space for project title',
+                medium: 'A series of works inspired by nature, light and the changing atmosphere of everyday spaces.',
+                cover: 'artsites/project3.png',
+                fallbackCover: 'https://images.unsplash.com/photo-1579783902614-a3fb3927b675?q=80&w=800&auto=format&fit=crop',
+                description: 'Space for your personal note. Share the inspiration behind your artwork, describe the creative process, or tell visitors more about the ideas and emotions that shaped this collection.',
+                images: [
+                    'artsites/photo1.png',
+                    'artsites/photo2.png',
+                    'artsites/photo3.png'
+                ],
+                fallbackImages: [
+                    'https://images.unsplash.com/photo-1579783902614-a3fb3927b675?q=80&w=800&auto=format&fit=crop',
+                    'https://images.unsplash.com/photo-1541701494587-cb58502866ab?q=80&w=800&auto=format&fit=crop',
+                    'https://images.unsplash.com/photo-1579783900882-c0d3dad7b119?q=80&w=800&auto=format&fit=crop'
+                ]
+            },
+            {
+                id: 'project-4',
+                year: '2023',
+                title: 'Space for project title',
+                medium: 'Selected artworks exploring the relationship between artistic vision, material and space.',
+                cover: 'artsites/project4.png',
+                fallbackCover: 'https://images.unsplash.com/photo-1579783900882-c0d3dad7b119?q=80&w=800&auto=format&fit=crop',
+                description: 'Space for your personal note. Share the inspiration behind your artwork, describe the creative process, or tell visitors more about the ideas and emotions that shaped this collection.',
+                images: [
+                    'artsites/photo1.png',
+                    'artsites/photo2.png',
+                    'artsites/photo3.png'
+                ],
+                fallbackImages: [
+                    'https://images.unsplash.com/photo-1579783900882-c0d3dad7b119?q=80&w=800&auto=format&fit=crop',
+                    'https://images.unsplash.com/photo-1579783902614-a3fb3927b675?q=80&w=800&auto=format&fit=crop',
+                    'https://images.unsplash.com/photo-1541701494587-cb58502866ab?q=80&w=800&auto=format&fit=crop'
+                ]
+            }
+        ];
+
+        const projectsContainer = document.getElementById('projects-container');
+        projectsData.forEach(project => {
+            const el = document.createElement('div');
+            el.className = 'flex-none w-full md:w-96 md:snap-start group cursor-pointer';
+            el.onclick = () => openProjectGallery(project.id);
+            el.innerHTML = `
+                <div class="relative aspect-square overflow-hidden bg-zinc-900 mb-4 border border-zinc-800">
+                    <img src="${project.cover}" 
+                         onerror="this.onerror=null; this.src='${project.fallbackCover}';" 
+                         alt="${project.title}" 
+                         class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
+                    
+                    <div class="absolute inset-0 flex items-center justify-center pointer-events-none p-4">
+                        <div class="bg-zinc-950/85 border-2 border-dashed border-amber-400 px-5 py-2 rounded-full transform -rotate-12 shadow-2xl backdrop-blur-sm">
+                            <span class="font-display font-extrabold text-amber-400 text-sm md:text-base tracking-widest uppercase drop-shadow">EXAMPLE PHOTO</span>
+                        </div>
+                    </div>
+
+                    <div class="absolute inset-0 bg-galleryRed/25 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                        <span class="bg-black/85 px-4 py-2 font-mono text-xs uppercase text-white border border-zinc-700 tracking-widest">View collection &rarr;</span>
+                    </div>
+                </div>
+                <span class="text-xs font-mono text-galleryRed block mb-1">${project.year}</span>
+                <h3 class="font-display font-bold text-lg uppercase tracking-wider text-white group-hover:text-galleryRed transition-colors">${project.title}</h3>
+                <p class="text-xs font-mono text-zinc-400 mt-1 leading-relaxed">${project.medium}</p>
+                <span class="text-xs font-mono text-galleryRed mt-2 inline-block group-hover:underline">View collection &rarr;</span>
+            `;
+            projectsContainer.appendChild(el);
+        });
+
+        function openProjectGallery(projectId) {
+            const project = projectsData.find(p => p.id === projectId);
+            if (!project) return;
+
+            document.getElementById('modal-title').innerText = project.title;
+            document.getElementById('modal-year').innerText = project.year;
+            document.getElementById('modal-subtitle').innerText = project.medium;
+            document.getElementById('modal-description').innerText = project.description;
+
+            const grid = document.getElementById('modal-gallery-grid');
+            grid.innerHTML = '';
+
+            project.images.forEach((imgUrl, index) => {
+                const item = document.createElement('div');
+                item.className = 'aspect-[4/3] bg-zinc-900 border border-zinc-800 overflow-hidden group relative';
+                const fallback = project.fallbackImages[index] || project.fallbackCover;
+                item.innerHTML = `
+                    <img src="${imgUrl}" 
+                         onerror="this.onerror=null; this.src='${fallback}';" 
+                         alt="${project.title} image ${index + 1}" 
+                         class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                    
+                    <div class="absolute inset-0 flex items-center justify-center pointer-events-none p-4">
+                        <div class="bg-zinc-950/85 border-2 border-dashed border-amber-400 px-4 py-1.5 rounded-full transform -rotate-12 shadow-2xl backdrop-blur-sm">
+                            <span class="font-display font-extrabold text-amber-400 text-xs md:text-sm tracking-widest uppercase drop-shadow">EXAMPLE PHOTO</span>
+                        </div>
+                    </div>
+                `;
+                grid.appendChild(item);
+            });
+
+            const modal = document.getElementById('project-modal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeProjectGallery() {
+            const modal = document.getElementById('project-modal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+            document.body.style.overflow = 'auto';
+        }
+
+        window.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeProjectGallery();
+        });
+
+        const pageViews = {
+            'home': document.getElementById('page-home'),
+            'about': document.getElementById('page-about'),
+            'projects': document.getElementById('page-projects'),
+            'studio': document.getElementById('page-studio'),
+            'contact': document.getElementById('page-contact')
+        };
+
+        const pageTag = document.getElementById('current-page-tag');
+
+        function navigateToPage(pageId) {
+            Object.keys(pageViews).forEach(id => {
+                if (pageViews[id]) {
+                    pageViews[id].classList.remove('active');
+                }
+            });
+
+            if (pageViews[pageId]) {
+                pageViews[pageId].classList.add('active');
+                if (pageTag) pageTag.innerText = `/ ${pageId.toUpperCase()}`;
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+
+            if (isMenuOpen) {
+                toggleMenu();
+            }
+
+            document.querySelectorAll('.nav-link').forEach(link => link.classList.remove('active-link'));
+            const activeLink = document.getElementById(`link-${pageId}`);
+            if (activeLink) activeLink.classList.add('active-link');
+
+            window.location.hash = pageId;
+        }
+
+        window.addEventListener('load', () => {
+            const hash = window.location.hash.replace('#', '');
+            if (hash && pageViews[hash]) {
+                navigateToPage(hash);
+            } else {
+                navigateToPage('home');
+            }
+        });
+
+        const img1 = document.getElementById('hero-img-1');
+        const img2 = document.getElementById('hero-img-2');
+        const img3 = document.getElementById('hero-img-3');
+
+        let currentImageIndex = 1;
+        const transitionInterval = 4500;
+
+        function switchHeroImages() {
+            if (!img1 || !img2 || !img3) return;
+            if (currentImageIndex === 1) {
+                img1.classList.remove('opacity-100');
+                img1.classList.add('opacity-0');
+                img2.classList.remove('opacity-0');
+                img2.classList.add('opacity-100');
+                currentImageIndex = 2;
+            } else if (currentImageIndex === 2) {
+                img2.classList.remove('opacity-100');
+                img2.classList.add('opacity-0');
+                img3.classList.remove('opacity-0');
+                img3.classList.add('opacity-100');
+                currentImageIndex = 3;
+            } else {
+                img3.classList.remove('opacity-100');
+                img3.classList.add('opacity-0');
+                img1.classList.remove('opacity-0');
+                img1.classList.add('opacity-100');
+                currentImageIndex = 1;
+            }
+        }
+
+        setInterval(switchHeroImages, transitionInterval);
+
+        const sidebar = document.getElementById('sidebar');
+        const menuIcon = document.getElementById('menu-icon');
+        let isMenuOpen = false;
+
+        function toggleMenu() {
+            isMenuOpen = !isMenuOpen;
+            if (isMenuOpen) {
+                sidebar.classList.remove('-translate-x-full', 'opacity-0', 'pointer-events-none');
+                sidebar.classList.add('translate-x-0', 'opacity-100', 'pointer-events-auto');
+                menuIcon.classList.remove('fa-bars');
+                menuIcon.classList.add('fa-xmark');
+            } else {
+                sidebar.classList.add('-translate-x-full', 'opacity-0', 'pointer-events-none');
+                sidebar.classList.remove('translate-x-0', 'opacity-100', 'pointer-events-auto');
+                menuIcon.classList.remove('fa-xmark');
+                menuIcon.classList.add('fa-bars');
+            }
+        }
+
+        function handleSidebarClick(event) {
+            if (event.target === sidebar) {
+                toggleMenu();
+            }
+        }
+
+        function handleFormSubmit(e) {
+            e.preventDefault();
+            const form = document.getElementById('contact-form');
+            const status = document.getElementById('form-status');
+            form.reset();
+            status.classList.remove('hidden');
+            setTimeout(() => {
+                status.classList.add('hidden');
+            }, 5000);
+        }
+    </script>
+
+    <!-- =========================================================================================
+         SKOPIUJ PONIŻSZY KOD BANERA DO INNYCH STRON DEMO (wklej tuż przed znacznikiem </body>)
+         Jest w 100% niezależny (zawiera własny styl, czcionkę i ikony SVG).
+         ========================================================================================= -->
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+
+        /* Desktop: Baner w prawym górnym rogu, zawsze na wierzchu */
+        .tailoredly-banner-wrap {
+            position: fixed !important;
+            top: 42px !important;
+            right: 20px !important;
+            bottom: auto !important;
+            left: auto !important;
+            transform: none !important;
+            z-index: 2147483647 !important;
+            width: auto;
+            max-width: calc(100vw - 40px);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            box-sizing: border-box;
+            pointer-events: auto;
+        }
+
+        .tailoredly-banner-box {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            padding: 11px 16px;
+            /* Głębokie czarne tło w środku z bardzo subtelnym akcentem pod przyciskiem */
+            background: radial-gradient(circle at 85% 50%, rgba(190, 18, 74, 0.08) 0%, rgba(6, 6, 8, 0.98) 55%), #060608;
+            border: 1px solid rgba(244, 37, 100, 0.45);
+            border-radius: 16px;
+            box-shadow: 
+                0 0 25px rgba(235, 20, 85, 0.22),
+                0 12px 32px rgba(0, 0, 0, 0.92),
+                inset 0 0 8px rgba(244, 37, 100, 0.04);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+        }
+
+        .tailoredly-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            min-width: 0;
+        }
+
+        .tailoredly-icon-box {
+            width: 40px;
+            height: 40px;
+            min-width: 40px;
+            border-radius: 10px;
+            border: 1px solid rgba(244, 37, 100, 0.4);
+            background: rgba(14, 8, 12, 0.95);
+            box-shadow: 0 0 12px rgba(244, 37, 100, 0.15);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #f42564;
+        }
+
+        .tailoredly-brand-text {
+            display: flex;
+            flex-direction: column;
+            line-height: 1.2;
+        }
+
+        .tailoredly-demo-label {
+            font-size: 9.5px;
+            font-weight: 700;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: #f42564;
+            margin-bottom: 2px;
+        }
+
+        .tailoredly-madeby {
+            font-size: 16px;
+            font-weight: 700;
+            color: #d1d5db;
+            letter-spacing: -0.01em;
+            white-space: nowrap;
+            display: flex;
+            align-items: baseline;
+            gap: 5px;
+        }
+
+        .tailoredly-logo-mark {
+            font-weight: 900;
+            letter-spacing: 0.02em;
+            text-transform: uppercase;
+            color: #ffffff;
+        }
+
+        .tailoredly-logo-mark span {
+            color: #f42564;
+        }
+
+        .tailoredly-divider {
+            width: 1px;
+            height: 34px;
+            background: rgba(255, 255, 255, 0.1);
+            flex-shrink: 0;
+        }
+
+        .tailoredly-middle {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            line-height: 1.3;
+            min-width: 0;
+            padding-right: 4px;
+        }
+
+        .tailoredly-question {
+            font-size: 13px;
+            font-weight: 500;
+            color: #f3f4f6;
+            margin: 0;
+            white-space: nowrap;
+        }
+
+        .tailoredly-subtext {
+            font-size: 12px;
+            font-weight: 400;
+            color: #8e8e99;
+            margin: 0;
+            white-space: nowrap;
+        }
+
+        .tailoredly-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 10px 18px;
+            border-radius: 11px;
+            background: linear-gradient(90deg, #f72564 0%, #c11248 100%);
+            color: #ffffff !important;
+            font-size: 13px;
+            font-weight: 700;
+            text-decoration: none !important;
+            white-space: nowrap;
+            box-shadow: 0 0 22px rgba(247, 37, 100, 0.5), inset 0 1px 1px rgba(255, 255, 255, 0.25);
+            transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
+            flex-shrink: 0;
+        }
+
+        .tailoredly-btn:hover {
+            transform: translateY(-1px);
+            filter: brightness(1.08);
+            box-shadow: 0 0 30px rgba(247, 37, 100, 0.75), inset 0 1px 1px rgba(255, 255, 255, 0.35);
+        }
+
+        .tailoredly-btn svg {
+            transition: transform 0.2s ease;
+        }
+
+        .tailoredly-btn:hover svg {
+            transform: translateX(-3px);
+        }
+
+        /* Na mniejszych laptopach ukrywamy środkowy tekst, żeby baner w prawym górnym rogu nie zasłaniał lewego menu */
+        @media (max-width: 1100px) and (min-width: 769px) {
+            .tailoredly-divider,
+            .tailoredly-middle {
+                display: none;
+            }
+        }
+
+        /* Mobile & Tablet: Baner na dole ekranu + bezpieczny odstęp na dole strony */
+        @media (max-width: 768px) {
+            html body {
+                padding-bottom: calc(144px + env(safe-area-inset-bottom, 0px)) !important;
+            }
+            .tailoredly-banner-wrap {
+                top: auto !important;
+                right: auto !important;
+                bottom: calc(56px + env(safe-area-inset-bottom, 0px)) !important;
+                left: 50% !important;
+                transform: translateX(-50%) !important;
+                width: calc(100% - 16px);
+                max-width: 540px;
+            }
+            .tailoredly-banner-box {
+                padding: 10px 12px;
+                gap: 10px;
+                border-radius: 15px;
+            }
+            .tailoredly-divider,
+            .tailoredly-middle {
+                display: none;
+            }
+            .tailoredly-icon-box {
+                width: 38px;
+                height: 38px;
+                min-width: 38px;
+                border-radius: 10px;
+            }
+            .tailoredly-icon-box svg {
+                width: 18px;
+                height: 18px;
+            }
+            .tailoredly-demo-label {
+                font-size: 8.5px;
+                letter-spacing: 0.14em;
+                margin-bottom: 1px;
+            }
+            .tailoredly-madeby {
+                font-size: 15px;
+            }
+            .tailoredly-btn {
+                padding: 10px 14px;
+                font-size: 12.5px;
+                gap: 6px;
+                border-radius: 10px;
+            }
+        }
+
+        @media (max-width: 360px) {
+            .tailoredly-icon-box {
+                display: none;
+            }
+            .tailoredly-madeby {
+                font-size: 14px;
+            }
+            .tailoredly-btn {
+                padding: 9px 12px;
+                font-size: 12px;
+            }
+        }
+    </style>
+
+    <div class="tailoredly-banner-wrap" role="region" aria-label="Tailoredly Demo Banner">
+        <div class="tailoredly-banner-box">
+            <!-- Lewa sekcja: Ikona monitora + Made by TAILOREDLY -->
+            <div class="tailoredly-left">
+                <div class="tailoredly-icon-box" aria-hidden="true">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="3" y="4" width="18" height="12" rx="2" ry="2"></rect>
+                        <line x1="8" y1="20" x2="16" y2="20"></line>
+                        <line x1="12" y1="16" x2="12" y2="20"></line>
+                    </svg>
+                </div>
+                <div class="tailoredly-brand-text">
+                    <span class="tailoredly-demo-label">WEBSITE DEMO</span>
+                    <div class="tailoredly-madeby">
+                        Made by <strong class="tailoredly-logo-mark">TAILORED<span>LY</span></strong>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pionowy separator -->
+            <div class="tailoredly-divider" aria-hidden="true"></div>
+
+            <!-- Środkowa sekcja: Tekst zachęcający -->
+            <div class="tailoredly-middle">
+                <p class="tailoredly-question">Like this design?</p>
+                <p class="tailoredly-subtext">Get a website for your business.</p>
+            </div>
+
+            <!-- Prawa sekcja: Przycisk powrotu do portfolio -->
+            <a href="file:///C:/Users/Bobik/Desktop/Website creator/index.html" class="tailoredly-btn">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="19" y1="12" x2="5" y2="12"></line>
+                    <polyline points="12 19 5 12 12 5"></polyline>
+                </svg>
+                <span>Back to Portfolio</span>
+            </a>
+        </div>
+    </div>
+    <!-- ================= KONIEC KODU BANERA DO SKOPIOWANIA ================= -->
+
+</body>
+</html>

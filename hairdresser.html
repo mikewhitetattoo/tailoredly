@@ -1,0 +1,1624 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Hairdresser Demo Website</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        gold: {
+                            100: '#FAF0D7',
+                            300: '#E2C785',
+                            400: '#DFB26B',
+                            500: '#D4AF37',
+                            600: '#C59B27',
+                            700: '#9A771C'
+                        },
+                        dark: {
+                            900: '#0B0B0D',
+                            800: '#121215',
+                            700: '#18181C',
+                            600: '#222228'
+                        }
+                    },
+                    fontFamily: {
+                        serif: ['Cinzel', 'Cormorant Garamond', 'serif'],
+                        sans: ['Montserrat', 'sans-serif'],
+                        script: ['Great Vibes', 'cursive']
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Great+Vibes&family=Inter:wght@400;500;600;700;800;900&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Custom CSS Styling -->
+    <style>
+        body {
+            background-color: #0B0B0D;
+            color: #E2E8F0;
+            font-family: 'Montserrat', sans-serif;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        /* Gold Gradient Text */
+        .text-gold-gradient {
+            background: linear-gradient(135deg, #FFF1C5 0%, #DFB26B 50%, #A67C1E 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Gold Button Style matching screenshot */
+        .btn-gold {
+            background: linear-gradient(135deg, #EAD096 0%, #DFB26B 50%, #C89947 100%);
+            color: #0B0B0D;
+            font-weight: 600;
+            letter-spacing: 0.08em;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(223, 178, 107, 0.2);
+        }
+
+        .btn-gold:hover {
+            background: linear-gradient(135deg, #FFF1C5 0%, #E6C180 50%, #D4A853 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(223, 178, 107, 0.35);
+        }
+
+        /* Golden Leaf Botanical Background Patterns */
+        .bg-marble-texture {
+            background-color: #0B0B0D;
+            background-image: 
+                radial-gradient(at 0% 0%, rgba(223, 178, 107, 0.03) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(223, 178, 107, 0.03) 0px, transparent 50%);
+        }
+
+        /* Golden Line Overlay Effect */
+        .golden-leaf-svg {
+            position: absolute;
+            pointer-events: none;
+            opacity: 0.35;
+            z-index: 1;
+        }
+
+        /* Navigation active tab link underline */
+        .nav-link.active::after {
+            content: '';
+            position: absolute;
+            bottom: -6px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: #DFB26B;
+            border-radius: 2px;
+        }
+
+        /* Card Hover Effects */
+        .luxury-card {
+            background: rgba(18, 18, 21, 0.85);
+            border: 1px solid rgba(223, 178, 107, 0.2);
+            backdrop-filter: blur(8px);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .luxury-card:hover {
+            border-color: rgba(223, 178, 107, 0.6);
+            transform: translateY(-4px);
+            box-shadow: 0 10px 25px -5px rgba(223, 178, 107, 0.15);
+        }
+
+        /* Glass Input Fields */
+        .glass-input {
+            background: rgba(18, 18, 21, 0.7);
+            border: 1px solid rgba(223, 178, 107, 0.25);
+            color: #FFF;
+            transition: all 0.3s ease;
+        }
+
+        .glass-input:focus {
+            outline: none;
+            border-color: #DFB26B;
+            box-shadow: 0 0 12px rgba(223, 178, 107, 0.2);
+        }
+
+        /* Example Photo Watermark Badge Overlay */
+        .example-photo-badge {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(-18deg);
+            background: rgba(26, 30, 39, 0.94);
+            border: 3.5px dashed #DFB26B;
+            color: #FFD479;
+            font-weight: 800;
+            font-size: 1.1rem;
+            letter-spacing: 0.16em;
+            padding: 0.65rem 2.25rem;
+            border-radius: 9999px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.75);
+            z-index: 15;
+            pointer-events: none;
+            white-space: nowrap;
+            text-transform: uppercase;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .example-photo-badge-sm {
+            font-size: 0.75rem;
+            padding: 0.3rem 0.9rem;
+            border-width: 2px;
+        }
+
+        /* SPA Page Transitions */
+        .page-view {
+            display: none;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: opacity 0.4s ease-out, transform 0.4s ease-out;
+        }
+
+        .page-view.active-page {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0B0B0D;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #2A2A32;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #DFB26B;
+        }
+
+        /* Marquee Animation for Top Demo Ticker */
+        @keyframes marquee {
+            0% { transform: translateX(0%); }
+            100% { transform: translateX(-50%); }
+        }
+        .animate-marquee {
+            display: flex;
+            width: max-content;
+            animation: marquee 25s linear infinite;
+        }
+
+        /* ========================================================= */
+        /* EXACT TAILOREDLY DEMO BANNER STYLES                       */
+        /* ========================================================= */
+        .tailoredly-banner-wrap {
+            position: fixed !important;
+            top: 120px !important;
+            right: 24px !important;
+            bottom: auto !important;
+            left: auto !important;
+            transform: none !important;
+            z-index: 2147483647 !important;
+            width: auto;
+            max-width: calc(100vw - 48px);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif !important;
+            box-sizing: border-box;
+            pointer-events: auto;
+        }
+
+        .tailoredly-banner-box {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            padding: 10px 16px;
+            background: radial-gradient(circle at 85% 50%, rgba(190, 18, 74, 0.08) 0%, rgba(6, 6, 8, 0.98) 55%), #060608;
+            border: 1px solid rgba(244, 37, 100, 0.45);
+            border-radius: 16px;
+            box-shadow: 
+                0 0 25px rgba(235, 20, 85, 0.22),
+                0 12px 32px rgba(0, 0, 0, 0.92),
+                inset 0 0 8px rgba(244, 37, 100, 0.04);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif !important;
+        }
+
+        .tailoredly-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            min-width: 0;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif !important;
+        }
+
+        .tailoredly-icon-box {
+            width: 38px;
+            height: 38px;
+            min-width: 38px;
+            border-radius: 10px;
+            border: 1px solid rgba(244, 37, 100, 0.4);
+            background: rgba(14, 8, 12, 0.95);
+            box-shadow: 0 0 12px rgba(244, 37, 100, 0.15);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #f42564;
+        }
+
+        .tailoredly-brand-text {
+            display: flex;
+            flex-direction: column;
+            line-height: 1.2;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif !important;
+        }
+
+        .tailoredly-demo-label {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif !important;
+            font-size: 9.5px !important;
+            font-weight: 700 !important;
+            letter-spacing: 0.18em !important;
+            text-transform: uppercase !important;
+            color: #f42564 !important;
+            margin-bottom: 2px !important;
+        }
+
+        .tailoredly-madeby {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif !important;
+            font-size: 16px !important;
+            font-weight: 700 !important;
+            color: #d1d5db !important;
+            letter-spacing: -0.01em !important;
+            white-space: nowrap !important;
+            display: flex !important;
+            align-items: baseline !important;
+            gap: 5px !important;
+        }
+
+        .tailoredly-logo-mark {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif !important;
+            font-weight: 900 !important;
+            letter-spacing: 0.02em !important;
+            text-transform: uppercase !important;
+            color: #ffffff !important;
+        }
+
+        .tailoredly-logo-mark span {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif !important;
+            color: #f42564 !important;
+        }
+
+        .tailoredly-divider {
+            width: 1px;
+            height: 32px;
+            background: rgba(255, 255, 255, 0.1);
+            flex-shrink: 0;
+        }
+
+        .tailoredly-middle {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            line-height: 1.3;
+            min-width: 0;
+            padding-right: 4px;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif !important;
+        }
+
+        .tailoredly-question {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif !important;
+            font-size: 13px !important;
+            font-weight: 500 !important;
+            color: #f3f4f6 !important;
+            margin: 0 !important;
+            white-space: nowrap !important;
+        }
+
+        .tailoredly-subtext {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif !important;
+            font-size: 12px !important;
+            font-weight: 400 !important;
+            color: #8e8e99 !important;
+            margin: 0 !important;
+            white-space: nowrap !important;
+        }
+
+        .tailoredly-btn {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif !important;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 9px 16px;
+            border-radius: 11px;
+            background: linear-gradient(90deg, #f72564 0%, #c11248 100%);
+            color: #ffffff !important;
+            font-size: 13px !important;
+            font-weight: 700 !important;
+            text-decoration: none !important;
+            white-space: nowrap;
+            box-shadow: 0 0 22px rgba(247, 37, 100, 0.5), inset 0 1px 1px rgba(255, 255, 255, 0.25);
+            transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
+            flex-shrink: 0;
+        }
+
+        .tailoredly-btn:hover {
+            transform: translateY(-1px);
+            filter: brightness(1.08);
+            box-shadow: 0 0 30px rgba(247, 37, 100, 0.75), inset 0 1px 1px rgba(255, 255, 255, 0.35);
+        }
+
+        .tailoredly-btn svg {
+            transition: transform 0.2s ease;
+        }
+
+        .tailoredly-btn:hover svg {
+            transform: translateX(-3px);
+        }
+
+        @media (max-width: 1250px) and (min-width: 769px) {
+            .tailoredly-divider,
+            .tailoredly-middle {
+                display: none;
+            }
+        }
+
+        @media (max-width: 768px) {
+            html body {
+                padding-bottom: calc(144px + env(safe-area-inset-bottom, 0px)) !important;
+            }
+            .tailoredly-banner-wrap {
+                top: auto !important;
+                right: auto !important;
+                bottom: calc(56px + env(safe-area-inset-bottom, 0px)) !important;
+                left: 50% !important;
+                transform: translateX(-50%) !important;
+                width: calc(100% - 16px);
+                max-width: 540px;
+            }
+            .tailoredly-banner-box {
+                padding: 10px 12px;
+                gap: 10px;
+                border-radius: 15px;
+            }
+            .tailoredly-divider,
+            .tailoredly-middle {
+                display: none;
+            }
+            .tailoredly-icon-box {
+                width: 36px;
+                height: 36px;
+                min-width: 36px;
+                border-radius: 9px;
+            }
+            .tailoredly-icon-box svg {
+                width: 17px;
+                height: 17px;
+            }
+            .tailoredly-demo-label {
+                font-size: 8.5px !important;
+                letter-spacing: 0.14em !important;
+                margin-bottom: 1px !important;
+            }
+            .tailoredly-madeby {
+                font-size: 15px !important;
+            }
+            .tailoredly-btn {
+                padding: 10px 14px;
+                font-size: 12.5px !important;
+                gap: 6px;
+                border-radius: 10px;
+            }
+        }
+    </style>
+</head>
+<body class="relative antialiased selection:bg-gold-500 selection:text-black min-h-screen flex flex-col justify-between">
+
+    <!-- Top Demo Ticker Bar -->
+    <div class="fixed top-0 left-0 right-0 z-[60] bg-amber-400 text-slate-950 font-extrabold text-xs uppercase tracking-wider py-1.5 overflow-hidden whitespace-nowrap select-none border-b border-amber-500 shadow-sm">
+        <div class="animate-marquee flex items-center space-x-8">
+            <span class="flex items-center space-x-8">
+                <span>Przykładowa Strona</span><span class="text-amber-800">•</span>
+                <span>Demo Website</span><span class="text-amber-800">•</span>
+                <span>Przykładowa Strona</span><span class="text-amber-800">•</span>
+                <span>Demo Website</span><span class="text-amber-800">•</span>
+                <span>Przykładowa Strona</span><span class="text-amber-800">•</span>
+                <span>Demo Website</span><span class="text-amber-800">•</span>
+            </span>
+            <span class="flex items-center space-x-8" aria-hidden="true">
+                <span>Przykładowa Strona</span><span class="text-amber-800">•</span>
+                <span>Demo Website</span><span class="text-amber-800">•</span>
+                <span>Przykładowa Strona</span><span class="text-amber-800">•</span>
+                <span>Demo Website</span><span class="text-amber-800">•</span>
+                <span>Przykładowa Strona</span><span class="text-amber-800">•</span>
+                <span>Demo Website</span><span class="text-amber-800">•</span>
+            </span>
+        </div>
+    </div>
+
+    <!-- Background Decorative Golden Botanical Leaf Overlay Left -->
+    <svg class="golden-leaf-svg top-16 left-0 w-[280px] md:w-[450px]" viewBox="0 0 400 800" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M10 100 C120 150, 250 100, 300 250 C320 310, 280 400, 200 450 C120 500, 50 600, 10 750" stroke="#DFB26B" stroke-width="1.2" opacity="0.6"/>
+        <path d="M120 180 Q200 120 280 180 Q220 250 120 180 Z" stroke="#DFB26B" stroke-width="1"/>
+        <path d="M50 320 Q150 280 220 340 Q160 410 50 320 Z" stroke="#DFB26B" stroke-width="1"/>
+        <path d="M15 480 Q100 420 180 500 Q110 560 15 480 Z" stroke="#DFB26B" stroke-width="1"/>
+        <path d="M5 620 Q80 580 140 650 Q70 700 5 620 Z" stroke="#DFB26B" stroke-width="1"/>
+    </svg>
+
+    <!-- TOP NAVIGATION BAR -->
+    <header id="mainHeader" class="fixed top-[28px] left-0 right-0 z-50 bg-dark-900/95 backdrop-blur-md border-b border-gold-500/20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <!-- Brand Logo -->
+            <a href="javascript:void(0)" onclick="navigateTo('home')" class="flex flex-col items-start group">
+                <span class="font-serif text-xl sm:text-2xl font-bold tracking-[0.25em] text-white group-hover:text-gold-400 transition-colors">EXAMPLE</span>
+                <span class="font-serif text-[10px] sm:text-[11px] tracking-[0.3em] text-gold-400 uppercase -mt-1">HAIRDRESSER SALON</span>
+            </a>
+
+            <!-- Multi-Page Navigation Links -->
+            <nav class="hidden md:flex items-center space-x-8">
+                <a href="javascript:void(0)" onclick="navigateTo('home')" id="nav-home" class="nav-link text-xs uppercase tracking-[0.2em] text-gold-400 hover:text-white transition-colors relative py-1 font-medium active">Home</a>
+                <a href="javascript:void(0)" onclick="navigateTo('about')" id="nav-about" class="nav-link text-xs uppercase tracking-[0.2em] text-gray-300 hover:text-gold-400 transition-colors relative py-1 font-medium">About Us</a>
+                <a href="javascript:void(0)" onclick="navigateTo('services')" id="nav-services" class="nav-link text-xs uppercase tracking-[0.2em] text-gray-300 hover:text-gold-400 transition-colors relative py-1 font-medium">Services & Prices</a>
+                <a href="javascript:void(0)" onclick="navigateTo('contact')" id="nav-contact" class="nav-link text-xs uppercase tracking-[0.2em] text-gray-300 hover:text-gold-400 transition-colors relative py-1 font-medium">Contact</a>
+            </nav>
+
+            <!-- Book Now Action Button -->
+            <div class="flex items-center gap-4">
+                <button onclick="openBookingModal()" class="btn-gold px-5 py-2.5 rounded-sm text-xs font-bold uppercase tracking-widest flex items-center gap-2">
+                    <span>BOOK NOW</span>
+                </button>
+                <!-- Mobile Menu Button -->
+                <button id="mobileMenuBtn" class="md:hidden text-gold-400 hover:text-white p-2">
+                    <i class="fa-solid fa-bars text-2xl"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Navigation Menu Dropdown -->
+        <div id="mobileMenu" class="hidden md:hidden bg-dark-800 border-b border-gold-500/20 px-6 py-6 space-y-4">
+            <a href="javascript:void(0)" onclick="navigateTo('home'); closeMobileMenu();" class="block text-xs uppercase tracking-widest text-gold-400 py-2 border-b border-gray-800">Home</a>
+            <a href="javascript:void(0)" onclick="navigateTo('about'); closeMobileMenu();" class="block text-xs uppercase tracking-widest text-gray-300 hover:text-gold-400 py-2 border-b border-gray-800">About Us</a>
+            <a href="javascript:void(0)" onclick="navigateTo('services'); closeMobileMenu();" class="block text-xs uppercase tracking-widest text-gray-300 hover:text-gold-400 py-2 border-b border-gray-800">Services & Prices</a>
+            <a href="javascript:void(0)" onclick="navigateTo('contact'); closeMobileMenu();" class="block text-xs uppercase tracking-widest text-gray-300 hover:text-gold-400 py-2 border-b border-gray-800">Contact</a>
+        </div>
+    </header>
+
+    <!-- TAILOREDLY DEMO BANNER -->
+    <div class="tailoredly-banner-wrap" role="region" aria-label="Tailoredly Demo Banner">
+        <div class="tailoredly-banner-box">
+            <div class="tailoredly-left">
+                <div class="tailoredly-icon-box" aria-hidden="true">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="3" y="4" width="18" height="12" rx="2" ry="2"></rect>
+                        <line x1="8" y1="20" x2="16" y2="20"></line>
+                        <line x1="12" y1="16" x2="12" y2="20"></line>
+                    </svg>
+                </div>
+                <div class="tailoredly-brand-text">
+                    <span class="tailoredly-demo-label">WEBSITE DEMO</span>
+                    <div class="tailoredly-madeby">
+                        Made by <strong class="tailoredly-logo-mark">TAILORED<span>LY</span></strong>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tailoredly-divider" aria-hidden="true"></div>
+
+            <div class="tailoredly-middle">
+                <p class="tailoredly-question">Like this design?</p>
+                <p class="tailoredly-subtext">Get a website for your business.</p>
+            </div>
+
+            <a href="file:///C:/Users/Bobik/Desktop/Website creator/index.html" class="tailoredly-btn">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="19" y1="12" x2="5" y2="12"></line>
+                    <polyline points="12 19 5 12 12 5"></polyline>
+                </svg>
+                <span>Back to Portfolio</span>
+            </a>
+        </div>
+    </div>
+    <!-- END TAILOREDLY BANNER -->
+
+    <!-- MAIN MULTI-PAGE CONTAINER -->
+    <main class="pt-28 flex-grow">
+
+        <!-- ========================================== -->
+        <!-- PAGE 1: HOME PAGE                          -->
+        <!-- ========================================== -->
+        <div id="page-home" class="page-view active-page">
+            <section class="relative min-h-[85vh] flex items-center justify-center overflow-hidden py-12">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full grid grid-cols-1 lg:grid-cols-12 gap-12 items-center z-10">
+                    
+                    <!-- Left Hero Content -->
+                    <div class="lg:col-span-6 space-y-6 text-left pt-6 lg:pt-0">
+                        <span class="text-xs sm:text-sm uppercase tracking-[0.35em] text-gray-400 font-medium block">
+                            PLACE FOR YOUR BUSINESS DETAILS
+                        </span>
+                        
+                        <h1 class="font-serif text-4xl sm:text-6xl lg:text-7xl font-light tracking-wide text-white leading-tight">
+                            BEAUTIFUL<br>
+                            <span class="text-gold-gradient font-normal tracking-wider text-5xl sm:text-7xl lg:text-8xl block my-1">HAIR</span>
+                        </h1>
+
+                        <h2 class="font-serif text-sm sm:text-base tracking-[0.25em] text-white uppercase font-semibold">
+                            EXAMPLE HAIRDRESSER SALON
+                        </h2>
+
+                        <p class="text-gray-400 text-sm sm:text-base leading-relaxed max-w-lg font-light">
+                            Place for a short description of your salon and what makes it special.
+                        </p>
+
+                        <div class="pt-4 flex flex-wrap gap-4">
+                            <button onclick="openBookingModal()" class="btn-gold px-7 py-3.5 rounded-sm text-xs sm:text-sm font-semibold uppercase tracking-[0.15em] inline-flex items-center gap-3">
+                                <span>BOOK AN APPOINTMENT</span>
+                                <i class="fa-solid fa-arrow-right text-xs"></i>
+                            </button>
+                            <button onclick="navigateTo('about')" class="px-7 py-3.5 border border-gold-500/40 hover:border-gold-400 text-gold-400 hover:text-white rounded-sm text-xs sm:text-sm font-semibold uppercase tracking-[0.15em] transition-colors">
+                                LEARN MORE
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Right Hero Image Frame -->
+                    <div class="lg:col-span-6 relative flex justify-center lg:justify-end">
+                        <div class="relative w-full max-w-lg aspect-[4/5] rounded-tl-[80px] rounded-br-[80px] overflow-hidden border border-gold-500/30 shadow-2xl">
+                            <img src="https://images.unsplash.com/photo-1562322140-8baeececf3df?q=80&w=1200&auto=format&fit=crop" 
+                                 alt="Luxury Hairstyling" 
+                                 class="w-full h-full object-cover transform hover:scale-105 transition-transform duration-700">
+                            <div class="example-photo-badge">EXAMPLE PHOTO</div>
+                            <div class="absolute inset-0 bg-gradient-to-t from-dark-900/80 via-transparent to-transparent"></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Bottom Feature Strip Bar (4 Columns) -->
+            <section class="border-y border-gold-500/20 bg-dark-800/80 backdrop-blur-sm relative z-20">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-y-8 gap-x-4 md:gap-4 md:divide-x divide-gold-500/20 text-center">
+                        <div class="flex flex-col items-center p-4">
+                            <div class="w-12 h-12 rounded-full border border-gold-500/30 flex items-center justify-center text-gold-400 mb-3 hover:scale-110 transition-transform">
+                                <i class="fa-solid fa-scissors text-lg"></i>
+                            </div>
+                            <h4 class="font-serif text-xs uppercase tracking-[0.2em] text-white font-semibold">EXPERT STYLING</h4>
+                            <p class="text-[11px] uppercase tracking-widest text-gray-400 mt-1">PLACE FOR YOUR DESCRIPTION</p>
+                        </div>
+
+                        <div class="flex flex-col items-center p-4">
+                            <div class="w-12 h-12 rounded-full border border-gold-500/30 flex items-center justify-center text-gold-400 mb-3 hover:scale-110 transition-transform">
+                                <i class="fa-regular fa-gem text-lg"></i>
+                            </div>
+                            <h4 class="font-serif text-xs uppercase tracking-[0.2em] text-white font-semibold">LUXURY CARE</h4>
+                            <p class="text-[11px] uppercase tracking-widest text-gray-400 mt-1">PLACE FOR YOUR DETAILS</p>
+                        </div>
+
+                        <div class="flex flex-col items-center p-4 pt-8 md:pt-4 border-t border-gold-500/20 md:border-t-0">
+                            <div class="w-12 h-12 rounded-full border border-gold-500/30 flex items-center justify-center text-gold-400 mb-3 hover:scale-110 transition-transform">
+                                <i class="fa-solid fa-leaf text-lg"></i>
+                            </div>
+                            <h4 class="font-serif text-xs uppercase tracking-[0.2em] text-white font-semibold">NATURAL PRODUCTS</h4>
+                            <p class="text-[11px] uppercase tracking-widest text-gray-400 mt-1">PLACE FOR YOUR TEXT</p>
+                        </div>
+
+                        <div class="flex flex-col items-center p-4 pt-8 md:pt-4 border-t border-gold-500/20 md:border-t-0">
+                            <div class="w-12 h-12 rounded-full border border-gold-500/30 flex items-center justify-center text-gold-400 mb-3 hover:scale-110 transition-transform">
+                                <i class="fa-regular fa-heart text-lg"></i>
+                            </div>
+                            <h4 class="font-serif text-xs uppercase tracking-[0.2em] text-white font-semibold">TAILORED APPROACH</h4>
+                            <p class="text-[11px] uppercase tracking-widest text-gray-400 mt-1">PLACE FOR YOUR INFO</p>
+                        </div>
+                    </div>
+
+                    <div class="flex justify-center mt-6">
+                        <button onclick="navigateTo('about')" class="text-gold-400 hover:text-white transition-colors animate-bounce">
+                            <i class="fa-solid fa-chevron-down text-sm"></i>
+                        </button>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+
+        <!-- ========================================== -->
+        <!-- PAGE 2: ABOUT US PAGE                      -->
+        <!-- ========================================== -->
+        <div id="page-about" class="page-view">
+            <section class="pt-12 pb-0 md:py-16 relative overflow-hidden bg-dark-900">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    
+                    <!-- Top About Section -->
+                    <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center mb-16">
+                        <div class="lg:col-span-6 space-y-6">
+                            <span class="text-xs uppercase tracking-[0.3em] text-gold-400 font-semibold block">ABOUT US</span>
+                            <h2 class="font-serif text-3xl sm:text-5xl font-normal text-white leading-tight">
+                                EXAMPLE<br>
+                                <span class="text-gold-gradient font-light">HAIRDRESSER SALON</span>
+                            </h2>
+                            <h3 class="text-xs uppercase tracking-[0.25em] text-gray-400 font-semibold">PLACE FOR YOUR BUSINESS DETAILS</h3>
+                            
+                            <p class="text-gray-300 text-sm sm:text-base leading-relaxed font-light">
+                                This is a place for your text. You can write a short story about your salon, your team, your approach and what makes your salon unique.
+                            </p>
+
+                            <div>
+                                <button onclick="openBookingModal()" class="btn-gold px-7 py-3.5 rounded-sm text-xs font-semibold uppercase tracking-[0.15em] inline-flex items-center gap-3">
+                                    <span>BOOK AN APPOINTMENT</span>
+                                    <i class="fa-solid fa-arrow-right text-xs"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="lg:col-span-6">
+                            <div class="relative rounded-t-full overflow-hidden border border-gold-500/30 max-w-md mx-auto shadow-2xl aspect-[3/4]">
+                                <img src="https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?q=80&w=1000&auto=format&fit=crop" 
+                                     alt="Salon Interior Model" 
+                                     class="w-full h-full object-cover">
+                                <div class="example-photo-badge">EXAMPLE PHOTO</div>
+                                <div class="absolute inset-0 bg-gradient-to-t from-dark-900/60 via-transparent to-transparent"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- OUR APPROACH SECTION -->
+                    <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center mb-16 pt-8">
+                        <div class="lg:col-span-6 order-2 lg:order-1">
+                            <div class="relative rounded-sm overflow-hidden border border-gold-500/20 shadow-2xl aspect-[4/3]">
+                                <img src="https://images.unsplash.com/photo-1560066984-138dadb4c035?q=80&w=1200&auto=format&fit=crop" 
+                                     alt="Salon Interior Workstations" 
+                                     class="w-full h-full object-cover">
+                                <div class="example-photo-badge">EXAMPLE PHOTO</div>
+                            </div>
+                        </div>
+
+                        <div class="lg:col-span-6 space-y-6 order-1 lg:order-2">
+                            <span class="text-xs uppercase tracking-[0.3em] text-gold-400 font-semibold block">OUR APPROACH</span>
+                            <h3 class="font-serif text-2xl sm:text-4xl text-white font-light">
+                                PLACE FOR YOUR <span class="text-gold-gradient font-normal">BUSINESS DETAILS</span>
+                            </h3>
+                            
+                            <p class="text-gray-300 text-sm leading-relaxed font-light">
+                                This is a place for your text. You can write about your philosophy, what inspires you and how you take care of your clients.
+                            </p>
+
+                            <p class="text-gray-400 text-sm leading-relaxed font-light">
+                                This is a place for additional information about your experience, values or the atmosphere in your salon.
+                            </p>
+
+                            <div>
+                                <button onclick="navigateTo('services')" class="btn-gold px-7 py-3 rounded-sm text-xs font-semibold uppercase tracking-[0.15em] inline-flex items-center gap-3">
+                                    <span>OUR SERVICES</span>
+                                    <i class="fa-solid fa-arrow-right text-xs"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- OUR VALUES SUBSECTION -->
+                    <div class="text-center pt-8 border-t border-gold-500/10">
+                        <div class="flex items-center justify-center space-x-6 mb-12">
+                            <div class="h-[1px] w-16 sm:w-32 bg-gradient-to-r from-transparent to-gold-500/50"></div>
+                            <div class="text-center">
+                                <span class="text-[11px] uppercase tracking-[0.3em] text-gold-400 font-semibold block">OUR VALUES</span>
+                                <h3 class="font-serif text-2xl sm:text-3xl text-white tracking-wider mt-1">EXAMPLE TEXT</h3>
+                            </div>
+                            <div class="h-[1px] w-16 sm:w-32 bg-gradient-to-l from-transparent to-gold-500/50"></div>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 divide-y md:divide-y-0 md:divide-x divide-gold-500/20">
+                            <div class="flex flex-col items-center p-4">
+                                <i class="fa-solid fa-leaf text-2xl text-gold-400 mb-4"></i>
+                                <h4 class="font-serif text-sm uppercase tracking-widest text-white">EXAMPLE TEXT</h4>
+                                <p class="text-xs uppercase tracking-widest text-gray-400 mt-1">YOUR TEXT HERE</p>
+                            </div>
+                            <div class="flex flex-col items-center p-4 pt-6 md:pt-4">
+                                <i class="fa-regular fa-gem text-2xl text-gold-400 mb-4"></i>
+                                <h4 class="font-serif text-sm uppercase tracking-widest text-white">EXAMPLE TEXT</h4>
+                                <p class="text-xs uppercase tracking-widest text-gray-400 mt-1">YOUR TEXT HERE</p>
+                            </div>
+                            <div class="flex flex-col items-center p-4 pt-6 md:pt-4">
+                                <i class="fa-solid fa-users text-2xl text-gold-400 mb-4"></i>
+                                <h4 class="font-serif text-sm uppercase tracking-widest text-white">EXAMPLE TEXT</h4>
+                                <p class="text-xs uppercase tracking-widest text-gray-400 mt-1">YOUR TEXT HERE</p>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Calligraphic Banner Footer -->
+                <div class="mt-8 md:mt-16 bg-dark-800 border-t md:border-y border-gold-500/20 py-10 px-6">
+                    <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
+                        <div class="flex items-center space-x-6">
+                            <div class="w-16 h-16 rounded-full border border-gold-500/30 overflow-hidden shadow-lg flex-shrink-0 relative">
+                                <img src="https://images.unsplash.com/photo-1585747860715-2ba37e788b70?q=80&w=400&auto=format&fit=crop" alt="Scissors" class="w-full h-full object-cover">
+                                <div class="example-photo-badge example-photo-badge-sm">EXAMPLE</div>
+                            </div>
+                            <span class="font-serif text-xs uppercase tracking-widest text-gold-400">LUXURY HAIR EXPERIENCE</span>
+                        </div>
+                        <div>
+                            <span class="font-script text-4xl sm:text-5xl text-gold-400 block tracking-wider">Example text here</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+
+        <!-- ========================================== -->
+        <!-- PAGE 3: SERVICES & PRICES PAGE             -->
+        <!-- ========================================== -->
+        <div id="page-services" class="page-view">
+            <section class="py-16 relative bg-dark-900 border-t border-gold-500/10">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    
+                    <!-- Services Header -->
+                    <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center mb-12">
+                        <div class="lg:col-span-6 space-y-4">
+                            <span class="text-xs uppercase tracking-[0.3em] text-gold-400 font-semibold block">OUR SERVICES</span>
+                            <h2 class="font-serif text-4xl sm:text-6xl text-white font-light leading-none">
+                                SERVICES &<br>
+                                <span class="text-gold-gradient font-normal">PRICES</span>
+                            </h2>
+                            <h3 class="text-xs uppercase tracking-[0.25em] text-gray-400 font-semibold pt-2">PLACE FOR YOUR BUSINESS DETAILS</h3>
+                            <p class="text-gray-300 text-sm leading-relaxed font-light max-w-lg">
+                                This is a place for a short description of your services. You can highlight what makes your salon special and why clients choose you.
+                            </p>
+                        </div>
+
+                        <div class="lg:col-span-6 flex justify-center lg:justify-end">
+                            <div class="w-full max-w-md aspect-[16/10] rounded-sm overflow-hidden border border-gold-500/30 shadow-2xl relative">
+                                <img src="https://images.unsplash.com/photo-1519699047748-de8e457a634e?q=80&w=1000&auto=format&fit=crop" 
+                                     alt="Hair Colouring & Styling Model" 
+                                     class="w-full h-full object-cover">
+                                <div class="example-photo-badge">EXAMPLE PHOTO</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 4 Category Visual Cards (Clickable Gallery Lightbox Triggers) -->
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+                        <div class="luxury-card rounded-sm overflow-hidden group cursor-pointer" onclick="openGalleryModal('HAIRCUTS')">
+                            <div class="aspect-[4/3] overflow-hidden relative">
+                                <img src="https://images.unsplash.com/photo-1562322140-8baeececf3df?q=80&w=600&auto=format&fit=crop" alt="Haircuts" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                                <div class="example-photo-badge">EXAMPLE PHOTO</div>
+                                <div class="absolute inset-0 bg-dark-900/40 group-hover:bg-dark-900/20 transition-colors flex items-center justify-center">
+                                    <span class="opacity-0 group-hover:opacity-100 transition-opacity bg-dark-900/90 text-gold-400 border border-gold-500/50 text-[10px] uppercase font-bold tracking-widest px-3 py-1.5 rounded-sm shadow-xl flex items-center gap-2 z-20">
+                                        <i class="fa-solid fa-expand"></i> OPEN GALLERY
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="p-4 flex items-center justify-between border-t border-gold-500/20">
+                                <div>
+                                    <h4 class="font-serif text-xs uppercase tracking-wider text-white">HAIRCUTS</h4>
+                                    <p class="text-[10px] uppercase tracking-widest text-gold-400/80 font-medium">EXPLORE GALLERY</p>
+                                </div>
+                                <i class="fa-solid fa-arrow-right text-gold-400 group-hover:translate-x-1 transition-transform text-xs"></i>
+                            </div>
+                        </div>
+
+                        <div class="luxury-card rounded-sm overflow-hidden group cursor-pointer" onclick="openGalleryModal('COLOURING')">
+                            <div class="aspect-[4/3] overflow-hidden relative">
+                                <img src="https://images.unsplash.com/photo-1527799820374-dcf8d9d4a388?q=80&w=600&auto=format&fit=crop" alt="Colouring" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                                <div class="example-photo-badge">EXAMPLE PHOTO</div>
+                                <div class="absolute inset-0 bg-dark-900/40 group-hover:bg-dark-900/20 transition-colors flex items-center justify-center">
+                                    <span class="opacity-0 group-hover:opacity-100 transition-opacity bg-dark-900/90 text-gold-400 border border-gold-500/50 text-[10px] uppercase font-bold tracking-widest px-3 py-1.5 rounded-sm shadow-xl flex items-center gap-2 z-20">
+                                        <i class="fa-solid fa-expand"></i> OPEN GALLERY
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="p-4 flex items-center justify-between border-t border-gold-500/20">
+                                <div>
+                                    <h4 class="font-serif text-xs uppercase tracking-wider text-white">COLOURING</h4>
+                                    <p class="text-[10px] uppercase tracking-widest text-gold-400/80 font-medium">EXPLORE GALLERY</p>
+                                </div>
+                                <i class="fa-solid fa-arrow-right text-gold-400 group-hover:translate-x-1 transition-transform text-xs"></i>
+                            </div>
+                        </div>
+
+                        <div class="luxury-card rounded-sm overflow-hidden group cursor-pointer" onclick="openGalleryModal('STYLING')">
+                            <div class="aspect-[4/3] overflow-hidden relative">
+                                <img src="https://images.unsplash.com/photo-1492106087820-71f1a00d2b11?q=80&w=600&auto=format&fit=crop" alt="Styling" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                                <div class="example-photo-badge">EXAMPLE PHOTO</div>
+                                <div class="absolute inset-0 bg-dark-900/40 group-hover:bg-dark-900/20 transition-colors flex items-center justify-center">
+                                    <span class="opacity-0 group-hover:opacity-100 transition-opacity bg-dark-900/90 text-gold-400 border border-gold-500/50 text-[10px] uppercase font-bold tracking-widest px-3 py-1.5 rounded-sm shadow-xl flex items-center gap-2 z-20">
+                                        <i class="fa-solid fa-expand"></i> OPEN GALLERY
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="p-4 flex items-center justify-between border-t border-gold-500/20">
+                                <div>
+                                    <h4 class="font-serif text-xs uppercase tracking-wider text-white">STYLING</h4>
+                                    <p class="text-[10px] uppercase tracking-widest text-gold-400/80 font-medium">EXPLORE GALLERY</p>
+                                </div>
+                                <i class="fa-solid fa-arrow-right text-gold-400 group-hover:translate-x-1 transition-transform text-xs"></i>
+                            </div>
+                        </div>
+
+                        <div class="luxury-card rounded-sm overflow-hidden group cursor-pointer" onclick="openGalleryModal('TREATMENTS')">
+                            <div class="aspect-[4/3] overflow-hidden relative">
+                                <img src="https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?q=80&w=600&auto=format&fit=crop" alt="Treatments" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                                <div class="example-photo-badge">EXAMPLE PHOTO</div>
+                                <div class="absolute inset-0 bg-dark-900/40 group-hover:bg-dark-900/20 transition-colors flex items-center justify-center">
+                                    <span class="opacity-0 group-hover:opacity-100 transition-opacity bg-dark-900/90 text-gold-400 border border-gold-500/50 text-[10px] uppercase font-bold tracking-widest px-3 py-1.5 rounded-sm shadow-xl flex items-center gap-2 z-20">
+                                        <i class="fa-solid fa-expand"></i> OPEN GALLERY
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="p-4 flex items-center justify-between border-t border-gold-500/20">
+                                <div>
+                                    <h4 class="font-serif text-xs uppercase tracking-wider text-white">TREATMENTS</h4>
+                                    <p class="text-[10px] uppercase tracking-widest text-gold-400/80 font-medium">EXPLORE GALLERY</p>
+                                </div>
+                                <i class="fa-solid fa-arrow-right text-gold-400 group-hover:translate-x-1 transition-transform text-xs"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 4 Column Price List Grid -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+                        <!-- Haircuts Box -->
+                        <div class="luxury-card p-6 rounded-sm flex flex-col justify-between">
+                            <div>
+                                <div class="text-center mb-6">
+                                    <i class="fa-solid fa-scissors text-gold-400 text-xl mb-2"></i>
+                                    <h4 class="font-serif text-xs uppercase tracking-widest text-white font-semibold">HAIRCUTS</h4>
+                                </div>
+                                <ul class="space-y-4 text-xs">
+                                    <li class="flex justify-between items-center border-b border-gray-800 pb-2">
+                                        <span class="text-gray-300">Example service</span>
+                                        <span class="text-gold-400 font-semibold">€00</span>
+                                    </li>
+                                    <li class="flex justify-between items-center border-b border-gray-800 pb-2">
+                                        <span class="text-gray-300">Example service</span>
+                                        <span class="text-gold-400 font-semibold">€00</span>
+                                    </li>
+                                    <li class="flex justify-between items-center border-b border-gray-800 pb-2">
+                                        <span class="text-gray-300">Example service</span>
+                                        <span class="text-gold-400 font-semibold">€00</span>
+                                    </li>
+                                    <li class="flex justify-between items-center border-b border-gray-800 pb-2">
+                                        <span class="text-gray-300">Example service</span>
+                                        <span class="text-gold-400 font-semibold">€00</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <!-- Colouring Box -->
+                        <div class="luxury-card p-6 rounded-sm flex flex-col justify-between">
+                            <div>
+                                <div class="text-center mb-6">
+                                    <i class="fa-solid fa-bottle-droplet text-gold-400 text-xl mb-2"></i>
+                                    <h4 class="font-serif text-xs uppercase tracking-widest text-white font-semibold">COLOURING</h4>
+                                </div>
+                                <ul class="space-y-4 text-xs">
+                                    <li class="flex justify-between items-center border-b border-gray-800 pb-2">
+                                        <span class="text-gray-300">Example service</span>
+                                        <span class="text-gold-400 font-semibold">€00</span>
+                                    </li>
+                                    <li class="flex justify-between items-center border-b border-gray-800 pb-2">
+                                        <span class="text-gray-300">Example service</span>
+                                        <span class="text-gold-400 font-semibold">€00</span>
+                                    </li>
+                                    <li class="flex justify-between items-center border-b border-gray-800 pb-2">
+                                        <span class="text-gray-300">Example service</span>
+                                        <span class="text-gold-400 font-semibold">€00</span>
+                                    </li>
+                                    <li class="flex justify-between items-center border-b border-gray-800 pb-2">
+                                        <span class="text-gray-300">Example service</span>
+                                        <span class="text-gold-400 font-semibold">€00</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <!-- Styling Box -->
+                        <div class="luxury-card p-6 rounded-sm flex flex-col justify-between">
+                            <div>
+                                <div class="text-center mb-6">
+                                    <i class="fa-solid fa-wind text-gold-400 text-xl mb-2"></i>
+                                    <h4 class="font-serif text-xs uppercase tracking-widest text-white font-semibold">STYLING</h4>
+                                </div>
+                                <ul class="space-y-4 text-xs">
+                                    <li class="flex justify-between items-center border-b border-gray-800 pb-2">
+                                        <span class="text-gray-300">Example service</span>
+                                        <span class="text-gold-400 font-semibold">€00</span>
+                                    </li>
+                                    <li class="flex justify-between items-center border-b border-gray-800 pb-2">
+                                        <span class="text-gray-300">Example service</span>
+                                        <span class="text-gold-400 font-semibold">€00</span>
+                                    </li>
+                                    <li class="flex justify-between items-center border-b border-gray-800 pb-2">
+                                        <span class="text-gray-300">Example service</span>
+                                        <span class="text-gold-400 font-semibold">€00</span>
+                                    </li>
+                                    <li class="flex justify-between items-center border-b border-gray-800 pb-2">
+                                        <span class="text-gray-300">Example service</span>
+                                        <span class="text-gold-400 font-semibold">€00</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <!-- Treatments Box -->
+                        <div class="luxury-card p-6 rounded-sm flex flex-col justify-between">
+                            <div>
+                                <div class="text-center mb-6">
+                                    <i class="fa-solid fa-spa text-gold-400 text-xl mb-2"></i>
+                                    <h4 class="font-serif text-xs uppercase tracking-widest text-white font-semibold">TREATMENTS</h4>
+                                </div>
+                                <ul class="space-y-4 text-xs">
+                                    <li class="flex justify-between items-center border-b border-gray-800 pb-2">
+                                        <span class="text-gray-300">Example service</span>
+                                        <span class="text-gold-400 font-semibold">€00</span>
+                                    </li>
+                                    <li class="flex justify-between items-center border-b border-gray-800 pb-2">
+                                        <span class="text-gray-300">Example service</span>
+                                        <span class="text-gold-400 font-semibold">€00</span>
+                                    </li>
+                                    <li class="flex justify-between items-center border-b border-gray-800 pb-2">
+                                        <span class="text-gray-300">Example service</span>
+                                        <span class="text-gold-400 font-semibold">€00</span>
+                                    </li>
+                                    <li class="flex justify-between items-center border-b border-gray-800 pb-2">
+                                        <span class="text-gray-300">Example service</span>
+                                        <span class="text-gold-400 font-semibold">€00</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Banner Call To Action -->
+                    <div class="relative rounded-sm overflow-hidden border border-gold-500/30 min-h-[300px] flex items-center p-8 sm:p-12">
+                        <img src="https://images.unsplash.com/photo-1503951914875-452162b0f3f1?q=80&w=1400&auto=format&fit=crop" 
+                             alt="Salon Wash Chairs" 
+                             class="absolute inset-0 w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-r from-dark-900/95 via-dark-900/80 to-transparent"></div>
+
+                        <div class="relative z-10 space-y-4 max-w-xl">
+                            <span class="text-xs uppercase tracking-[0.3em] text-gold-400 font-semibold block">READY FOR A CHANGE?</span>
+                            <h2 class="font-serif text-3xl sm:text-5xl text-white font-light">
+                                BOOK AN <span class="text-gold-gradient font-normal">APPOINTMENT</span>
+                            </h2>
+                            <p class="text-xs uppercase tracking-[0.25em] text-gray-300 font-medium">PLACE FOR YOUR BUSINESS DETAILS</p>
+                            <div class="pt-2">
+                                <button onclick="openBookingModal()" class="btn-gold px-7 py-3 rounded-sm text-xs font-semibold uppercase tracking-[0.15em] inline-flex items-center gap-3">
+                                    <span>BOOK NOW</span>
+                                    <i class="fa-solid fa-arrow-right text-xs"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+        </div>
+
+
+        <!-- ========================================== -->
+        <!-- PAGE 4: CONTACT PAGE                       -->
+        <!-- ========================================== -->
+        <div id="page-contact" class="page-view">
+            <section class="py-16 relative bg-dark-900">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    
+                    <!-- Contact Header -->
+                    <div class="space-y-3 mb-12">
+                        <span class="text-xs uppercase tracking-[0.3em] text-gold-400 font-semibold block">GET IN TOUCH</span>
+                        <h2 class="font-serif text-4xl sm:text-6xl text-white font-light tracking-wide">CONTACT</h2>
+                        <h3 class="text-xs uppercase tracking-[0.25em] text-gold-400/80 font-semibold">ADDRESS</h3>
+                        <p class="text-gray-300 text-sm font-light max-w-lg pt-1">
+                            Your address, Malta
+                        </p>
+                    </div>
+
+                    <!-- Contact Details & Map Side-by-Side Grid -->
+                    <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-stretch mb-16">
+                        <!-- Left Details (4 Icon Rows) -->
+                        <div class="lg:col-span-5 flex flex-col justify-center space-y-7 py-2 pr-0 lg:pr-8 border-r-0 lg:border-r border-gold-500/20">
+                            <div class="flex items-center space-x-5">
+                                <div class="w-12 h-12 rounded-full border border-gold-500/40 flex items-center justify-center text-gold-400 flex-shrink-0">
+                                    <i class="fa-solid fa-location-dot text-lg"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-serif text-xs uppercase tracking-wider text-white font-semibold">ADDRESS</h4>
+                                    <p class="text-xs text-gray-400 mt-0.5">Your address, Malta</p>
+                                </div>
+                            </div>
+
+                            <div class="flex items-center space-x-5">
+                                <div class="w-12 h-12 rounded-full border border-gold-500/40 flex items-center justify-center text-gold-400 flex-shrink-0">
+                                    <i class="fa-solid fa-phone text-lg"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-serif text-xs uppercase tracking-wider text-white font-semibold">PHONE NUMBER</h4>
+                                    <p class="text-xs text-gray-400 mt-0.5">+356 9900 0000</p>
+                                </div>
+                            </div>
+
+                            <div class="flex items-center space-x-5">
+                                <div class="w-12 h-12 rounded-full border border-gold-500/40 flex items-center justify-center text-gold-400 flex-shrink-0">
+                                    <i class="fa-regular fa-envelope text-lg"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-serif text-xs uppercase tracking-wider text-white font-semibold">EMAIL ADDRESS</h4>
+                                    <p class="text-xs text-gray-400 mt-0.5">your@email.com</p>
+                                </div>
+                            </div>
+
+                            <div class="flex items-center space-x-5">
+                                <div class="w-12 h-12 rounded-full border border-gold-500/40 flex items-center justify-center text-gold-400 flex-shrink-0">
+                                    <i class="fa-regular fa-clock text-lg"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-serif text-xs uppercase tracking-wider text-white font-semibold">OPENING HOURS</h4>
+                                    <p class="text-xs text-gray-400 mt-0.5">Mon - Sat: 09:00 - 19:00</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Right Side: Visit Our Salon Map Card -->
+                        <div class="lg:col-span-7 luxury-card rounded-sm p-6 lg:p-8 space-y-6">
+                            <div>
+                                <h3 class="font-serif text-2xl sm:text-3xl text-white font-light">VISIT OUR SALON</h3>
+                                <span class="text-xs uppercase tracking-[0.2em] text-gold-400 font-medium block mt-1">Your address, Malta</span>
+                            </div>
+
+                            <div class="relative aspect-[16/9] w-full rounded-sm overflow-hidden bg-dark-900 border border-gold-500/20">
+                                <iframe 
+                                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d12891.139638426308!2d14.3564917!3d35.9582531!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x139e4c32e1a30159%3A0xebd0a55dfb4557b0!2sMellie%C4%A7a!5e0!3m2!1sen!2smt!4v1710000000000!5m2!1sen!2smt" 
+                                    class="w-full h-full border-0 grayscale opacity-85 hover:opacity-100 hover:grayscale-0 transition-all duration-500 min-h-[220px]" 
+                                    allowfullscreen="" 
+                                    loading="lazy" 
+                                    referrerpolicy="no-referrer-when-downgrade">
+                                </iframe>
+                            </div>
+
+                            <p class="text-gray-300 text-xs sm:text-sm leading-relaxed font-light">
+                                Find us right in the heart of our location. Convenient free parking is available nearby for all our clients.
+                            </p>
+
+                            <div>
+                                <a href="https://maps.google.com/?cid=16992263217135048624" target="_blank" rel="noopener noreferrer" class="btn-gold px-6 py-2.5 rounded-sm text-xs font-semibold uppercase tracking-[0.15em] inline-flex items-center gap-2">
+                                    <span>GET DIRECTIONS</span>
+                                    <i class="fa-solid fa-arrow-right text-xs"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+        </div>
+
+    </main>
+
+    <!-- FOOTER WITH PAGE NAVIGATION LINKS -->
+    <footer class="bg-dark-900 border-t border-gold-500/20 py-10 sm:py-12 mt-auto relative z-30">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 mb-8 text-center sm:text-left">
+            <div class="space-y-3 flex flex-col items-center sm:items-start">
+                <div class="flex flex-col items-center sm:items-start">
+                    <span class="font-serif text-lg font-bold tracking-[0.25em] text-white">EXAMPLE</span>
+                    <span class="font-serif text-[9px] tracking-[0.3em] text-gold-400 uppercase">HAIRDRESSER SALON</span>
+                </div>
+                <p class="text-xs text-gray-400 leading-relaxed max-w-xs">
+                    This is where you can add a short description of your business and what you offer.
+                </p>
+            </div>
+
+            <div class="flex flex-col items-center sm:items-start">
+                <h4 class="font-serif text-xs uppercase tracking-widest text-white font-bold mb-4">Quick Links</h4>
+                <ul class="space-y-2.5 text-xs uppercase tracking-widest text-gray-400">
+                    <li><button onclick="navigateTo('home')" class="hover:text-gold-400 transition-colors">Home</button></li>
+                    <li><button onclick="navigateTo('about')" class="hover:text-gold-400 transition-colors">About Us</button></li>
+                    <li><button onclick="navigateTo('services')" class="hover:text-gold-400 transition-colors">Services & Prices</button></li>
+                    <li><button onclick="navigateTo('contact')" class="hover:text-gold-400 transition-colors">Contact</button></li>
+                </ul>
+            </div>
+
+            <div class="flex flex-col items-center sm:items-start">
+                <h4 class="font-serif text-xs uppercase tracking-widest text-white font-bold mb-4">Services</h4>
+                <ul class="space-y-2.5 text-xs uppercase tracking-widest text-gray-400">
+                    <li><span onclick="navigateTo('services')" class="hover:text-gold-400 transition-colors cursor-pointer">Haircuts</span></li>
+                    <li><span onclick="navigateTo('services')" class="hover:text-gold-400 transition-colors cursor-pointer">Colouring</span></li>
+                    <li><span onclick="navigateTo('services')" class="hover:text-gold-400 transition-colors cursor-pointer">Styling</span></li>
+                    <li><span onclick="navigateTo('services')" class="hover:text-gold-400 transition-colors cursor-pointer">Treatments</span></li>
+                </ul>
+            </div>
+
+            <div class="space-y-3 flex flex-col items-center sm:items-start">
+                <h4 class="font-serif text-xs uppercase tracking-widest text-white font-bold mb-2">Stay connected</h4>
+                <p class="text-xs text-gray-400 max-w-xs">Add a short message encouraging visitors to subscribe to your social media.</p>
+                <div class="flex items-center space-x-4 text-base pt-1">
+                    <a href="#" class="w-9 h-9 rounded-full border border-gold-500/30 flex items-center justify-center text-gold-400 hover:bg-gold-500 hover:text-black transition-all"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="#" class="w-9 h-9 rounded-full border border-gold-500/30 flex items-center justify-center text-gold-400 hover:bg-gold-500 hover:text-black transition-all"><i class="fa-brands fa-facebook-f"></i></a>
+                    <a href="#" class="w-9 h-9 rounded-full border border-gold-500/30 flex items-center justify-center text-gold-400 hover:bg-gold-500 hover:text-black transition-all"><i class="fa-brands fa-tiktok"></i></a>
+                </div>
+            </div>
+        </div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 border-t border-gold-500/10 text-center">
+            <p class="text-xs text-gray-500 tracking-wider">
+                &copy; 2026 EXAMPLE HAIRDRESSER SALON. ALL RIGHTS RESERVED.
+            </p>
+        </div>
+    </footer>
+
+    <!-- INTERACTIVE GALLERY LIGHTBOX MODAL -->
+    <div id="galleryModal" onclick="handleGalleryBackdropClick(event)" class="fixed inset-0 z-[100] flex items-center justify-center p-3 sm:p-6 bg-black/90 backdrop-blur-md hidden transition-opacity">
+        <div class="luxury-card w-full max-w-5xl rounded-sm p-3 sm:p-6 relative bg-dark-900 border-gold-500/40 shadow-2xl max-h-[85vh] sm:max-h-[92vh] flex flex-col justify-between overflow-hidden" onclick="event.stopPropagation()">
+            
+            <!-- Header Bar -->
+            <div class="flex flex-col gap-2.5 pb-3 border-b border-gold-500/20">
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center space-x-3">
+                        <i class="fa-solid fa-images text-gold-400 text-lg"></i>
+                        <div>
+                            <h3 class="font-serif text-sm sm:text-base text-white tracking-wider font-semibold uppercase" id="galleryModalTitle">LOOKBOOK GALLERY</h3>
+                            <p class="text-[10px] uppercase tracking-widest text-gray-400" id="galleryCategorySubtitle">ALL CATEGORIES</p>
+                        </div>
+                    </div>
+
+                    <!-- Desktop Category Filter Tabs -->
+                    <div class="hidden md:flex items-center space-x-2 text-[10px] uppercase tracking-widest">
+                        <button onclick="filterGalleryCategory('ALL')" data-cat="ALL" class="gallery-tab-btn px-3 py-1.5 rounded-sm border border-gold-500/30 text-gold-400 bg-gold-500/10 font-semibold">ALL</button>
+                        <button onclick="filterGalleryCategory('HAIRCUTS')" data-cat="HAIRCUTS" class="gallery-tab-btn px-3 py-1.5 rounded-sm border border-gold-500/20 text-gray-400 hover:text-white">HAIRCUTS</button>
+                        <button onclick="filterGalleryCategory('COLOURING')" data-cat="COLOURING" class="gallery-tab-btn px-3 py-1.5 rounded-sm border border-gold-500/20 text-gray-400 hover:text-white">COLOURING</button>
+                        <button onclick="filterGalleryCategory('STYLING')" data-cat="STYLING" class="gallery-tab-btn px-3 py-1.5 rounded-sm border border-gold-500/20 text-gray-400 hover:text-white">STYLING</button>
+                        <button onclick="filterGalleryCategory('TREATMENTS')" data-cat="TREATMENTS" class="gallery-tab-btn px-3 py-1.5 rounded-sm border border-gold-500/20 text-gray-400 hover:text-white">TREATMENTS</button>
+                    </div>
+
+                    <button onclick="closeGalleryModal()" class="text-gray-400 hover:text-gold-400 text-xl p-2 transition-colors">
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
+                </div>
+
+                <!-- Mobile Scrollable Category Filter Tabs -->
+                <div class="flex md:hidden items-center space-x-2 text-[10px] uppercase tracking-widest overflow-x-auto pb-1 no-scrollbar" style="-webkit-overflow-scrolling: touch;">
+                    <button onclick="filterGalleryCategory('ALL')" data-cat="ALL" class="gallery-tab-btn flex-shrink-0 px-3 py-1.5 rounded-sm border border-gold-500/30 text-gold-400 bg-gold-500/10 font-semibold">ALL</button>
+                    <button onclick="filterGalleryCategory('HAIRCUTS')" data-cat="HAIRCUTS" class="gallery-tab-btn flex-shrink-0 px-3 py-1.5 rounded-sm border border-gold-500/20 text-gray-400">HAIRCUTS</button>
+                    <button onclick="filterGalleryCategory('COLOURING')" data-cat="COLOURING" class="gallery-tab-btn flex-shrink-0 px-3 py-1.5 rounded-sm border border-gold-500/20 text-gray-400">COLOURING</button>
+                    <button onclick="filterGalleryCategory('STYLING')" data-cat="STYLING" class="gallery-tab-btn flex-shrink-0 px-3 py-1.5 rounded-sm border border-gold-500/20 text-gray-400">STYLING</button>
+                    <button onclick="filterGalleryCategory('TREATMENTS')" data-cat="TREATMENTS" class="gallery-tab-btn flex-shrink-0 px-3 py-1.5 rounded-sm border border-gold-500/20 text-gray-400">TREATMENTS</button>
+                </div>
+            </div>
+
+            <!-- Main Viewer Area (Touch Swipe Enabled) -->
+            <div id="gallerySwipeArea" class="relative flex-grow my-3 sm:my-4 min-h-[240px] sm:min-h-[420px] flex items-center justify-center bg-dark-800 rounded-sm overflow-hidden border border-gold-500/20 group select-none" style="touch-action: pan-y;">
+                <img id="galleryMainImage" src="" alt="Gallery Preview" class="w-full h-full max-h-[44vh] sm:max-h-[55vh] object-contain transition-all duration-300 pointer-events-none">
+                <div class="example-photo-badge example-photo-badge-sm sm:text-base">EXAMPLE PHOTO</div>
+                
+                <!-- Overlay Info Tag -->
+                <div class="absolute bottom-0 inset-x-0 bg-gradient-to-t from-dark-900/95 via-dark-900/80 to-transparent p-3 sm:p-6 flex flex-col sm:flex-row sm:items-end justify-between gap-2.5 sm:gap-4 z-20">
+                    <div>
+                        <span id="galleryImageCategoryBadge" class="text-[9px] uppercase tracking-widest text-black bg-gold-400 font-bold px-2 py-0.5 rounded-xs mb-1 inline-block">CATEGORY</span>
+                        <h4 id="galleryImageTitle" class="font-serif text-sm sm:text-xl text-white font-medium">Place for your title</h4>
+                        <p id="galleryImageDesc" class="text-[11px] sm:text-xs text-gray-300 font-light mt-0.5 max-w-xl">Place for your description</p>
+                    </div>
+                    <div class="flex items-center justify-between sm:justify-end gap-3">
+                        <span id="galleryCounter" class="text-xs font-serif tracking-widest text-gold-400/80">1 / 8</span>
+                        <button onclick="bookCurrentGalleryStyle()" class="btn-gold px-3.5 py-2 rounded-sm text-[10px] font-bold uppercase tracking-widest flex items-center gap-2">
+                            <span>BOOK THIS LOOK</span>
+                            <i class="fa-solid fa-calendar-check text-xs"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Nav Controls -->
+                <button onclick="prevGalleryImage()" class="absolute left-2 sm:left-3 top-1/2 -translate-y-1/2 w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-dark-900/85 border border-gold-500/40 text-gold-400 hover:bg-gold-500 hover:text-black transition-all flex items-center justify-center shadow-lg z-30">
+                    <i class="fa-solid fa-chevron-left text-xs sm:text-sm"></i>
+                </button>
+                <button onclick="nextGalleryImage()" class="absolute right-2 sm:right-3 top-1/2 -translate-y-1/2 w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-dark-900/85 border border-gold-500/40 text-gold-400 hover:bg-gold-500 hover:text-black transition-all flex items-center justify-center shadow-lg z-30">
+                    <i class="fa-solid fa-chevron-right text-xs sm:text-sm"></i>
+                </button>
+            </div>
+
+            <!-- Thumbnails Carousel Strip (Touch Scrollable) -->
+            <div id="galleryThumbnailsStrip" class="flex items-center gap-2.5 sm:gap-3 overflow-x-auto pb-1.5 pt-2 border-t border-gold-500/10" style="-webkit-overflow-scrolling: touch;">
+                <!-- Dynamically generated thumbnails -->
+            </div>
+
+        </div>
+    </div>
+
+    <!-- INTERACTIVE BOOKING MODAL -->
+    <div id="bookingModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md hidden transition-opacity">
+        <div class="luxury-card w-full max-w-lg rounded-sm p-6 sm:p-8 relative bg-dark-900 border-gold-500/40 shadow-2xl max-h-[90vh] overflow-y-auto">
+            
+            <button onclick="closeBookingModal()" class="absolute top-4 right-4 text-gray-400 hover:text-gold-400 text-lg p-2">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+            <div class="text-center mb-6">
+                <span class="text-[10px] uppercase tracking-[0.3em] text-gold-400 block font-semibold">ONLINE RESERVATION</span>
+                <h3 class="font-serif text-2xl text-white font-light tracking-wide mt-1">BOOK AN APPOINTMENT</h3>
+                <div class="h-[1px] w-12 bg-gold-500/40 mx-auto mt-2"></div>
+            </div>
+
+            <form onsubmit="handleBookingSubmit(event)" class="space-y-4">
+                <div>
+                    <label class="block text-[11px] uppercase tracking-wider text-gray-300 mb-1">Select Service</label>
+                    <select id="modalServiceSelect" class="w-full glass-input px-3 py-2.5 rounded-sm text-xs text-white">
+                        <option value="HAIRCUTS" class="bg-dark-800 text-white">HAIRCUTS - Custom Hair Styling</option>
+                        <option value="COLOURING" class="bg-dark-800 text-white">COLOURING - Balayage & Highlights</option>
+                        <option value="STYLING" class="bg-dark-800 text-white">STYLING - Event & Evening Hair</option>
+                        <option value="TREATMENTS" class="bg-dark-800 text-white">TREATMENTS - Keratin & Hydration</option>
+                    </select>
+                </div>
+
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-[11px] uppercase tracking-wider text-gray-300 mb-1">Preferred Date</label>
+                        <input type="date" required class="w-full glass-input px-3 py-2 rounded-sm text-xs text-white">
+                    </div>
+                    <div>
+                        <label class="block text-[11px] uppercase tracking-wider text-gray-300 mb-1">Preferred Time</label>
+                        <select required class="w-full glass-input px-3 py-2 rounded-sm text-xs text-white">
+                            <option class="bg-dark-800">10:00 AM</option>
+                            <option class="bg-dark-800">12:00 PM</option>
+                            <option class="bg-dark-800">02:30 PM</option>
+                            <option class="bg-dark-800">05:00 PM</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-[11px] uppercase tracking-wider text-gray-300 mb-1">Your Full Name</label>
+                    <input type="text" required placeholder="Name & Surname" class="w-full glass-input px-3 py-2.5 rounded-sm text-xs">
+                </div>
+
+                <div>
+                    <label class="block text-[11px] uppercase tracking-wider text-gray-300 mb-1">Phone Number</label>
+                    <input type="tel" required placeholder="+356 000000" class="w-full glass-input px-3 py-2.5 rounded-sm text-xs">
+                </div>
+
+                <div>
+                    <label class="block text-[11px] uppercase tracking-wider text-gray-300 mb-1">Special Requests (Optional)</label>
+                    <textarea rows="2" placeholder="Any specific requirements..." class="w-full glass-input px-3 py-2 rounded-sm text-xs resize-none"></textarea>
+                </div>
+
+                <div class="pt-3">
+                    <button type="submit" class="w-full btn-gold py-3 rounded-sm text-xs font-bold uppercase tracking-widest">
+                        CONFIRM APPOINTMENT
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- NOTIFICATION TOAST -->
+    <div id="toast" class="fixed bottom-6 right-6 z-50 bg-dark-800 border border-gold-500/50 text-white px-6 py-4 rounded-sm shadow-2xl flex items-center space-x-4 transform translate-y-24 opacity-0 transition-all duration-300">
+        <i class="fa-solid fa-circle-check text-gold-400 text-xl"></i>
+        <div>
+            <h5 id="toastTitle" class="font-serif text-xs uppercase tracking-wider font-semibold">Appointment Submitted</h5>
+            <p id="toastMessage" class="text-[11px] text-gray-300">We will contact you shortly to confirm your booking.</p>
+        </div>
+    </div>
+
+    <script>
+        // Multi-Page SPA Navigation Logic
+        const pages = ['home', 'about', 'services', 'contact'];
+
+        function navigateTo(pageId) {
+            if (!pages.includes(pageId)) pageId = 'home';
+
+            // Hide all page views
+            pages.forEach(p => {
+                const pageEl = document.getElementById(`page-${p}`);
+                const navEl = document.getElementById(`nav-${p}`);
+                
+                if (pageEl) {
+                    pageEl.classList.remove('active-page');
+                }
+                if (navEl) {
+                    navEl.classList.remove('active', 'text-gold-400');
+                    navEl.classList.add('text-gray-300');
+                }
+            });
+
+            // Show selected page
+            const selectedPage = document.getElementById(`page-${pageId}`);
+            const selectedNav = document.getElementById(`nav-${pageId}`);
+
+            if (selectedPage) {
+                selectedPage.classList.add('active-page');
+            }
+            if (selectedNav) {
+                selectedNav.classList.add('active', 'text-gold-400');
+                selectedNav.classList.remove('text-gray-300');
+            }
+
+            // Update URL hash without reload
+            window.location.hash = pageId;
+
+            // Scroll to top on page transition
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Handle browser hash changes or initial load
+        function handleHashRoute() {
+            const hash = window.location.hash.replace('#', '');
+            if (hash && pages.includes(hash)) {
+                navigateTo(hash);
+            } else {
+                navigateTo('home');
+            }
+        }
+
+        window.addEventListener('hashchange', handleHashRoute);
+        window.addEventListener('DOMContentLoaded', handleHashRoute);
+
+        // Mobile Menu Toggle
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        function closeMobileMenu() {
+            mobileMenu.classList.add('hidden');
+        }
+
+        // Modal Functions
+        const bookingModal = document.getElementById('bookingModal');
+        const modalServiceSelect = document.getElementById('modalServiceSelect');
+
+        function openBookingModal(serviceName = 'HAIRCUTS') {
+            if (modalServiceSelect) {
+                modalServiceSelect.value = serviceName;
+            }
+            bookingModal.classList.remove('hidden');
+        }
+
+        function closeBookingModal() {
+            bookingModal.classList.add('hidden');
+        }
+
+        bookingModal.addEventListener('click', (e) => {
+            if (e.target === bookingModal) {
+                closeBookingModal();
+            }
+        });
+
+        // Toast Helper
+        function showToast(title, message) {
+            const toast = document.getElementById('toast');
+            document.getElementById('toastTitle').innerText = title;
+            document.getElementById('toastMessage').innerText = message;
+            
+            toast.classList.remove('translate-y-24', 'opacity-0');
+            
+            setTimeout(() => {
+                toast.classList.add('translate-y-24', 'opacity-0');
+            }, 4000);
+        }
+
+        // Form Handlers
+        function handleBookingSubmit(event) {
+            event.preventDefault();
+            closeBookingModal();
+            showToast('BOOKING SUCCESSFUL', 'Thank you for your enquiry! Your demo request has been submitted successfully. Ready to create a website for your business? Get in touch with Tailoredly!');
+        }
+
+        function handleContactSubmit(event) {
+            event.preventDefault();
+            event.target.reset();
+            showToast('MESSAGE SENT', 'Thank you for reaching out. We will get back to you soon.');
+        }
+
+        const galleryData = [
+            {
+                id: 1,
+                category: 'HAIRCUTS',
+                title: 'Place for your title',
+                desc: 'Place for your description',
+                image: 'https://images.unsplash.com/photo-1562322140-8baeececf3df?q=80&w=1200&auto=format&fit=crop'
+            },
+            {
+                id: 2,
+                category: 'HAIRCUTS',
+                title: 'Place for your title',
+                desc: 'Place for your description',
+                image: 'https://images.unsplash.com/photo-1595476108010-b4d1f102b1b1?q=80&w=1200&auto=format&fit=crop'
+            },
+            {
+                id: 3,
+                category: 'COLOURING',
+                title: 'Place for your title',
+                desc: 'Place for your description',
+                image: 'https://images.unsplash.com/photo-1527799820374-dcf8d9d4a388?q=80&w=1200&auto=format&fit=crop'
+            },
+            {
+                id: 4,
+                category: 'COLOURING',
+                title: 'Place for your title',
+                desc: 'Place for your description',
+                image: 'https://images.unsplash.com/photo-1519699047748-de8e457a634e?q=80&w=1200&auto=format&fit=crop'
+            },
+            {
+                id: 5,
+                category: 'STYLING',
+                title: 'Place for your title',
+                desc: 'Place for your description',
+                image: 'https://images.unsplash.com/photo-1492106087820-71f1a00d2b11?q=80&w=1200&auto=format&fit=crop'
+            },
+            {
+                id: 6,
+                category: 'STYLING',
+                title: 'Place for your title',
+                desc: 'Place for your description',
+                image: 'https://images.unsplash.com/photo-1560869713-7d0a29430803?q=80&w=1200&auto=format&fit=crop'
+            },
+            {
+                id: 7,
+                category: 'TREATMENTS',
+                title: 'Place for your title',
+                desc: 'Place for your description',
+                image: 'https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?q=80&w=1200&auto=format&fit=crop'
+            },
+            {
+                id: 8,
+                category: 'TREATMENTS',
+                title: 'Place for your title',
+                desc: 'Place for your description',
+                image: 'https://images.unsplash.com/photo-1503951914875-452162b0f3f1?q=80&w=1200&auto=format&fit=crop'
+            }
+        ];
+
+        let filteredGallery = [...galleryData];
+        let currentGalleryIndex = 0;
+
+        function openGalleryModal(category = 'ALL') {
+            filterGalleryCategory(category);
+            const modal = document.getElementById('galleryModal');
+            if (modal) {
+                modal.classList.remove('hidden');
+                document.body.style.overflow = 'hidden';
+            }
+        }
+
+        function closeGalleryModal() {
+            const modal = document.getElementById('galleryModal');
+            if (modal) {
+                modal.classList.add('hidden');
+                document.body.style.overflow = '';
+            }
+        }
+
+        function handleGalleryBackdropClick(event) {
+            if (event.target.id === 'galleryModal') {
+                closeGalleryModal();
+            }
+        }
+
+        function filterGalleryCategory(cat) {
+            if (cat === 'ALL') {
+                filteredGallery = [...galleryData];
+            } else {
+                filteredGallery = galleryData.filter(item => item.category === cat);
+            }
+            
+            currentGalleryIndex = 0;
+
+            document.querySelectorAll('.gallery-tab-btn').forEach(btn => {
+                if (btn.getAttribute('data-cat') === cat) {
+                    btn.classList.add('text-gold-400', 'bg-gold-500/10', 'font-semibold', 'border-gold-500/30');
+                    btn.classList.remove('text-gray-400', 'border-gold-500/20');
+                } else {
+                    btn.classList.remove('text-gold-400', 'bg-gold-500/10', 'font-semibold', 'border-gold-500/30');
+                    btn.classList.add('text-gray-400', 'border-gold-500/20');
+                }
+            });
+
+            const subtitle = document.getElementById('galleryCategorySubtitle');
+            if (subtitle) {
+                subtitle.innerText = cat === 'ALL' ? 'ALL CATEGORIES' : `${cat} GALLERY`;
+            }
+
+            renderGalleryView();
+        }
+
+        function renderGalleryView() {
+            if (filteredGallery.length === 0) return;
+
+            const current = filteredGallery[currentGalleryIndex];
+            
+            document.getElementById('galleryMainImage').src = current.image;
+            document.getElementById('galleryImageTitle').innerText = current.title;
+            document.getElementById('galleryImageDesc').innerText = current.desc;
+            document.getElementById('galleryImageCategoryBadge').innerText = current.category;
+            document.getElementById('galleryCounter').innerText = `${currentGalleryIndex + 1} / ${filteredGallery.length}`;
+
+            const strip = document.getElementById('galleryThumbnailsStrip');
+            strip.innerHTML = '';
+
+            filteredGallery.forEach((item, idx) => {
+                const thumb = document.createElement('button');
+                const isActive = idx === currentGalleryIndex;
+                thumb.className = `relative w-16 h-12 flex-shrink-0 rounded-sm overflow-hidden border ${isActive ? 'border-gold-400 ring-2 ring-gold-400/40' : 'border-gray-800 opacity-60 hover:opacity-100'} transition-all`;
+                thumb.onclick = () => {
+                    currentGalleryIndex = idx;
+                    renderGalleryView();
+                };
+                thumb.innerHTML = `<img src="${item.image}" class="w-full h-full object-cover">`;
+                strip.appendChild(thumb);
+
+                if (isActive) {
+                    setTimeout(() => {
+                        thumb.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+                    }, 50);
+                }
+            });
+        }
+
+        function nextGalleryImage() {
+            if (filteredGallery.length === 0) return;
+            currentGalleryIndex = (currentGalleryIndex + 1) % filteredGallery.length;
+            renderGalleryView();
+        }
+
+        function prevGalleryImage() {
+            if (filteredGallery.length === 0) return;
+            currentGalleryIndex = (currentGalleryIndex - 1 + filteredGallery.length) % filteredGallery.length;
+            renderGalleryView();
+        }
+
+        function bookCurrentGalleryStyle() {
+            if (filteredGallery.length === 0) return;
+            const current = filteredGallery[currentGalleryIndex];
+            closeGalleryModal();
+            openBookingModal(current.category);
+        }
+
+        // Touch swipe support for mobile gallery
+        const swipeArea = document.getElementById('gallerySwipeArea');
+        let touchStartX = 0;
+        let touchEndX = 0;
+
+        if (swipeArea) {
+            swipeArea.addEventListener('touchstart', (e) => {
+                touchStartX = e.changedTouches[0].screenX;
+            }, { passive: true });
+
+            swipeArea.addEventListener('touchend', (e) => {
+                touchEndX = e.changedTouches[0].screenX;
+                const diff = touchStartX - touchEndX;
+                if (Math.abs(diff) > 40) {
+                    if (diff > 0) {
+                        nextGalleryImage();
+                    } else {
+                        prevGalleryImage();
+                    }
+                }
+            }, { passive: true });
+        }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            const modal = document.getElementById('galleryModal');
+            if (modal && !modal.classList.contains('hidden')) {
+                if (e.key === 'Escape') closeGalleryModal();
+                if (e.key === 'ArrowRight') nextGalleryImage();
+                if (e.key === 'ArrowLeft') prevGalleryImage();
+            }
+        });
+    </script>
+</body>
+</html>

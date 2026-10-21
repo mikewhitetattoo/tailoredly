@@ -1,0 +1,1143 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Handyman Demo Website</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts Plus Jakarta Sans & Inter (for Banner) -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                    },
+                    colors: {
+                        primary: {
+                            DEFAULT: '#e05612', // Rich vibrant handyman orange
+                            hover: '#c8490a',
+                            light: '#fff4ec',
+                            border: '#fed7aa',
+                            dark: '#9a3412'
+                        },
+                        surface: {
+                            DEFAULT: '#fbf8f5', // Warm light neutral surface background
+                            card: '#ffffff',
+                            dark: '#12100e'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            overflow-x: hidden;
+        }
+
+        /* Custom scrolling marquee style for top yellow demo banner */
+        @keyframes marquee {
+            0% { transform: translateX(0%); }
+            100% { transform: translateX(-50%); }
+        }
+        .animate-marquee {
+            display: flex;
+            width: max-content;
+            animation: marquee 25s linear infinite;
+        }
+        
+        /* Custom curved arrow effect matching reference design */
+        .handdrawn-arrow {
+            position: absolute;
+            bottom: -24px;
+            left: 22px;
+            width: 44px;
+            height: 38px;
+            border-left: 2.5px dashed #e05612;
+            border-bottom: 2.5px dashed #e05612;
+            border-bottom-left-radius: 20px;
+            transform: rotate(-15deg);
+        }
+        .handdrawn-arrow::after {
+            content: '';
+            position: absolute;
+            left: -5px;
+            bottom: -5px;
+            width: 0;
+            height: 0;
+            border-top: 5px solid transparent;
+            border-bottom: 5px solid transparent;
+            border-right: 8px solid #e05612;
+        }
+
+        /* ========================================================= */
+        /* EXACT TAILOREDLY DEMO BANNER STYLES                       */
+        /* ========================================================= */
+        .tailoredly-banner-wrap {
+            position: fixed !important;
+            top: 132px !important;
+            right: 24px !important;
+            bottom: auto !important;
+            left: auto !important;
+            transform: none !important;
+            z-index: 2147483647 !important;
+            width: auto;
+            max-width: calc(100vw - 48px);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif !important;
+            box-sizing: border-box;
+            pointer-events: auto;
+        }
+
+        .tailoredly-banner-box {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            padding: 10px 16px;
+            background: radial-gradient(circle at 85% 50%, rgba(190, 18, 74, 0.08) 0%, rgba(6, 6, 8, 0.98) 55%), #060608;
+            border: 1px solid rgba(244, 37, 100, 0.45);
+            border-radius: 16px;
+            box-shadow: 
+                0 0 25px rgba(235, 20, 85, 0.22),
+                0 12px 32px rgba(0, 0, 0, 0.92),
+                inset 0 0 8px rgba(244, 37, 100, 0.04);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif !important;
+        }
+
+        .tailoredly-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            min-width: 0;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif !important;
+        }
+
+        .tailoredly-icon-box {
+            width: 38px;
+            height: 38px;
+            min-width: 38px;
+            border-radius: 10px;
+            border: 1px solid rgba(244, 37, 100, 0.4);
+            background: rgba(14, 8, 12, 0.95);
+            box-shadow: 0 0 12px rgba(244, 37, 100, 0.15);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #f42564;
+        }
+
+        .tailoredly-brand-text {
+            display: flex;
+            flex-direction: column;
+            line-height: 1.2;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif !important;
+        }
+
+        .tailoredly-demo-label {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif !important;
+            font-size: 9.5px !important;
+            font-weight: 700 !important;
+            letter-spacing: 0.18em !important;
+            text-transform: uppercase !important;
+            color: #f42564 !important;
+            margin-bottom: 2px !important;
+        }
+
+        .tailoredly-madeby {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif !important;
+            font-size: 16px !important;
+            font-weight: 700 !important;
+            color: #d1d5db !important;
+            letter-spacing: -0.01em !important;
+            white-space: nowrap !important;
+            display: flex !important;
+            align-items: baseline !important;
+            gap: 5px !important;
+        }
+
+        .tailoredly-logo-mark {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif !important;
+            font-weight: 900 !important;
+            letter-spacing: 0.02em !important;
+            text-transform: uppercase !important;
+            color: #ffffff !important;
+        }
+
+        .tailoredly-logo-mark span {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif !important;
+            color: #f42564 !important;
+        }
+
+        .tailoredly-divider {
+            width: 1px;
+            height: 32px;
+            background: rgba(255, 255, 255, 0.1);
+            flex-shrink: 0;
+        }
+
+        .tailoredly-middle {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            line-height: 1.3;
+            min-width: 0;
+            padding-right: 4px;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif !important;
+        }
+
+        .tailoredly-question {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif !important;
+            font-size: 13px !important;
+            font-weight: 500 !important;
+            color: #f3f4f6 !important;
+            margin: 0 !important;
+            white-space: nowrap !important;
+        }
+
+        .tailoredly-subtext {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif !important;
+            font-size: 12px !important;
+            font-weight: 400 !important;
+            color: #8e8e99 !important;
+            margin: 0 !important;
+            white-space: nowrap !important;
+        }
+
+        .tailoredly-btn {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif !important;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 9px 16px;
+            border-radius: 11px;
+            background: linear-gradient(90deg, #f72564 0%, #c11248 100%);
+            color: #ffffff !important;
+            font-size: 13px !important;
+            font-weight: 700 !important;
+            text-decoration: none !important;
+            white-space: nowrap;
+            box-shadow: 0 0 22px rgba(247, 37, 100, 0.5), inset 0 1px 1px rgba(255, 255, 255, 0.25);
+            transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
+            flex-shrink: 0;
+        }
+
+        .tailoredly-btn:hover {
+            transform: translateY(-1px);
+            filter: brightness(1.08);
+            box-shadow: 0 0 30px rgba(247, 37, 100, 0.75), inset 0 1px 1px rgba(255, 255, 255, 0.35);
+        }
+
+        .tailoredly-btn svg {
+            transition: transform 0.2s ease;
+        }
+
+        .tailoredly-btn:hover svg {
+            transform: translateX(-3px);
+        }
+
+        @media (max-width: 1250px) and (min-width: 769px) {
+            .tailoredly-divider,
+            .tailoredly-middle {
+                display: none;
+            }
+        }
+
+        @media (max-width: 768px) {
+            html body {
+                padding-bottom: calc(144px + env(safe-area-inset-bottom, 0px)) !important;
+            }
+            .tailoredly-banner-wrap {
+                top: auto !important;
+                right: auto !important;
+                bottom: calc(56px + env(safe-area-inset-bottom, 0px)) !important;
+                left: 50% !important;
+                transform: translateX(-50%) !important;
+                width: calc(100% - 16px);
+                max-width: 540px;
+            }
+            .tailoredly-banner-box {
+                padding: 10px 12px;
+                gap: 10px;
+                border-radius: 15px;
+            }
+            .tailoredly-divider,
+            .tailoredly-middle {
+                display: none;
+            }
+            .tailoredly-icon-box {
+                width: 36px;
+                height: 36px;
+                min-width: 36px;
+                border-radius: 9px;
+            }
+            .tailoredly-icon-box svg {
+                width: 17px;
+                height: 17px;
+            }
+            .tailoredly-demo-label {
+                font-size: 8.5px !important;
+                letter-spacing: 0.14em !important;
+                margin-bottom: 1px !important;
+            }
+            .tailoredly-madeby {
+                font-size: 15px !important;
+            }
+            .tailoredly-btn {
+                padding: 10px 14px;
+                font-size: 12.5px !important;
+                gap: 6px;
+                border-radius: 10px;
+            }
+        }
+
+        @media (max-width: 360px) {
+            .tailoredly-icon-box {
+                display: none;
+            }
+            .tailoredly-madeby {
+                font-size: 14px !important;
+            }
+            .tailoredly-btn {
+                padding: 9px 12px;
+                font-size: 12px !important;
+            }
+        }
+    </style>
+</head>
+<body class="bg-surface text-stone-800 font-sans antialiased selection:bg-primary selection:text-white">
+
+    <!-- Sticky Yellow Marquee Banner -->
+    <div class="sticky top-0 z-50 bg-[#f5b018] text-stone-950 font-bold text-sm py-2 overflow-hidden whitespace-nowrap border-b border-amber-500/60 shadow-sm">
+        <div class="animate-marquee flex items-center space-x-8 uppercase tracking-widest text-xs sm:text-sm font-extrabold">
+            <span class="flex items-center space-x-8">
+                <span class="flex items-center"><span class="w-2.5 h-2.5 bg-[#78350f] rounded-full inline-block mx-4"></span> PRZYKŁADOWA STRONA</span>
+                <span class="flex items-center"><span class="w-2.5 h-2.5 bg-[#78350f] rounded-full inline-block mx-4"></span> DEMO WEBSITE</span>
+                <span class="flex items-center"><span class="w-2.5 h-2.5 bg-[#78350f] rounded-full inline-block mx-4"></span> PRZYKŁADOWA STRONA</span>
+                <span class="flex items-center"><span class="w-2.5 h-2.5 bg-[#78350f] rounded-full inline-block mx-4"></span> DEMO WEBSITE</span>
+                <span class="flex items-center"><span class="w-2.5 h-2.5 bg-[#78350f] rounded-full inline-block mx-4"></span> PRZYKŁADOWA STRONA</span>
+                <span class="flex items-center"><span class="w-2.5 h-2.5 bg-[#78350f] rounded-full inline-block mx-4"></span> DEMO WEBSITE</span>
+            </span>
+            <span class="flex items-center space-x-8" aria-hidden="true">
+                <span class="flex items-center"><span class="w-2.5 h-2.5 bg-[#78350f] rounded-full inline-block mx-4"></span> PRZYKŁADOWA STRONA</span>
+                <span class="flex items-center"><span class="w-2.5 h-2.5 bg-[#78350f] rounded-full inline-block mx-4"></span> DEMO WEBSITE</span>
+                <span class="flex items-center"><span class="w-2.5 h-2.5 bg-[#78350f] rounded-full inline-block mx-4"></span> PRZYKŁADOWA STRONA</span>
+                <span class="flex items-center"><span class="w-2.5 h-2.5 bg-[#78350f] rounded-full inline-block mx-4"></span> DEMO WEBSITE</span>
+                <span class="flex items-center"><span class="w-2.5 h-2.5 bg-[#78350f] rounded-full inline-block mx-4"></span> PRZYKŁADOWA STRONA</span>
+                <span class="flex items-center"><span class="w-2.5 h-2.5 bg-[#78350f] rounded-full inline-block mx-4"></span> DEMO WEBSITE</span>
+            </span>
+        </div>
+    </div>
+
+    <header class="sticky top-[36px] bg-white/95 backdrop-blur-md z-40 border-b border-stone-200/80 shadow-sm transition-all">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <!-- Brand Logo -->
+                <a href="#home" onclick="setActiveNav('home')" class="flex items-center space-x-3 group">
+                    <div class="w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-primary flex items-center justify-center text-white shadow-md shadow-primary/30 group-hover:bg-primary-hover transition-all transform group-hover:-translate-y-0.5">
+                        <i class="fa-solid fa-house text-lg sm:text-xl"></i>
+                    </div>
+                    <div class="flex flex-col">
+                        <span class="text-xl sm:text-[22px] font-extrabold tracking-tight text-stone-900 leading-tight">YourBusiness<span class="text-primary">Name</span></span>
+                        <span class="text-[9.5px] sm:text-[10px] uppercase tracking-widest text-stone-500 font-bold">HOME REPAIR & MAINTENANCE</span>
+                    </div>
+                </a>
+
+                <!-- Desktop Nav Links -->
+                <nav class="hidden md:flex items-center space-x-8" id="desktop-nav">
+                    <a href="#home" data-nav="home" onclick="setActiveNav('home')" class="desktop-nav-link font-bold text-[15px] text-primary hover:text-primary-hover transition-colors">Home</a>
+                    <a href="#about" data-nav="about" onclick="setActiveNav('about')" class="desktop-nav-link font-semibold text-[15px] text-stone-600 hover:text-primary transition-colors">About</a>
+                    <a href="#services" data-nav="services" onclick="setActiveNav('services')" class="desktop-nav-link font-semibold text-[15px] text-stone-600 hover:text-primary transition-colors">Services</a>
+                    <a href="#contact" data-nav="contact" onclick="setActiveNav('contact')" class="desktop-nav-link font-semibold text-[15px] text-stone-600 hover:text-primary transition-colors">Contact</a>
+                </nav>
+
+                <!-- Header CTA Button -->
+                <div class="hidden sm:flex items-center">
+                    <a href="#contact" onclick="setActiveNav('contact')" class="bg-primary hover:bg-primary-hover text-white px-5 py-2.5 rounded-xl font-bold text-[15px] shadow-md shadow-primary/20 transition-all flex items-center space-x-2 transform hover:-translate-y-1">
+                        <span>Book a Service</span>
+                        <i class="fa-solid fa-calendar-days text-sm"></i>
+                    </a>
+                </div>
+
+                <!-- Mobile Menu Toggle Button -->
+                <div class="md:hidden flex items-center">
+                    <button id="menu-btn" onclick="toggleMobileMenu()" class="w-11 h-11 rounded-2xl border border-orange-200 bg-orange-50/90 flex items-center justify-center text-stone-800 hover:text-primary hover:border-primary/40 transition-all shadow-sm focus:outline-none" aria-label="Toggle Menu">
+                        <i class="fa-solid fa-bars text-lg" id="mobile-menu-icon"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Menu Dropdown (100% Opaque Solid White Background) -->
+        <div id="mobile-menu" style="background-color: #ffffff;" class="hidden md:hidden absolute top-full left-0 right-0 bg-white border-t border-b-2 border-stone-200 border-b-primary/30 px-5 pt-3 pb-6 shadow-[0_25px_50px_-12px_rgba(18,16,14,0.28)] z-50">
+            <div class="max-w-md mx-auto">
+                <div class="divide-y divide-stone-100">
+                    <a href="#home" data-mobile-nav="home" onclick="setActiveNav('home'); closeMobileMenu();" class="mobile-nav-btn w-full flex items-center justify-between py-3 px-3 rounded-xl font-bold text-sm text-primary bg-orange-50/90 transition-all my-0.5">
+                        <div class="flex items-center space-x-3.5">
+                            <div class="mobile-nav-icon w-9 h-9 rounded-xl bg-primary text-white flex items-center justify-center text-sm shadow-sm transition-all">
+                                <i class="fa-solid fa-house"></i>
+                            </div>
+                            <span>Home</span>
+                        </div>
+                        <i class="fa-solid fa-chevron-right text-[11px] opacity-80"></i>
+                    </a>
+
+                    <a href="#about" data-mobile-nav="about" onclick="setActiveNav('about'); closeMobileMenu();" class="mobile-nav-btn w-full flex items-center justify-between py-3 px-3 rounded-xl font-semibold text-sm text-stone-700 hover:bg-orange-50/80 hover:text-primary transition-all my-0.5">
+                        <div class="flex items-center space-x-3.5">
+                            <div class="mobile-nav-icon w-9 h-9 rounded-xl bg-orange-50 text-primary border border-orange-100 flex items-center justify-center text-sm transition-all">
+                                <i class="fa-solid fa-user-Tie fa-user"></i>
+                            </div>
+                            <span>About</span>
+                        </div>
+                        <i class="fa-solid fa-chevron-right text-[11px] text-stone-400"></i>
+                    </a>
+
+                    <a href="#services" data-mobile-nav="services" onclick="setActiveNav('services'); closeMobileMenu();" class="mobile-nav-btn w-full flex items-center justify-between py-3 px-3 rounded-xl font-semibold text-sm text-stone-700 hover:bg-orange-50/80 hover:text-primary transition-all my-0.5">
+                        <div class="flex items-center space-x-3.5">
+                            <div class="mobile-nav-icon w-9 h-9 rounded-xl bg-orange-50 text-primary border border-orange-100 flex items-center justify-center text-sm transition-all">
+                                <i class="fa-solid fa-screwdriver-wrench"></i>
+                            </div>
+                            <span>Services</span>
+                        </div>
+                        <i class="fa-solid fa-chevron-right text-[11px] text-stone-400"></i>
+                    </a>
+
+                    <a href="#contact" data-mobile-nav="contact" onclick="setActiveNav('contact'); closeMobileMenu();" class="mobile-nav-btn w-full flex items-center justify-between py-3 px-3 rounded-xl font-semibold text-sm text-stone-700 hover:bg-orange-50/80 hover:text-primary transition-all my-0.5">
+                        <div class="flex items-center space-x-3.5">
+                            <div class="mobile-nav-icon w-9 h-9 rounded-xl bg-orange-50 text-primary border border-orange-100 flex items-center justify-center text-sm transition-all">
+                                <i class="fa-solid fa-envelope-open-text"></i>
+                            </div>
+                            <span>Contact</span>
+                        </div>
+                        <i class="fa-solid fa-chevron-right text-[11px] text-stone-400"></i>
+                    </a>
+                </div>
+
+                <!-- Bottom Call & Book Actions in Mobile Menu -->
+                <div class="pt-3.5 mt-2 border-t border-stone-100 grid grid-cols-2 gap-2.5">
+                    <a href="tel:+35600000000" class="w-full bg-orange-50 hover:bg-orange-100 text-stone-800 border border-orange-200 font-bold text-xs py-3.5 rounded-xl text-center flex items-center justify-center space-x-2 transition">
+                        <i class="fa-solid fa-phone text-primary text-xs"></i>
+                        <span>+356 0000 0000</span>
+                    </a>
+                    <a href="#contact" onclick="setActiveNav('contact'); closeMobileMenu();" class="w-full bg-primary hover:bg-primary-hover text-white font-bold text-xs py-3.5 rounded-xl text-center flex items-center justify-center space-x-2 shadow-md shadow-primary/20 transition">
+                        <i class="fa-solid fa-calendar-days text-xs"></i>
+                        <span>Book a Service</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- TAILOREDLY DEMO BANNER -->
+    <div class="tailoredly-banner-wrap" role="region" aria-label="Tailoredly Demo Banner">
+        <div class="tailoredly-banner-box">
+            <div class="tailoredly-left">
+                <div class="tailoredly-icon-box" aria-hidden="true">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="3" y="4" width="18" height="12" rx="2" ry="2"></rect>
+                        <line x1="8" y1="20" x2="16" y2="20"></line>
+                        <line x1="12" y1="16" x2="12" y2="20"></line>
+                    </svg>
+                </div>
+                <div class="tailoredly-brand-text">
+                    <span class="tailoredly-demo-label">WEBSITE DEMO</span>
+                    <div class="tailoredly-madeby">
+                        Made by <strong class="tailoredly-logo-mark">TAILORED<span>LY</span></strong>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tailoredly-divider" aria-hidden="true"></div>
+
+            <div class="tailoredly-middle">
+                <p class="tailoredly-question">Like this design?</p>
+                <p class="tailoredly-subtext">Get a website for your business.</p>
+            </div>
+
+            <a href="file:///C:/Users/Bobik/Desktop/Website creator/index.html" class="tailoredly-btn">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="19" y1="12" x2="5" y2="12"></line>
+                    <polyline points="12 19 5 12 12 5"></polyline>
+                </svg>
+                <span>Back to Portfolio</span>
+            </a>
+        </div>
+    </div>
+    <!-- END TAILOREDLY BANNER -->
+
+    <!-- Hero Section -->
+    <section id="home" class="relative text-white py-20 sm:py-24 lg:py-32 overflow-hidden bg-stone-950">
+        <!-- High resolution wooden workbench photo with hammer, tape measure & workshop tools -->
+        <div class="absolute inset-0 bg-cover bg-[center_right] sm:bg-right z-0" style="background-image: url('https://images.unsplash.com/photo-1504148455328-c376907d081c?auto=format&fit=crop&w=1920&q=80');"></div>
+        
+        <!-- High-contrast dark gradient overlay -->
+        <div class="absolute inset-0 bg-gradient-to-r from-stone-950 via-stone-950/90 sm:via-stone-950/70 to-stone-950/25 z-10"></div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20">
+            <div class="max-w-2xl space-y-6">
+                <!-- Tagline with Orange Horizontal Line -->
+                <div class="flex items-center space-x-3">
+                    <span class="w-9 h-[2.5px] bg-primary"></span>
+                    <span class="text-primary font-extrabold text-xs sm:text-sm uppercase tracking-widest">RELIABLE HOME REPAIR & MAINTENANCE</span>
+                </div>
+
+                <!-- Main Hero Headline -->
+                <h1 class="text-4xl sm:text-5xl lg:text-[64px] font-extrabold tracking-tight leading-[1.1] text-white">
+                    Your home <br>
+                    <span class="text-primary">in good hands</span>
+                </h1>
+
+                <!-- Hero Subtitle Paragraph -->
+                <p class="text-base sm:text-[19px] text-stone-200 leading-relaxed font-normal max-w-xl">
+                    Professional home repair and maintenance services to keep your home safe, functional and looking its best.
+                </p>
+
+                <!-- Action Buttons Row -->
+                <div class="flex flex-col sm:flex-row items-stretch sm:items-center space-y-3 sm:space-y-0 sm:space-x-4 pt-2">
+                    <a href="#contact" class="bg-primary hover:bg-primary-hover text-white font-bold px-7 py-3.5 rounded-xl shadow-lg shadow-primary/30 transition-all flex items-center justify-center space-x-2.5 text-[15px] transform hover:-translate-y-1">
+                        <i class="fa-solid fa-calendar-days text-sm"></i>
+                        <span>Book a Service</span>
+                        <i class="fa-solid fa-arrow-right text-xs"></i>
+                    </a>
+                    <a href="#services" class="bg-stone-900/85 hover:bg-stone-800 text-white font-bold px-7 py-3.5 rounded-xl border border-stone-700 transition-all text-center text-[15px] backdrop-blur-sm transform hover:-translate-y-1">
+                        View Services
+                    </a>
+                </div>
+            </div>
+
+            <!-- Hero Bottom 3 Feature Pills -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 border-t border-stone-800/80 pt-10 mt-16 max-w-5xl">
+                <!-- Feature 1 -->
+                <div class="flex items-center space-x-4">
+                    <div class="w-13 h-13 w-[52px] h-[52px] rounded-full border border-stone-700 bg-stone-900/85 flex items-center justify-center text-primary flex-shrink-0 text-lg shadow-md">
+                        <i class="fa-solid fa-shield-halved"></i>
+                    </div>
+                    <div>
+                        <h4 class="text-[15px] sm:text-base font-bold text-white">Reliable & trustworthy</h4>
+                        <p class="text-xs sm:text-[13px] text-stone-300">Quality work you can count on</p>
+                    </div>
+                </div>
+
+                <!-- Feature 2 -->
+                <div class="flex items-center space-x-4">
+                    <div class="w-[52px] h-[52px] rounded-full border border-stone-700 bg-stone-900/85 flex items-center justify-center text-primary flex-shrink-0 text-lg shadow-md">
+                        <i class="fa-solid fa-clock"></i>
+                    </div>
+                    <div>
+                        <h4 class="text-[15px] sm:text-base font-bold text-white">Flexible appointments</h4>
+                        <p class="text-xs sm:text-[13px] text-stone-300">At a time that suits you</p>
+                    </div>
+                </div>
+
+                <!-- Feature 3 -->
+                <div class="flex items-center space-x-4">
+                    <div class="w-[52px] h-[52px] rounded-full border border-stone-700 bg-stone-900/85 flex items-center justify-center text-primary flex-shrink-0 text-lg shadow-md">
+                        <i class="fa-solid fa-house"></i>
+                    </div>
+                    <div>
+                        <h4 class="text-[15px] sm:text-base font-bold text-white">All around home maintenance</h4>
+                        <p class="text-xs sm:text-[13px] text-stone-300">Small repairs to bigger projects</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Me Section -->
+    <section id="about" class="py-20 lg:py-28 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+                
+                <!-- Left Column: Photo Frame with organic shape + Orange sticker badge -->
+                <div class="lg:col-span-5 relative flex justify-center">
+                    <div class="relative w-full max-w-md">
+                        
+                        <!-- Slanted Orange Badge -->
+                        <div class="absolute -top-4 -left-2 sm:-left-3 z-20 bg-primary text-white font-extrabold text-xs tracking-wider uppercase py-2.5 px-4 rounded-xl shadow-lg transform -rotate-6">
+                            Experienced<br>Reliable<br>Local
+                            <div class="handdrawn-arrow"></div>
+                        </div>
+
+                        <!-- Main Image Box -->
+                        <div class="relative rounded-[2.5rem] overflow-hidden shadow-2xl border-4 border-stone-100 bg-stone-100 aspect-[4/4.5] flex items-center justify-center">
+                            <img src="handyman.png" alt="Handyman portrait" class="w-full h-full object-cover" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1621905251189-08b45d6a269e?auto=format&fit=crop&w=800&q=80';">
+                            
+                            <!-- Custom EXAMPLE PHOTO Badge overlay -->
+                            <div class="absolute inset-0 flex items-center justify-center pointer-events-none z-10 p-2">
+                                <div class="bg-stone-950/90 border-2 border-dashed border-primary text-primary px-6 py-2.5 rounded-full transform -rotate-12 shadow-2xl backdrop-blur-sm">
+                                    <span class="text-sm sm:text-base font-black uppercase tracking-widest drop-shadow">EXAMPLE PHOTO</span>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- Right Column: Text and 3 Key Features -->
+                <div class="lg:col-span-7 space-y-6">
+                    <div class="inline-block bg-orange-100 border border-orange-200 text-primary text-xs font-extrabold uppercase tracking-wider px-4 py-1.5 rounded-full">
+                        ABOUT ME
+                    </div>
+                    
+                    <h2 class="text-3xl sm:text-[42px] font-extrabold text-stone-900 tracking-tight leading-tight">
+                        Hi, I'm <span class="text-primary">[Your Name]</span>
+                    </h2>
+
+                    <p class="text-stone-600 leading-relaxed text-[15px] sm:text-[17px]">
+                        I'm a local handyman with experience in home repairs, installations and general maintenance. I take pride in delivering high-quality work, honest advice and a friendly, reliable service.
+                    </p>
+
+                    <!-- 3 Feature Columns -->
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-5 pt-4 pb-2 border-t border-stone-100">
+                        <div class="space-y-1.5">
+                            <div class="w-10 h-10 rounded-xl bg-orange-100 text-primary flex items-center justify-center text-base mb-2">
+                                <i class="fa-solid fa-hammer"></i>
+                            </div>
+                            <h4 class="text-[13px] font-extrabold text-stone-900 uppercase tracking-wider">Skilled & experienced</h4>
+                            <p class="text-[13px] text-stone-500">Years of hands-on experience</p>
+                        </div>
+                        <div class="space-y-1.5">
+                            <div class="w-10 h-10 rounded-xl bg-orange-100 text-primary flex items-center justify-center text-base mb-2">
+                                <i class="fa-solid fa-user"></i>
+                            </div>
+                            <h4 class="text-[13px] font-extrabold text-stone-900 uppercase tracking-wider">Customer focused</h4>
+                            <p class="text-[13px] text-stone-500">Clear communication and honest advice</p>
+                        </div>
+                        <div class="space-y-1.5">
+                            <div class="w-10 h-10 rounded-xl bg-orange-100 text-primary flex items-center justify-center text-base mb-2">
+                                <i class="fa-solid fa-star"></i>
+                            </div>
+                            <h4 class="text-[13px] font-extrabold text-stone-900 uppercase tracking-wider">Quality results</h4>
+                            <p class="text-[13px] text-stone-500">Attention to detail in every job</p>
+                        </div>
+                    </div>
+
+                    <div class="pt-2">
+                        <a href="#contact" class="inline-flex items-center space-x-2 text-primary font-bold hover:text-primary-hover border-2 border-primary/30 hover:border-primary px-6 py-3 rounded-xl transition-all text-[15px] transform hover:-translate-y-1 shadow-sm hover:shadow-md">
+                            <span>Learn more about me</span>
+                            <i class="fa-solid fa-arrow-right text-xs"></i>
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="py-20 lg:py-28 bg-surface border-t border-stone-200/60">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <div class="text-center max-w-2xl mx-auto space-y-3.5 mb-16">
+                <div class="inline-block bg-orange-100 border border-orange-200 text-primary text-xs font-extrabold uppercase tracking-wider px-4 py-1.5 rounded-full">
+                    OUR SERVICES
+                </div>
+                <h2 class="text-3xl sm:text-[42px] font-extrabold text-stone-900 tracking-tight leading-tight">
+                    How can <span class="text-primary">I help you?</span>
+                </h2>
+                <p class="text-stone-600 text-[15px] sm:text-[17px] leading-relaxed">
+                    A wide range of home repair and maintenance services, tailored to your needs.
+                </p>
+            </div>
+
+            <!-- 2-Column Grid of Horizontal Cards -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+
+                <!-- Service Card 1 -->
+                <div class="bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-xl transition-all border border-stone-200/80 flex flex-col sm:flex-row group">
+                    <div class="p-6 sm:p-8 flex-1 flex flex-col justify-between">
+                        <div>
+                            <div class="w-13 h-13 w-[50px] h-[50px] bg-orange-100 text-primary rounded-2xl flex items-center justify-center text-xl mb-4 group-hover:bg-primary group-hover:text-white transition-colors">
+                                <i class="fa-solid fa-chair"></i>
+                            </div>
+                            <h3 class="text-lg sm:text-xl font-bold text-stone-900 mb-2">Furniture assembly</h3>
+                            <p class="text-[13.5px] sm:text-[15px] text-stone-500 leading-relaxed mb-4">
+                                Assembly of flat-pack furniture, wardrobes, beds, desks and more.
+                            </p>
+                        </div>
+                        <a href="#contact" class="inline-flex items-center w-fit text-[13.5px] sm:text-sm font-bold text-primary hover:text-primary-hover transition-all transform hover:-translate-y-0.5">
+                            <span>Book service</span>
+                            <i class="fa-solid fa-arrow-right ml-1.5 text-xs"></i>
+                        </a>
+                    </div>
+                    <div class="sm:w-2/5 h-52 sm:h-auto bg-stone-100 overflow-hidden relative">
+                        <img src="https://images.unsplash.com/photo-1581858726788-75bc0f6a952d?auto=format&fit=crop&w=600&q=80" alt="Furniture assembly" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                        <div class="absolute inset-0 flex items-center justify-center pointer-events-none p-2">
+                            <div class="bg-stone-950/90 border-2 border-dashed border-primary text-primary px-3.5 py-1.5 rounded-full transform -rotate-12 shadow-lg backdrop-blur-sm flex items-center space-x-1.5">
+                                <span class="text-[11px] font-black uppercase tracking-wider">EXAMPLE PHOTO</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Service Card 2 -->
+                <div class="bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-xl transition-all border border-stone-200/80 flex flex-col sm:flex-row group">
+                    <div class="p-6 sm:p-8 flex-1 flex flex-col justify-between">
+                        <div>
+                            <div class="w-[50px] h-[50px] bg-orange-100 text-primary rounded-2xl flex items-center justify-center text-xl mb-4 group-hover:bg-primary group-hover:text-white transition-colors">
+                                <i class="fa-solid fa-wrench"></i>
+                            </div>
+                            <h3 class="text-lg sm:text-xl font-bold text-stone-900 mb-2">Plumbing repairs</h3>
+                            <p class="text-[13.5px] sm:text-[15px] text-stone-500 leading-relaxed mb-4">
+                                Fixing leaks, replacing taps, installation of fixtures and general plumbing work.
+                            </p>
+                        </div>
+                        <a href="#contact" class="inline-flex items-center w-fit text-[13.5px] sm:text-sm font-bold text-primary hover:text-primary-hover transition-all transform hover:-translate-y-0.5">
+                            <span>Book service</span>
+                            <i class="fa-solid fa-arrow-right ml-1.5 text-xs"></i>
+                        </a>
+                    </div>
+                    <div class="sm:w-2/5 h-52 sm:h-auto bg-stone-100 overflow-hidden relative">
+                        <img src="https://images.unsplash.com/photo-1585704032915-c3400ca199e7?auto=format&fit=crop&w=600&q=80" alt="Plumbing repairs" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                        <div class="absolute inset-0 flex items-center justify-center pointer-events-none p-2">
+                            <div class="bg-stone-950/90 border-2 border-dashed border-primary text-primary px-3.5 py-1.5 rounded-full transform -rotate-12 shadow-lg backdrop-blur-sm flex items-center space-x-1.5">
+                                <span class="text-[11px] font-black uppercase tracking-wider">EXAMPLE PHOTO</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Service Card 3 -->
+                <div class="bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-xl transition-all border border-stone-200/80 flex flex-col sm:flex-row group">
+                    <div class="p-6 sm:p-8 flex-1 flex flex-col justify-between">
+                        <div>
+                            <div class="w-[50px] h-[50px] bg-orange-100 text-primary rounded-2xl flex items-center justify-center text-xl mb-4 group-hover:bg-primary group-hover:text-white transition-colors">
+                                <i class="fa-solid fa-bolt"></i>
+                            </div>
+                            <h3 class="text-lg sm:text-xl font-bold text-stone-900 mb-2">Electrical & wall mounting</h3>
+                            <p class="text-[13.5px] sm:text-[15px] text-stone-500 leading-relaxed mb-4">
+                                Light fitting installation, TV mounting, shelves, curtains and more.
+                            </p>
+                        </div>
+                        <a href="#contact" class="inline-flex items-center w-fit text-[13.5px] sm:text-sm font-bold text-primary hover:text-primary-hover transition-all transform hover:-translate-y-0.5">
+                            <span>Book service</span>
+                            <i class="fa-solid fa-arrow-right ml-1.5 text-xs"></i>
+                        </a>
+                    </div>
+                    <div class="sm:w-2/5 h-52 sm:h-auto bg-stone-100 overflow-hidden relative">
+                        <img src="https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&w=600&q=80" alt="Electrical mounting" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                        <div class="absolute inset-0 flex items-center justify-center pointer-events-none p-2">
+                            <div class="bg-stone-950/90 border-2 border-dashed border-primary text-primary px-3.5 py-1.5 rounded-full transform -rotate-12 shadow-lg backdrop-blur-sm flex items-center space-x-1.5">
+                                <span class="text-[11px] font-black uppercase tracking-wider">EXAMPLE PHOTO</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Service Card 4 -->
+                <div class="bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-xl transition-all border border-stone-200/80 flex flex-col sm:flex-row group">
+                    <div class="p-6 sm:p-8 flex-1 flex flex-col justify-between">
+                        <div>
+                            <div class="w-[50px] h-[50px] bg-orange-100 text-primary rounded-2xl flex items-center justify-center text-xl mb-4 group-hover:bg-primary group-hover:text-white transition-colors">
+                                <i class="fa-solid fa-paint-roller"></i>
+                            </div>
+                            <h3 class="text-lg sm:text-xl font-bold text-stone-900 mb-2">Painting & touch-ups</h3>
+                            <p class="text-[13.5px] sm:text-[15px] text-stone-500 leading-relaxed mb-4">
+                                Refreshing walls, small repairs and general touch-ups to keep your home looking great.
+                            </p>
+                        </div>
+                        <a href="#contact" class="inline-flex items-center w-fit text-[13.5px] sm:text-sm font-bold text-primary hover:text-primary-hover transition-all transform hover:-translate-y-0.5">
+                            <span>Book service</span>
+                            <i class="fa-solid fa-arrow-right ml-1.5 text-xs"></i>
+                        </a>
+                    </div>
+                    <div class="sm:w-2/5 h-52 sm:h-auto bg-stone-100 overflow-hidden relative">
+                        <img src="https://images.unsplash.com/photo-1589939705384-5185137a7f0f?auto=format&fit=crop&w=600&q=80" alt="Painting" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                        <div class="absolute inset-0 flex items-center justify-center pointer-events-none p-2">
+                            <div class="bg-stone-950/90 border-2 border-dashed border-primary text-primary px-3.5 py-1.5 rounded-full transform -rotate-12 shadow-lg backdrop-blur-sm flex items-center space-x-1.5">
+                                <span class="text-[11px] font-black uppercase tracking-wider">EXAMPLE PHOTO</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Service Card 5 -->
+                <div class="bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-xl transition-all border border-stone-200/80 flex flex-col sm:flex-row group">
+                    <div class="p-6 sm:p-8 flex-1 flex flex-col justify-between">
+                        <div>
+                            <div class="w-[50px] h-[50px] bg-orange-100 text-primary rounded-2xl flex items-center justify-center text-xl mb-4 group-hover:bg-primary group-hover:text-white transition-colors">
+                                <i class="fa-solid fa-door-open"></i>
+                            </div>
+                            <h3 class="text-lg sm:text-xl font-bold text-stone-900 mb-2">Doors, locks & fittings</h3>
+                            <p class="text-[13.5px] sm:text-[15px] text-stone-500 leading-relaxed mb-4">
+                                Installing and repairing doors, locks, handles, hinges and other fittings.
+                            </p>
+                        </div>
+                        <a href="#contact" class="inline-flex items-center w-fit text-[13.5px] sm:text-sm font-bold text-primary hover:text-primary-hover transition-all transform hover:-translate-y-0.5">
+                            <span>Book service</span>
+                            <i class="fa-solid fa-arrow-right ml-1.5 text-xs"></i>
+                        </a>
+                    </div>
+                    <div class="sm:w-2/5 h-52 sm:h-auto bg-stone-100 overflow-hidden relative">
+                        <img src="https://images.unsplash.com/photo-1558002038-1055907df827?auto=format&fit=crop&w=600&q=80" alt="Doors & locks" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                        <div class="absolute inset-0 flex items-center justify-center pointer-events-none p-2">
+                            <div class="bg-stone-950/90 border-2 border-dashed border-primary text-primary px-3.5 py-1.5 rounded-full transform -rotate-12 shadow-lg backdrop-blur-sm flex items-center space-x-1.5">
+                                <span class="text-[11px] font-black uppercase tracking-wider">EXAMPLE PHOTO</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Service Card 6 -->
+                <div class="bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-xl transition-all border border-stone-200/80 flex flex-col sm:flex-row group">
+                    <div class="p-6 sm:p-8 flex-1 flex flex-col justify-between">
+                        <div>
+                            <div class="w-[50px] h-[50px] bg-orange-100 text-primary rounded-2xl flex items-center justify-center text-xl mb-4 group-hover:bg-primary group-hover:text-white transition-colors">
+                                <i class="fa-solid fa-house"></i>
+                            </div>
+                            <h3 class="text-lg sm:text-xl font-bold text-stone-900 mb-2">General home maintenance</h3>
+                            <p class="text-[13.5px] sm:text-[15px] text-stone-500 leading-relaxed mb-4">
+                                Small jobs around the house that make a big difference.
+                            </p>
+                        </div>
+                        <a href="#contact" class="inline-flex items-center w-fit text-[13.5px] sm:text-sm font-bold text-primary hover:text-primary-hover transition-all transform hover:-translate-y-0.5">
+                            <span>Book service</span>
+                            <i class="fa-solid fa-arrow-right ml-1.5 text-xs"></i>
+                        </a>
+                    </div>
+                    <div class="sm:w-2/5 h-52 sm:h-auto bg-stone-100 overflow-hidden relative">
+                        <img src="https://images.unsplash.com/photo-1504148455328-c376907d081c?auto=format&fit=crop&w=600&q=80" alt="General maintenance" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                        <div class="absolute inset-0 flex items-center justify-center pointer-events-none p-2">
+                            <div class="bg-stone-950/90 border-2 border-dashed border-primary text-primary px-3.5 py-1.5 rounded-full transform -rotate-12 shadow-lg backdrop-blur-sm flex items-center space-x-1.5">
+                                <span class="text-[11px] font-black uppercase tracking-wider">EXAMPLE PHOTO</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Banner Section -->
+    <section class="relative bg-stone-950 text-white py-20 overflow-hidden">
+        <div class="absolute inset-0 bg-cover bg-center opacity-30 mix-blend-overlay" style="background-image: url('https://images.unsplash.com/photo-1504148455328-c376907d081c?auto=format&fit=crop&w=1920&q=80');"></div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="flex flex-col lg:flex-row justify-between items-center gap-10">
+                <div class="space-y-4 max-w-2xl text-center lg:text-left">
+                    <div class="flex items-center space-x-2.5 text-primary font-bold text-xs uppercase tracking-widest justify-center lg:justify-start">
+                        <span class="w-7 h-[2px] bg-primary"></span>
+                        <span>PROFESSIONAL HOME SERVICES</span>
+                    </div>
+                    <h2 class="text-3xl sm:text-[42px] font-extrabold tracking-tight leading-tight">
+                        Need a hand <span class="text-primary">with a repair?</span>
+                    </h2>
+                    <p class="text-stone-300 text-[15px] sm:text-[17px] leading-relaxed">
+                        No job is too small. Whether it's a quick fix, an installation or a bigger project, I'm here to help. Get in touch and let's arrange a convenient time.
+                    </p>
+                    <div class="flex flex-wrap justify-center lg:justify-start gap-6 pt-2">
+                        <div class="flex items-center space-x-3">
+                            <div class="w-11 h-11 rounded-full border border-stone-800 bg-stone-900 flex items-center justify-center text-primary text-base">
+                                <i class="fa-solid fa-calendar-days"></i>
+                            </div>
+                            <div class="text-left">
+                                <p class="text-[13.5px] font-bold text-white">Flexible booking</p>
+                                <p class="text-xs text-stone-400">At a time that suits you</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center space-x-3">
+                            <div class="w-11 h-11 rounded-full border border-stone-800 bg-stone-900 flex items-center justify-center text-primary text-base">
+                                <i class="fa-solid fa-shield"></i>
+                            </div>
+                            <div class="text-left">
+                                <p class="text-[13.5px] font-bold text-white">Reliable service</p>
+                                <p class="text-xs text-stone-400">Quality work guaranteed</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center space-x-3">
+                            <div class="w-11 h-11 rounded-full border border-stone-800 bg-stone-900 flex items-center justify-center text-primary text-base">
+                                <i class="fa-solid fa-house"></i>
+                            </div>
+                            <div class="text-left">
+                                <p class="text-[13.5px] font-bold text-white">Local & friendly</p>
+                                <p class="text-xs text-stone-400">Serving your area</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="w-full sm:w-auto">
+                    <a href="#contact" class="w-full sm:w-auto bg-primary hover:bg-primary-hover text-white font-bold px-8 py-4 rounded-xl shadow-lg shadow-primary/25 transition-all flex items-center justify-center space-x-2.5 text-[15px] transform hover:-translate-y-1">
+                        <i class="fa-solid fa-calendar-days text-sm"></i>
+                        <span>Request a Visit</span>
+                        <i class="fa-solid fa-arrow-right text-xs"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-20 lg:py-28 bg-surface">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12">
+                
+                <!-- Left Side: Header & Info Cards -->
+                <div class="lg:col-span-5 space-y-6">
+                    <div>
+                        <div class="inline-block bg-orange-100 border border-orange-200 text-primary text-xs font-extrabold uppercase tracking-wider px-4 py-1.5 rounded-full mb-3">
+                            CONTACT
+                        </div>
+                        <h2 class="text-3xl sm:text-[42px] font-extrabold text-stone-900 tracking-tight leading-tight">
+                            Let's arrange <span class="text-primary">your visit</span>
+                        </h2>
+                        <p class="text-stone-600 text-[15px] sm:text-[16px] leading-relaxed mt-2.5">
+                            Need help with a repair, furniture assembly or a home improvement project? Get in touch and I'll get back to you as soon as possible.
+                        </p>
+                    </div>
+
+                    <!-- 3 Stacked Info Cards -->
+                    <div class="space-y-4 pt-2">
+                        <!-- Phone Card -->
+                        <div class="bg-white p-5 rounded-2xl border border-stone-200/80 shadow-sm flex items-center space-x-4">
+                            <div class="w-11 h-11 bg-orange-100 text-primary rounded-xl flex items-center justify-center text-lg flex-shrink-0">
+                                <i class="fa-solid fa-phone"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-[13px] font-extrabold text-stone-900 uppercase tracking-wider">Phone</h4>
+                                <p class="text-xs text-stone-400">Mon – Sat, 8:00 – 18:00</p>
+                                <a href="tel:+35600000000" class="text-primary font-bold text-[15px] hover:underline mt-0.5 block">+356 0000 0000</a>
+                            </div>
+                        </div>
+
+                        <!-- Email Card -->
+                        <div class="bg-white p-5 rounded-2xl border border-stone-200/80 shadow-sm flex items-center space-x-4">
+                            <div class="w-11 h-11 bg-orange-100 text-primary rounded-xl flex items-center justify-center text-lg flex-shrink-0">
+                                <i class="fa-solid fa-envelope"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-[13px] font-extrabold text-stone-900 uppercase tracking-wider">Email</h4>
+                                <p class="text-xs text-stone-400">Send me a message</p>
+                                <a href="mailto:hello@email.com" class="text-primary font-bold text-[15px] hover:underline mt-0.5 block">hello@email.com</a>
+                            </div>
+                        </div>
+
+                        <!-- Service Area Card -->
+                        <div class="bg-white p-5 rounded-2xl border border-stone-200/80 shadow-sm flex items-center space-x-4">
+                            <div class="w-11 h-11 bg-orange-100 text-primary rounded-xl flex items-center justify-center text-lg flex-shrink-0">
+                                <i class="fa-solid fa-location-dot"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-[13px] font-extrabold text-stone-900 uppercase tracking-wider">Service area</h4>
+                                <p class="text-xs text-stone-400">Your town / area</p>
+                                <span class="text-stone-800 font-semibold text-[13.5px] mt-0.5 block">Malta</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Side: White Form Container -->
+                <div class="lg:col-span-7 bg-white p-6 sm:p-10 rounded-3xl border border-stone-200/80 shadow-sm">
+                    <form id="booking-form" onsubmit="handleFormSubmit(event)" class="space-y-5">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                            <div>
+                                <label class="block text-xs font-extrabold text-stone-700 uppercase tracking-wider mb-2">Your name *</label>
+                                <input type="text" required class="w-full bg-stone-50 border border-stone-200 rounded-xl px-4 py-3 text-stone-800 focus:bg-white focus:outline-none focus:border-primary transition-colors text-[15px]" placeholder="Your name">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-extrabold text-stone-700 uppercase tracking-wider mb-2">Phone number *</label>
+                                <input type="tel" required class="w-full bg-stone-50 border border-stone-200 rounded-xl px-4 py-3 text-stone-800 focus:bg-white focus:outline-none focus:border-primary transition-colors text-[15px]" placeholder="Phone number">
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-extrabold text-stone-700 uppercase tracking-wider mb-2">Email address *</label>
+                            <input type="email" required class="w-full bg-stone-50 border border-stone-200 rounded-xl px-4 py-3 text-stone-800 focus:bg-white focus:outline-none focus:border-primary transition-colors text-[15px]" placeholder="Email address">
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-extrabold text-stone-700 uppercase tracking-wider mb-2">Service needed *</label>
+                            <select class="w-full bg-stone-50 border border-stone-200 rounded-xl px-4 py-3 text-stone-800 focus:bg-white focus:outline-none focus:border-primary transition-colors text-[15px]">
+                                <option>Select a service</option>
+                                <option>Furniture assembly</option>
+                                <option>Plumbing repairs</option>
+                                <option>Electrical & wall mounting</option>
+                                <option>Painting & touch-ups</option>
+                                <option>Doors, locks & fittings</option>
+                                <option>General home maintenance</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-extrabold text-stone-700 uppercase tracking-wider mb-2">Project details / additional notes</label>
+                            <textarea rows="4" required class="w-full bg-stone-50 border border-stone-200 rounded-xl px-4 py-3 text-stone-800 focus:bg-white focus:outline-none focus:border-primary transition-colors text-[15px] resize-none" placeholder="Tell me what needs to be done..."></textarea>
+                        </div>
+
+                        <div>
+                            <button type="submit" class="w-full bg-primary hover:bg-primary-hover text-white font-bold py-4 rounded-xl shadow-lg shadow-primary/25 transition-all text-[15px] flex items-center justify-center space-x-2.5 transform hover:-translate-y-1">
+                                <span>Send Request</span>
+                                <i class="fa-solid fa-arrow-right text-xs"></i>
+                            </button>
+                        </div>
+
+                        <div id="form-success" class="hidden bg-orange-50 border border-orange-200 text-stone-800 p-5 rounded-2xl text-sm sm:text-[15px] text-center space-y-1 shadow-sm">
+                            <p class="font-extrabold text-primary text-[15px] sm:text-base flex items-center justify-center gap-2">
+                                <i class="fa-solid fa-circle-check"></i>
+                                <span>Thank you for your enquiry!</span>
+                            </p>
+                            <p class="font-medium text-stone-700">Your demo request has been submitted successfully.</p>
+                            <p class="font-bold text-primary pt-1">Ready to create a website for your business? Get in touch with Tailoredly!</p>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-stone-950 text-stone-400 py-12 border-t border-stone-900">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-6 text-center md:text-left">
+                
+                <!-- Logo -->
+                <div class="flex items-center space-x-3">
+                    <div class="w-9 h-9 rounded-xl bg-primary flex items-center justify-center text-white">
+                        <i class="fa-solid fa-house text-sm"></i>
+                    </div>
+                    <div class="text-left">
+                        <span class="text-white font-extrabold text-base sm:text-lg tracking-tight">YourBusiness<span class="text-primary">Name</span></span>
+                        <span class="block text-[9.5px] uppercase tracking-widest text-stone-500 font-bold">HOME REPAIR & MAINTENANCE</span>
+                    </div>
+                </div>
+
+                <!-- Navigation Links (Reviews removed) -->
+                <nav class="flex flex-wrap justify-center gap-6 text-[13.5px] sm:text-sm font-semibold text-stone-400">
+                    <a href="#home" class="hover:text-primary transition-colors">Home</a>
+                    <a href="#about" class="hover:text-primary transition-colors">About</a>
+                    <a href="#services" class="hover:text-primary transition-colors">Services</a>
+                    <a href="#contact" class="hover:text-primary transition-colors">Contact</a>
+                </nav>
+
+                <!-- Socials & Copyright -->
+                <div class="flex flex-col sm:flex-row items-center gap-4 text-xs sm:text-[13px]">
+                    <div class="flex space-x-2.5">
+                        <a href="#home" class="w-9 h-9 rounded-xl bg-stone-900 hover:bg-primary hover:text-white flex items-center justify-center transition-all transform hover:-translate-y-0.5 text-stone-400">
+                            <i class="fa-brands fa-facebook-f text-xs"></i>
+                        </a>
+                        <a href="#home" class="w-9 h-9 rounded-xl bg-stone-900 hover:bg-primary hover:text-white flex items-center justify-center transition-all transform hover:-translate-y-0.5 text-stone-400">
+                            <i class="fa-brands fa-instagram text-xs"></i>
+                        </a>
+                    </div>
+                    <span class="text-stone-500">© 2026 YourBusinessName. All rights reserved.</span>
+                </div>
+
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Toggle mobile menu
+        const menuBtn = document.getElementById('menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const mobileMenuIcon = document.getElementById('mobile-menu-icon');
+
+        function toggleMobileMenu() {
+            mobileMenu.classList.toggle('hidden');
+            if (mobileMenu.classList.contains('hidden')) {
+                mobileMenuIcon.className = 'fa-solid fa-bars text-lg';
+                menuBtn.classList.remove('bg-primary', 'text-white', 'border-primary');
+                menuBtn.classList.add('bg-orange-50/90', 'text-stone-800', 'border-orange-200');
+            } else {
+                mobileMenuIcon.className = 'fa-solid fa-xmark text-lg';
+                menuBtn.classList.remove('bg-orange-50/90', 'text-stone-800', 'border-orange-200');
+                menuBtn.classList.add('bg-primary', 'text-white', 'border-primary');
+            }
+        }
+
+        function closeMobileMenu() {
+            mobileMenu.classList.add('hidden');
+            mobileMenuIcon.className = 'fa-solid fa-bars text-lg';
+            menuBtn.classList.remove('bg-primary', 'text-white', 'border-primary');
+            menuBtn.classList.add('bg-orange-50/90', 'text-stone-800', 'border-orange-200');
+        }
+
+        // Update active link state on Desktop and Mobile
+        const sectionIds = ['home', 'about', 'services', 'contact'];
+        let isClickScrolling = false;
+        let scrollTimeout;
+
+        function setActiveNav(sectionId) {
+            isClickScrolling = true;
+            clearTimeout(scrollTimeout);
+            scrollTimeout = setTimeout(() => {
+                isClickScrolling = false;
+            }, 900);
+
+            updateNavStyles(sectionId);
+        }
+
+        function updateNavStyles(sectionId) {
+            // Desktop nav links
+            document.querySelectorAll('.desktop-nav-link').forEach(link => {
+                if (link.getAttribute('data-nav') === sectionId) {
+                    link.classList.add('text-primary', 'font-bold');
+                    link.classList.remove('text-stone-600', 'font-semibold');
+                } else {
+                    link.classList.remove('text-primary', 'font-bold');
+                    link.classList.add('text-stone-600', 'font-semibold');
+                }
+            });
+
+            // Mobile nav links
+            document.querySelectorAll('.mobile-nav-btn').forEach(btn => {
+                const iconBox = btn.querySelector('.mobile-nav-icon');
+                if (btn.getAttribute('data-mobile-nav') === sectionId) {
+                    btn.classList.add('text-primary', 'bg-orange-50/90', 'font-bold');
+                    btn.classList.remove('text-stone-700', 'font-semibold');
+                    if (iconBox) {
+                        iconBox.classList.add('bg-primary', 'text-white', 'shadow-sm');
+                        iconBox.classList.remove('bg-orange-50', 'text-primary', 'border', 'border-orange-100');
+                    }
+                } else {
+                    btn.classList.remove('text-primary', 'bg-orange-50/90', 'font-bold');
+                    btn.classList.add('text-stone-700', 'font-semibold');
+                    if (iconBox) {
+                        iconBox.classList.remove('bg-primary', 'text-white', 'shadow-sm');
+                        iconBox.classList.add('bg-orange-50', 'text-primary', 'border', 'border-orange-100');
+                    }
+                }
+            });
+        }
+
+        // Highlight active section on scroll
+        window.addEventListener('scroll', () => {
+            if (isClickScrolling) return;
+
+            const scrollPos = window.scrollY + 240;
+            if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight - 40) {
+                updateNavStyles('contact');
+                return;
+            }
+
+            let current = 'home';
+            sectionIds.forEach(id => {
+                const el = document.getElementById(id);
+                if (el && el.offsetTop <= scrollPos) {
+                    current = id;
+                }
+            });
+            updateNavStyles(current);
+        }, { passive: true });
+
+        // Form Submission handler
+        function handleFormSubmit(event) {
+            event.preventDefault();
+            const successBox = document.getElementById('form-success');
+            successBox.classList.remove('hidden');
+            event.target.reset();
+            setTimeout(() => {
+                successBox.classList.add('hidden');
+            }, 8000);
+        }
+    </script>
+</body>
+</html>
