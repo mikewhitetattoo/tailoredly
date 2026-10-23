@@ -1025,6 +1025,7 @@
             backdrop-filter: blur(16px);
             -webkit-backdrop-filter: blur(16px);
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif !important;
+            box-sizing: border-box;
         }
 
         .tailoredly-left {
@@ -1032,6 +1033,7 @@
             align-items: center;
             gap: 12px;
             min-width: 0;
+            flex: 1 1 auto;
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif !important;
         }
 
@@ -1047,12 +1049,14 @@
             align-items: center;
             justify-content: center;
             color: #f42564;
+            flex-shrink: 0;
         }
 
         .tailoredly-brand-text {
             display: flex;
             flex-direction: column;
             line-height: 1.2;
+            min-width: 0;
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif !important;
         }
 
@@ -1064,6 +1068,7 @@
             text-transform: uppercase !important;
             color: #f42564 !important;
             margin-bottom: 2px !important;
+            white-space: nowrap !important;
         }
 
         .tailoredly-madeby {
@@ -1153,6 +1158,7 @@
 
         .tailoredly-btn svg {
             transition: transform 0.2s ease;
+            flex-shrink: 0;
         }
 
         .tailoredly-btn:hover svg {
@@ -1166,64 +1172,66 @@
             }
         }
 
+        /* Fluid scaling for mobile devices (including iPhone 14, iPhone Mini, SE) */
         @media (max-width: 768px) {
             html body {
-                padding-bottom: calc(144px + env(safe-area-inset-bottom, 0px)) !important;
+                padding-bottom: calc(130px + env(safe-area-inset-bottom, 0px)) !important;
             }
             .tailoredly-banner-wrap {
                 top: auto !important;
                 right: auto !important;
-                bottom: calc(56px + env(safe-area-inset-bottom, 0px)) !important;
+                bottom: calc(36px + env(safe-area-inset-bottom, 0px)) !important;
                 left: 50% !important;
                 transform: translateX(-50%) !important;
-                width: calc(100% - 16px);
-                max-width: 540px;
+                width: calc(100vw - 16px) !important;
+                max-width: 440px !important;
             }
             .tailoredly-banner-box {
-                padding: 10px 12px;
-                gap: 10px;
-                border-radius: 15px;
+                padding: clamp(7px, 2vw, 10px) clamp(9px, 2.6vw, 13px) !important;
+                gap: clamp(6px, 2vw, 10px) !important;
+                border-radius: 14px !important;
             }
             .tailoredly-divider,
             .tailoredly-middle {
-                display: none;
+                display: none !important;
+            }
+            .tailoredly-left {
+                gap: clamp(6px, 2vw, 10px) !important;
             }
             .tailoredly-icon-box {
-                width: 36px;
-                height: 36px;
-                min-width: 36px;
-                border-radius: 9px;
+                width: clamp(28px, 7.8vw, 34px) !important;
+                height: clamp(28px, 7.8vw, 34px) !important;
+                min-width: clamp(28px, 7.8vw, 34px) !important;
+                border-radius: 8px !important;
             }
             .tailoredly-icon-box svg {
-                width: 17px;
-                height: 17px;
+                width: clamp(14px, 4vw, 17px) !important;
+                height: clamp(14px, 4vw, 17px) !important;
             }
             .tailoredly-demo-label {
-                font-size: 8.5px !important;
-                letter-spacing: 0.14em !important;
+                font-size: clamp(7px, 2vw, 8.5px) !important;
+                letter-spacing: 0.11em !important;
                 margin-bottom: 1px !important;
             }
             .tailoredly-madeby {
-                font-size: 15px !important;
+                font-size: clamp(11px, 3.4vw, 14px) !important;
+                gap: 3px !important;
             }
             .tailoredly-btn {
-                padding: 10px 14px;
-                font-size: 12.5px !important;
-                gap: 6px;
-                border-radius: 10px;
+                padding: clamp(7px, 2vw, 9px) clamp(9px, 2.8vw, 13px) !important;
+                font-size: clamp(10.5px, 3vw, 12px) !important;
+                gap: 4px !important;
+                border-radius: 9px !important;
+            }
+            .tailoredly-btn svg {
+                width: clamp(12px, 3.3vw, 14px) !important;
+                height: clamp(12px, 3.3vw, 14px) !important;
             }
         }
 
-        @media (max-width: 360px) {
+        @media (max-width: 350px) {
             .tailoredly-icon-box {
-                display: none;
-            }
-            .tailoredly-madeby {
-                font-size: 14px !important;
-            }
-            .tailoredly-btn {
-                padding: 9px 12px;
-                font-size: 12px !important;
+                display: none !important;
             }
         }
     </style>
