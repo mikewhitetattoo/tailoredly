@@ -203,18 +203,18 @@
         }
 
         /* ========================================================= */
-        /* EXACT TAILOREDLY DEMO BANNER STYLES                       */
+        /* EXACT TAILOREDLY DEMO BANNER STYLES (FROM DENTIST.HTML)   */
         /* ========================================================= */
         .tailoredly-banner-wrap {
             position: fixed !important;
             top: 120px !important;
-            right: 24px !important;
+            right: 20px !important;
             bottom: auto !important;
             left: auto !important;
             transform: none !important;
             z-index: 2147483647 !important;
             width: auto;
-            max-width: calc(100vw - 48px);
+            max-width: calc(100vw - 40px);
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif !important;
             box-sizing: border-box;
             pointer-events: auto;
@@ -236,6 +236,7 @@
             backdrop-filter: blur(16px);
             -webkit-backdrop-filter: blur(16px);
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif !important;
+            box-sizing: border-box;
         }
 
         .tailoredly-left {
@@ -243,6 +244,7 @@
             align-items: center;
             gap: 12px;
             min-width: 0;
+            flex: 1 1 auto;
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif !important;
         }
 
@@ -258,12 +260,14 @@
             align-items: center;
             justify-content: center;
             color: #f42564;
+            flex-shrink: 0;
         }
 
         .tailoredly-brand-text {
             display: flex;
             flex-direction: column;
             line-height: 1.2;
+            min-width: 0;
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif !important;
         }
 
@@ -275,6 +279,7 @@
             text-transform: uppercase !important;
             color: #f42564 !important;
             margin-bottom: 2px !important;
+            white-space: nowrap !important;
         }
 
         .tailoredly-madeby {
@@ -364,6 +369,7 @@
 
         .tailoredly-btn svg {
             transition: transform 0.2s ease;
+            flex-shrink: 0;
         }
 
         .tailoredly-btn:hover svg {
@@ -377,51 +383,66 @@
             }
         }
 
+        /* Fluid scaling for mobile devices (including iPhone 14, iPhone Mini, SE) */
         @media (max-width: 768px) {
             html body {
-                padding-bottom: calc(144px + env(safe-area-inset-bottom, 0px)) !important;
+                padding-bottom: calc(130px + env(safe-area-inset-bottom, 0px)) !important;
             }
             .tailoredly-banner-wrap {
                 top: auto !important;
                 right: auto !important;
-                bottom: calc(56px + env(safe-area-inset-bottom, 0px)) !important;
+                bottom: calc(36px + env(safe-area-inset-bottom, 0px)) !important;
                 left: 50% !important;
                 transform: translateX(-50%) !important;
-                width: calc(100% - 16px);
-                max-width: 540px;
+                width: calc(100vw - 16px) !important;
+                max-width: 440px !important;
             }
             .tailoredly-banner-box {
-                padding: 10px 12px;
-                gap: 10px;
-                border-radius: 15px;
+                padding: clamp(7px, 2vw, 10px) clamp(9px, 2.6vw, 13px) !important;
+                gap: clamp(6px, 2vw, 10px) !important;
+                border-radius: 14px !important;
             }
             .tailoredly-divider,
             .tailoredly-middle {
-                display: none;
+                display: none !important;
+            }
+            .tailoredly-left {
+                gap: clamp(6px, 2vw, 10px) !important;
             }
             .tailoredly-icon-box {
-                width: 36px;
-                height: 36px;
-                min-width: 36px;
-                border-radius: 9px;
+                width: clamp(28px, 7.8vw, 34px) !important;
+                height: clamp(28px, 7.8vw, 34px) !important;
+                min-width: clamp(28px, 7.8vw, 34px) !important;
+                border-radius: 8px !important;
             }
             .tailoredly-icon-box svg {
-                width: 17px;
-                height: 17px;
+                width: clamp(14px, 4vw, 17px) !important;
+                height: clamp(14px, 4vw, 17px) !important;
             }
             .tailoredly-demo-label {
-                font-size: 8.5px !important;
-                letter-spacing: 0.14em !important;
+                font-size: clamp(7px, 2vw, 8.5px) !important;
+                letter-spacing: 0.11em !important;
                 margin-bottom: 1px !important;
             }
             .tailoredly-madeby {
-                font-size: 15px !important;
+                font-size: clamp(11px, 3.4vw, 14px) !important;
+                gap: 3px !important;
             }
             .tailoredly-btn {
-                padding: 10px 14px;
-                font-size: 12.5px !important;
-                gap: 6px;
-                border-radius: 10px;
+                padding: clamp(7px, 2vw, 9px) clamp(9px, 2.8vw, 13px) !important;
+                font-size: clamp(10.5px, 3vw, 12px) !important;
+                gap: 4px !important;
+                border-radius: 9px !important;
+            }
+            .tailoredly-btn svg {
+                width: clamp(12px, 3.3vw, 14px) !important;
+                height: clamp(12px, 3.3vw, 14px) !important;
+            }
+        }
+
+        @media (max-width: 350px) {
+            .tailoredly-icon-box {
+                display: none !important;
             }
         }
     </style>
@@ -463,7 +484,7 @@
     <header id="mainHeader" class="fixed top-[28px] left-0 right-0 z-50 bg-dark-900/95 backdrop-blur-md border-b border-gold-500/20">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
             <!-- Brand Logo -->
-            <a href="javascript:void(0)" onclick="navigateTo('home')" class="flex flex-col items-start group">
+            <a href="javascript:void(0)" onclick="navigateTo('home'); closeMobileMenu();" class="flex flex-col items-start group">
                 <span class="font-serif text-xl sm:text-2xl font-bold tracking-[0.25em] text-white group-hover:text-gold-400 transition-colors">EXAMPLE</span>
                 <span class="font-serif text-[10px] sm:text-[11px] tracking-[0.3em] text-gold-400 uppercase -mt-1">HAIRDRESSER SALON</span>
             </a>
@@ -476,24 +497,79 @@
                 <a href="javascript:void(0)" onclick="navigateTo('contact')" id="nav-contact" class="nav-link text-xs uppercase tracking-[0.2em] text-gray-300 hover:text-gold-400 transition-colors relative py-1 font-medium">Contact</a>
             </nav>
 
-            <!-- Book Now Action Button -->
-            <div class="flex items-center gap-4">
-                <button onclick="openBookingModal()" class="btn-gold px-5 py-2.5 rounded-sm text-xs font-bold uppercase tracking-widest flex items-center gap-2">
+            <!-- Book Now Action Button & Mobile Menu Toggle -->
+            <div class="flex items-center gap-3 sm:gap-4">
+                <button onclick="openBookingModal()" class="btn-gold px-4 sm:px-5 py-2.5 rounded-sm text-[11px] sm:text-xs font-bold uppercase tracking-widest flex items-center gap-2">
                     <span>BOOK NOW</span>
                 </button>
-                <!-- Mobile Menu Button -->
-                <button id="mobileMenuBtn" class="md:hidden text-gold-400 hover:text-white p-2">
-                    <i class="fa-solid fa-bars text-2xl"></i>
+                <!-- Upgraded Mobile Hamburger Button -->
+                <button id="mobileMenuBtn" onclick="toggleMobileMenu()" class="md:hidden w-11 h-11 rounded-sm border border-gold-500/30 bg-dark-800 flex items-center justify-center text-gold-400 hover:text-white hover:border-gold-400 transition-all shadow-md focus:outline-none" aria-label="Toggle Menu">
+                    <i class="fa-solid fa-bars text-lg" id="mobileMenuIcon"></i>
                 </button>
             </div>
         </div>
 
-        <!-- Mobile Navigation Menu Dropdown -->
-        <div id="mobileMenu" class="hidden md:hidden bg-dark-800 border-b border-gold-500/20 px-6 py-6 space-y-4">
-            <a href="javascript:void(0)" onclick="navigateTo('home'); closeMobileMenu();" class="block text-xs uppercase tracking-widest text-gold-400 py-2 border-b border-gray-800">Home</a>
-            <a href="javascript:void(0)" onclick="navigateTo('about'); closeMobileMenu();" class="block text-xs uppercase tracking-widest text-gray-300 hover:text-gold-400 py-2 border-b border-gray-800">About Us</a>
-            <a href="javascript:void(0)" onclick="navigateTo('services'); closeMobileMenu();" class="block text-xs uppercase tracking-widest text-gray-300 hover:text-gold-400 py-2 border-b border-gray-800">Services & Prices</a>
-            <a href="javascript:void(0)" onclick="navigateTo('contact'); closeMobileMenu();" class="block text-xs uppercase tracking-widest text-gray-300 hover:text-gold-400 py-2 border-b border-gray-800">Contact</a>
+        <!-- Upgraded Luxury Mobile Navigation Menu Dropdown with Icons -->
+        <div id="mobileMenu" style="background-color: #0F0F13;" class="hidden md:hidden absolute top-full left-0 right-0 border-t border-b-2 border-gold-500/20 border-b-gold-500/50 px-5 pt-3 pb-6 shadow-[0_25px_50px_-12px_rgba(0,0,0,0.92)] z-50">
+            <div class="max-w-md mx-auto">
+                <div class="divide-y divide-gold-500/10">
+                    <!-- Home Link -->
+                    <button onclick="navigateTo('home'); closeMobileMenu();" data-mobile-nav="home" class="mobile-nav-btn w-full flex items-center justify-between py-3 px-3 rounded-sm font-bold text-xs uppercase tracking-[0.18em] text-gold-400 bg-gold-500/10 border border-gold-500/25 transition-all my-1">
+                        <div class="flex items-center space-x-3.5">
+                            <div class="mobile-nav-icon w-9 h-9 rounded-sm bg-gradient-to-br from-gold-300 via-gold-400 to-gold-600 text-dark-900 flex items-center justify-center text-sm shadow-sm transition-all">
+                                <i class="fa-solid fa-house"></i>
+                            </div>
+                            <span>Home</span>
+                        </div>
+                        <i class="fa-solid fa-chevron-right text-[11px] opacity-80"></i>
+                    </button>
+
+                    <!-- About Us Link -->
+                    <button onclick="navigateTo('about'); closeMobileMenu();" data-mobile-nav="about" class="mobile-nav-btn w-full flex items-center justify-between py-3 px-3 rounded-sm font-medium text-xs uppercase tracking-[0.18em] text-gray-300 hover:bg-gold-500/5 hover:text-gold-400 border border-transparent transition-all my-1">
+                        <div class="flex items-center space-x-3.5">
+                            <div class="mobile-nav-icon w-9 h-9 rounded-sm bg-dark-800 text-gold-400 border border-gold-500/30 flex items-center justify-center text-sm transition-all">
+                                <i class="fa-regular fa-gem"></i>
+                            </div>
+                            <span>About Us</span>
+                        </div>
+                        <i class="fa-solid fa-chevron-right text-[11px] text-gray-500"></i>
+                    </button>
+
+                    <!-- Services & Prices Link -->
+                    <button onclick="navigateTo('services'); closeMobileMenu();" data-mobile-nav="services" class="mobile-nav-btn w-full flex items-center justify-between py-3 px-3 rounded-sm font-medium text-xs uppercase tracking-[0.18em] text-gray-300 hover:bg-gold-500/5 hover:text-gold-400 border border-transparent transition-all my-1">
+                        <div class="flex items-center space-x-3.5">
+                            <div class="mobile-nav-icon w-9 h-9 rounded-sm bg-dark-800 text-gold-400 border border-gold-500/30 flex items-center justify-center text-sm transition-all">
+                                <i class="fa-solid fa-scissors"></i>
+                            </div>
+                            <span>Services & Prices</span>
+                        </div>
+                        <i class="fa-solid fa-chevron-right text-[11px] text-gray-500"></i>
+                    </button>
+
+                    <!-- Contact Link -->
+                    <button onclick="navigateTo('contact'); closeMobileMenu();" data-mobile-nav="contact" class="mobile-nav-btn w-full flex items-center justify-between py-3 px-3 rounded-sm font-medium text-xs uppercase tracking-[0.18em] text-gray-300 hover:bg-gold-500/5 hover:text-gold-400 border border-transparent transition-all my-1">
+                        <div class="flex items-center space-x-3.5">
+                            <div class="mobile-nav-icon w-9 h-9 rounded-sm bg-dark-800 text-gold-400 border border-gold-500/30 flex items-center justify-center text-sm transition-all">
+                                <i class="fa-solid fa-location-dot"></i>
+                            </div>
+                            <span>Contact</span>
+                        </div>
+                        <i class="fa-solid fa-chevron-right text-[11px] text-gray-500"></i>
+                    </button>
+                </div>
+
+                <!-- Bottom Call & Book Actions in Mobile Menu -->
+                <div class="pt-3.5 mt-2 border-t border-gold-500/20 grid grid-cols-2 gap-2.5">
+                    <a href="tel:+35699000000" class="w-full bg-dark-800 hover:bg-dark-700 text-gold-400 border border-gold-500/30 font-semibold text-[11px] uppercase tracking-wider py-3.5 rounded-sm text-center flex items-center justify-center space-x-2 transition">
+                        <i class="fa-solid fa-phone text-gold-400 text-xs"></i>
+                        <span>+356 9900 0000</span>
+                    </a>
+                    <button onclick="closeMobileMenu(); openBookingModal();" class="w-full btn-gold font-bold text-[11px] uppercase tracking-wider py-3.5 rounded-sm text-center flex items-center justify-center space-x-2 transition">
+                        <i class="fa-solid fa-calendar-check text-xs"></i>
+                        <span>Book Visit</span>
+                    </button>
+                </div>
+            </div>
         </div>
     </header>
 
@@ -1318,7 +1394,7 @@
         function navigateTo(pageId) {
             if (!pages.includes(pageId)) pageId = 'home';
 
-            // Hide all page views
+            // Hide all page views & update desktop nav
             pages.forEach(p => {
                 const pageEl = document.getElementById(`page-${p}`);
                 const navEl = document.getElementById(`nav-${p}`);
@@ -1344,6 +1420,35 @@
                 selectedNav.classList.remove('text-gray-300');
             }
 
+            // Update Mobile Navigation Button Active Styles
+            document.querySelectorAll('.mobile-nav-btn').forEach(btn => {
+                const iconBox = btn.querySelector('.mobile-nav-icon');
+                const chevron = btn.querySelector('.fa-chevron-right');
+                if (btn.getAttribute('data-mobile-nav') === pageId) {
+                    btn.classList.add('text-gold-400', 'bg-gold-500/10', 'border-gold-500/25', 'font-bold');
+                    btn.classList.remove('text-gray-300', 'border-transparent', 'font-medium');
+                    if (iconBox) {
+                        iconBox.classList.add('bg-gradient-to-br', 'from-gold-300', 'via-gold-400', 'to-gold-600', 'text-dark-900', 'shadow-sm');
+                        iconBox.classList.remove('bg-dark-800', 'text-gold-400', 'border', 'border-gold-500/30');
+                    }
+                    if (chevron) {
+                        chevron.classList.remove('text-gray-500');
+                        chevron.classList.add('opacity-80');
+                    }
+                } else {
+                    btn.classList.remove('text-gold-400', 'bg-gold-500/10', 'border-gold-500/25', 'font-bold');
+                    btn.classList.add('text-gray-300', 'border-transparent', 'font-medium');
+                    if (iconBox) {
+                        iconBox.classList.remove('bg-gradient-to-br', 'from-gold-300', 'via-gold-400', 'to-gold-600', 'text-dark-900', 'shadow-sm');
+                        iconBox.classList.add('bg-dark-800', 'text-gold-400', 'border', 'border-gold-500/30');
+                    }
+                    if (chevron) {
+                        chevron.classList.add('text-gray-500');
+                        chevron.classList.remove('opacity-80');
+                    }
+                }
+            });
+
             // Update URL hash without reload
             window.location.hash = pageId;
 
@@ -1364,16 +1469,36 @@
         window.addEventListener('hashchange', handleHashRoute);
         window.addEventListener('DOMContentLoaded', handleHashRoute);
 
-        // Mobile Menu Toggle
-        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
-        const mobileMenu = document.getElementById('mobileMenu');
+        // Upgraded Mobile Menu Toggle
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobileMenu');
+            const icon = document.getElementById('mobileMenuIcon');
+            const btn = document.getElementById('mobileMenuBtn');
+            
+            menu.classList.toggle('hidden');
 
-        mobileMenuBtn.addEventListener('click', () => {
-            mobileMenu.classList.toggle('hidden');
-        });
+            if (menu.classList.contains('hidden')) {
+                icon.className = 'fa-solid fa-bars text-lg';
+                btn.classList.remove('bg-gold-400', 'text-dark-900', 'border-gold-400');
+                btn.classList.add('bg-dark-800', 'text-gold-400', 'border-gold-500/30');
+            } else {
+                icon.className = 'fa-solid fa-xmark text-lg';
+                btn.classList.remove('bg-dark-800', 'text-gold-400', 'border-gold-500/30');
+                btn.classList.add('bg-gold-400', 'text-dark-900', 'border-gold-400');
+            }
+        }
 
         function closeMobileMenu() {
-            mobileMenu.classList.add('hidden');
+            const menu = document.getElementById('mobileMenu');
+            const icon = document.getElementById('mobileMenuIcon');
+            const btn = document.getElementById('mobileMenuBtn');
+            
+            menu.classList.add('hidden');
+            if (icon) icon.className = 'fa-solid fa-bars text-lg';
+            if (btn) {
+                btn.classList.remove('bg-gold-400', 'text-dark-900', 'border-gold-400');
+                btn.classList.add('bg-dark-800', 'text-gold-400', 'border-gold-500/30');
+            }
         }
 
         // Modal Functions
